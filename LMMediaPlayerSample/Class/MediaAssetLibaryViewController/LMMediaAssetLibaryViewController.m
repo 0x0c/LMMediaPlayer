@@ -50,27 +50,32 @@
 	playerView_.delegate = self;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		[HCYoutubeParser h264videosWithYoutubeURL:[NSURL URLWithString:@"http://www.youtube.com/watch?v=rVWx5YHmvFo"] completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
-			NSDictionary *qualities = videoDictionary;
-			NSString *URLString = nil;
-			if ([qualities objectForKey:@"small"] != nil) {
-				URLString = [qualities objectForKey:@"small"];
-			}
-			else if ([qualities objectForKey:@"live"] != nil) {
-				URLString = [qualities objectForKey:@"live"];
-			}
-			else {
-				[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't find youtube video" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles: nil] show];
-				return;
-			}
-			dispatch_async(dispatch_get_main_queue(), ^{
-				LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{
-																		LMMediaItemInfoURLKey:[NSURL URLWithString:URLString]
-																		}];
-				[playerView_.mediaPlayer addMedia:item];
-				[playerView_.mediaPlayer play];
-			});
-		}];
+		for (NSString *url in @[@"http://www.youtube.com/watch?v=G5f4S6DI1eQ", @"http://www.youtube.com/watch?v=rVWx5YHmvFo"]) {
+			[HCYoutubeParser h264videosWithYoutubeURL:[NSURL URLWithString:url] completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
+				NSDictionary *qualities = videoDictionary;
+				NSString *URLString = nil;
+				if ([qualities objectForKey:@"small"] != nil) {
+					URLString = [qualities objectForKey:@"small"];
+				}
+				else if ([qualities objectForKey:@"live"] != nil) {
+					URLString = [qualities objectForKey:@"live"];
+				}
+				else {
+					[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't find youtube video" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles: nil] show];
+					return;
+				}
+				dispatch_async(dispatch_get_main_queue(), ^{
+					LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{
+																			LMMediaItemInfoURLKey:[NSURL URLWithString:URLString]
+																			}];
+					[playerView_.mediaPlayer addMedia:item];
+					static dispatch_once_t onceToken;
+					dispatch_once(&onceToken, ^{
+						[playerView_.mediaPlayer play];
+					});
+				});
+			}];
+		}
 	});
 }
 
