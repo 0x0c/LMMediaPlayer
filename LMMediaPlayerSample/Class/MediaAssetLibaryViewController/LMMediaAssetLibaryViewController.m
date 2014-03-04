@@ -48,31 +48,30 @@
 	}
 	playerView_ = [LMMediaPlayerView sharedPlayerView];
 	playerView_.delegate = self;
-	[HCYoutubeParser h264videosWithYoutubeURL:[NSURL URLWithString:@"http://www.youtube.com/watch?v=rVWx5YHmvFo"] completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
-		NSDictionary *qualities = videoDictionary;
-		NSString *URLString = nil;
-		if ([qualities objectForKey:@"small"] != nil) {
-			URLString = [qualities objectForKey:@"small"];
-		}
-		else if ([qualities objectForKey:@"live"] != nil) {
-			URLString = [qualities objectForKey:@"live"];
-		}
-		else {
-			[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't find youtube video" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles: nil] show];
-			return;
-		}
-		dispatch_async(dispatch_get_main_queue(), ^{
-			LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{
-																	LMMediaItemInfoURLKey:[NSURL URLWithString:URLString]
-																	}];
-			[playerView_.mediaPlayer addMedia:item];
-			[playerView_.mediaPlayer play];
-		});
-	}];
-	UIView *baseView = [[UIView alloc] initWithFrame:playerView_.frame];
-	baseView.backgroundColor = [UIColor blackColor];
-	[baseView addSubview:playerView_];
-	self.tableView.tableHeaderView = baseView;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		[HCYoutubeParser h264videosWithYoutubeURL:[NSURL URLWithString:@"http://www.youtube.com/watch?v=rVWx5YHmvFo"] completeBlock:^(NSDictionary *videoDictionary, NSError *error) {
+			NSDictionary *qualities = videoDictionary;
+			NSString *URLString = nil;
+			if ([qualities objectForKey:@"small"] != nil) {
+				URLString = [qualities objectForKey:@"small"];
+			}
+			else if ([qualities objectForKey:@"live"] != nil) {
+				URLString = [qualities objectForKey:@"live"];
+			}
+			else {
+				[[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't find youtube video" delegate:nil cancelButtonTitle:@"Close" otherButtonTitles: nil] show];
+				return;
+			}
+			dispatch_async(dispatch_get_main_queue(), ^{
+				LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{
+																		LMMediaItemInfoURLKey:[NSURL URLWithString:URLString]
+																		}];
+				[playerView_.mediaPlayer addMedia:item];
+				[playerView_.mediaPlayer play];
+			});
+		}];
+	});
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -81,6 +80,16 @@
 	
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 	[self becomeFirstResponder];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	UIView *baseView = [[UIView alloc] initWithFrame:playerView_.frame];
+	baseView.backgroundColor = [UIColor blackColor];
+	[baseView addSubview:playerView_];
+	self.tableView.tableHeaderView = baseView;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -159,7 +168,7 @@
 		NSURL *url = [musics_[indexPath.row] valueForProperty:MPMediaItemPropertyAssetURL];
 		if (url.absoluteString.length) {
 			NSNumber *type = [musics_[indexPath.row] valueForProperty:MPMediaItemPropertyMediaType];
-			LMMediaItem *item = [[LMMediaItem alloc] initWithMetaMedia:musics_[indexPath.row] contentType:([type integerValue] | MPMediaTypeMusicVideo) ? LMMediaItemContentTypeVideo : LMMediaItemContentTypeAudio];
+			LMMediaItem *item = [[LMMediaItem alloc] initWithMetaMedia:musics_[indexPath.row] contentType:([type integerValue] & MPMediaTypeMusicVideo) ? LMMediaItemContentTypeVideo : LMMediaItemContentTypeAudio];
 			[playerView_.mediaPlayer addMedia:item];
 		}
 		else {
