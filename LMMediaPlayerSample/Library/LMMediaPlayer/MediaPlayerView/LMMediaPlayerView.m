@@ -133,8 +133,12 @@ static LMMediaPlayerView *sharedPlayerView;
 	[nextButton_ addTarget:self action:@selector(fourcePlayNextMedia) forControlEvents:UIControlEventTouchUpInside];
 	[previousButton_ addTarget:self	action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
 	
+	UIView *gestureView = [[UIView alloc] initWithFrame:self.frame];
+	gestureView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	[self addSubview:gestureView];
+	[self sendSubviewToBack:gestureView];
 	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
-	[artworkImageView_ addGestureRecognizer:gesture];
+	[gestureView addGestureRecognizer:gesture];
 	
 	UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 	footerView_.backgroundColor = headerView_.backgroundColor = backgroundColor;
@@ -231,7 +235,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		artworkImageView_.hidden = YES;
 		videoLayer_ = [[LMPlayerLayerView alloc] initWithFrame:self.frame audioPlayer:_mediaPlayer.player];
 		UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
-		[self addGestureRecognizer:gesture];
+		[videoLayer_ addGestureRecognizer:gesture];
 		double delayInSeconds = 0.01;
 		dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 		dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
