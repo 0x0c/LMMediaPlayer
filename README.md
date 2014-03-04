@@ -37,7 +37,7 @@ You can play **MPMediaItem** and **http streaming contents** not only with fulls
 
 ===
 	//Get shared player
-	LMMediaPlayerView *player = [LMMediaPlayer sharedPlayerView];
+	LMMediaPlayerView *player = [LMMediaPlayerView sharedPlayerView];
 	
 	//Create media item with URL.
 	LMMediaItem *item1 = [[LMMediaItem alloc] initWithInfo:@{
@@ -60,7 +60,7 @@ You can play **MPMediaItem** and **http streaming contents** not only with fulls
 Already implemented repeat mode and shuffle mode.
 
 ===
-	LMMediaPlayerView *player = [LMMediaPlayer sharedPlayerView];
+	LMMediaPlayerView *player = [LMMediaPlayerView sharedPlayerView];
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeNone;
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeAll;
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeOne;
