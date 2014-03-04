@@ -1,0 +1,1 @@
+appledoc --project-name "LMMediaPlayer" -c "Akira Matsuda" --no-repeat-first-par --keep-undocumented-objects --keep-undocumented-members --create-html --no-create-docset -o * ./

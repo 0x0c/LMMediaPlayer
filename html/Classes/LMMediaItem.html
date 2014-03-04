@@ -1,0 +1,621 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>LMMediaItem Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.2 (build 963)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">LMMediaPlayer </a></h1>
+				<a id="developerHome" href="../index.html">Akira Matsuda</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">LMMediaItem Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	<option value="properties">Properties</option>
+	
+	<option value="//api/name/albumTitle">&nbsp;&nbsp;&nbsp;&nbsp;albumTitle</option>
+	
+	<option value="//api/name/artist">&nbsp;&nbsp;&nbsp;&nbsp;artist</option>
+	
+	<option value="//api/name/assetURL">&nbsp;&nbsp;&nbsp;&nbsp;assetURL</option>
+	
+	<option value="//api/name/metaMedia">&nbsp;&nbsp;&nbsp;&nbsp;metaMedia</option>
+	
+	<option value="//api/name/title">&nbsp;&nbsp;&nbsp;&nbsp;title</option>
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/copyWithZone:">&nbsp;&nbsp;&nbsp;&nbsp;- copyWithZone:</option>
+	
+	<option value="//api/name/encodeWithCoder:">&nbsp;&nbsp;&nbsp;&nbsp;- encodeWithCoder:</option>
+	
+	<option value="//api/name/getArtworkImageWithSize:">&nbsp;&nbsp;&nbsp;&nbsp;- getArtworkImageWithSize:</option>
+	
+	<option value="//api/name/getDescription">&nbsp;&nbsp;&nbsp;&nbsp;- getDescription</option>
+	
+	<option value="//api/name/getMetaMedia">&nbsp;&nbsp;&nbsp;&nbsp;- getMetaMedia</option>
+	
+	<option value="//api/name/getPropertyValue:cache:">&nbsp;&nbsp;&nbsp;&nbsp;- getPropertyValue:cache:</option>
+	
+	<option value="//api/name/initWithCoder:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithCoder:</option>
+	
+	<option value="//api/name/initWithInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithInfo:</option>
+	
+	<option value="//api/name/initWithMetaMedia:contentType:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithMetaMedia:contentType:</option>
+	
+	<option value="//api/name/isVideo">&nbsp;&nbsp;&nbsp;&nbsp;- isVideo</option>
+	
+	<option value="//api/name/setArtworkImage:">&nbsp;&nbsp;&nbsp;&nbsp;- setArtworkImage:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#properties">Properties</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/albumTitle">albumTitle</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/artist">artist</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/assetURL">assetURL</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/metaMedia">metaMedia</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/title">title</a></span></li>
+	
+</ul></li>
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/copyWithZone:">copyWithZone:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/encodeWithCoder:">encodeWithCoder:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getArtworkImageWithSize:">getArtworkImageWithSize:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getDescription">getDescription</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getMetaMedia">getMetaMedia</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getPropertyValue:cache:">getPropertyValue:cache:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithCoder:">initWithCoder:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithInfo:">initWithInfo:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithMetaMedia:contentType:">initWithMetaMedia:contentType:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/isVideo">isVideo</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setArtworkImage:">setArtworkImage:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="LMMediaItem Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">LMMediaItem Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">NSCoding<br />NSCopying</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">LMMediaItem.h<br />LMMediaItem.m</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithMetaMedia:contentType:">&ndash;&nbsp;initWithMetaMedia:contentType:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithInfo:">&ndash;&nbsp;initWithInfo:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getArtworkImageWithSize:">&ndash;&nbsp;getArtworkImageWithSize:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/setArtworkImage:">&ndash;&nbsp;setArtworkImage:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/isVideo">&ndash;&nbsp;isVideo</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getDescription">&ndash;&nbsp;getDescription</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/title">&nbsp;&nbsp;title</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/albumTitle">&nbsp;&nbsp;albumTitle</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/artist">&nbsp;&nbsp;artist</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/metaMedia">&nbsp;&nbsp;metaMedia</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/assetURL">&nbsp;&nbsp;assetURL</a></code>
+		
+	</span>
+	<span class="task-item-suffix">property</span>
+	
+</li>
+						</ul>
+						
+						
+						
+						<h3 class="subsubtitle task-title">Other Methods</h3>
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithCoder:">&ndash;&nbsp;initWithCoder:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/encodeWithCoder:">&ndash;&nbsp;encodeWithCoder:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/copyWithZone:">&ndash;&nbsp;copyWithZone:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getPropertyValue:cache:">&ndash;&nbsp;getPropertyValue:cache:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getMetaMedia">&ndash;&nbsp;getMetaMedia</a></code>
+		
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Properties" name="properties"></a>
+						<h2 class="subtitle subtitle-methods">Properties</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/albumTitle" title="albumTitle"></a>
+	<h3 class="subsubtitle method-title">albumTitle</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, getter=getAlbumTitle) NSString *albumTitle</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/artist" title="artist"></a>
+	<h3 class="subsubtitle method-title">artist</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, getter=getArtistString) NSString *artist</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/assetURL" title="assetURL"></a>
+	<h3 class="subsubtitle method-title">assetURL</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, getter=getAssetURL) NSURL *assetURL</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/metaMedia" title="metaMedia"></a>
+	<h3 class="subsubtitle method-title">metaMedia</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) id metaMedia</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/title" title="title"></a>
+	<h3 class="subsubtitle method-title">title</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, getter=getTitle) NSString *title</code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/copyWithZone:" title="copyWithZone:"></a>
+	<h3 class="subsubtitle method-title">copyWithZone:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)copyWithZone:(NSZone *)<em>zone</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/encodeWithCoder:" title="encodeWithCoder:"></a>
+	<h3 class="subsubtitle method-title">encodeWithCoder:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)encodeWithCoder:(NSCoder *)<em>coder</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getArtworkImageWithSize:" title="getArtworkImageWithSize:"></a>
+	<h3 class="subsubtitle method-title">getArtworkImageWithSize:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (UIImage *)getArtworkImageWithSize:(CGSize)<em>size</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getDescription" title="getDescription"></a>
+	<h3 class="subsubtitle method-title">getDescription</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (NSString *)getDescription</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getMetaMedia" title="getMetaMedia"></a>
+	<h3 class="subsubtitle method-title">getMetaMedia</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)getMetaMedia</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getPropertyValue:cache:" title="getPropertyValue:cache:"></a>
+	<h3 class="subsubtitle method-title">getPropertyValue:cache:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)getPropertyValue:(NSString *)<em>property</em> cache:(id)<em>cache</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithCoder:" title="initWithCoder:"></a>
+	<h3 class="subsubtitle method-title">initWithCoder:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithCoder:(NSCoder *)<em>coder</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithInfo:" title="initWithInfo:"></a>
+	<h3 class="subsubtitle method-title">initWithInfo:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithInfo:(NSDictionary *)<em>info</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithMetaMedia:contentType:" title="initWithMetaMedia:contentType:"></a>
+	<h3 class="subsubtitle method-title">initWithMetaMedia:contentType:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (id)initWithMetaMedia:(id)<em>media</em> contentType:(LMMediaItemContentType)<em>type</em></code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/isVideo" title="isVideo"></a>
+	<h3 class="subsubtitle method-title">isVideo</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (BOOL)isVideo</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setArtworkImage:" title="setArtworkImage:"></a>
+	<h3 class="subsubtitle method-title">setArtworkImage:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (void)setArtworkImage:(UIImage *)<em>image</em></code></div>
+
+    
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2014 Akira Matsuda. All rights reserved. (Last updated: 2014-03-05)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+			
+			// If showing in Xcode, hide the TOC and Header
+			if (navigator.userAgent.match(/xcode/i)) {
+				document.getElementById("contents").className = "hideInXcode"
+				document.getElementById("tocContainer").className = "hideInXcode"
+				document.getElementById("top_header").className = "hideInXcode"
+			}
+			
+		</script>
+	</body>
+</html>
