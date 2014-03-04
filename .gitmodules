@@ -1,0 +1,3 @@
+[submodule "Submodule/HCYoutubeParser"]
+	path = Submodule/HCYoutubeParser
+	url = git@github.com:0x0c/HCYoutubeParser.git

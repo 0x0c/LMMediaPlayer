@@ -1,12 +1,13 @@
 //
 //  AppDelegate.m
-//  LMMediaPlayerSample
+//  iPodMusicSample
 //
-//  Created by Akira Matsuda on 2014/03/05.
+//  Created by Akira Matsuda on 2014/01/07.
 //  Copyright (c) 2014年 Akira Matsuda. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "LMMediaPlayerView.h"
 
 @implementation AppDelegate
 

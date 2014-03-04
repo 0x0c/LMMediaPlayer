@@ -14,14 +14,22 @@
 		E9DAA45D18C6618E00245E57 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA45C18C6618E00245E57 /* main.m */; };
 		E9DAA46118C6618E00245E57 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA46018C6618E00245E57 /* AppDelegate.m */; };
 		E9DAA46418C6618E00245E57 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9DAA46218C6618E00245E57 /* Main.storyboard */; };
-		E9DAA46718C6618E00245E57 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA46618C6618E00245E57 /* MasterViewController.m */; };
-		E9DAA46A18C6618E00245E57 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA46918C6618E00245E57 /* DetailViewController.m */; };
 		E9DAA46C18C6618E00245E57 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9DAA46B18C6618E00245E57 /* Images.xcassets */; };
 		E9DAA47318C6618E00245E57 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DAA47218C6618E00245E57 /* XCTest.framework */; };
 		E9DAA47418C6618E00245E57 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DAA45018C6618E00245E57 /* Foundation.framework */; };
 		E9DAA47518C6618E00245E57 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9DAA45418C6618E00245E57 /* UIKit.framework */; };
 		E9DAA47D18C6618E00245E57 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9DAA47B18C6618E00245E57 /* InfoPlist.strings */; };
 		E9DAA47F18C6618E00245E57 /* LMMediaPlayerSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA47E18C6618E00245E57 /* LMMediaPlayerSampleTests.m */; };
+		E9DAA4A418C661B100245E57 /* LMMediaAssetLibaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA48B18C661B100245E57 /* LMMediaAssetLibaryViewController.m */; };
+		E9DAA4A518C661B100245E57 /* NSArray+LMMediaPlayerShuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA49118C661B100245E57 /* NSArray+LMMediaPlayerShuffle.m */; };
+		E9DAA4A618C661B100245E57 /* LMMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA49518C661B100245E57 /* LMMediaItem.m */; };
+		E9DAA4A718C661B100245E57 /* LMMediaItemQueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA49818C661B100245E57 /* LMMediaItemQueueManager.m */; };
+		E9DAA4A818C661B100245E57 /* LMMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA49B18C661B100245E57 /* LMMediaPlayer.m */; };
+		E9DAA4A918C661B100245E57 /* LMPlayerLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA49E18C661B100245E57 /* LMPlayerLayerView.m */; };
+		E9DAA4AA18C661B100245E57 /* LMMediaPlayerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9DAA4A018C661B100245E57 /* LMMediaPlayerView.bundle */; };
+		E9DAA4AB18C661B100245E57 /* LMMediaPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA4A218C661B100245E57 /* LMMediaPlayerView.m */; };
+		E9DAA4AC18C661B100245E57 /* LMMediaPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9DAA4A318C661B100245E57 /* LMMediaPlayerView.xib */; };
+		E9DAA4B018C6623B00245E57 /* HCYoutubeParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E9DAA4AF18C6623B00245E57 /* HCYoutubeParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,16 +54,30 @@
 		E9DAA45F18C6618E00245E57 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E9DAA46018C6618E00245E57 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E9DAA46318C6618E00245E57 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E9DAA46518C6618E00245E57 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		E9DAA46618C6618E00245E57 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		E9DAA46818C6618E00245E57 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		E9DAA46918C6618E00245E57 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E9DAA46B18C6618E00245E57 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E9DAA47118C6618E00245E57 /* LMMediaPlayerSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LMMediaPlayerSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9DAA47218C6618E00245E57 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E9DAA47A18C6618E00245E57 /* LMMediaPlayerSampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LMMediaPlayerSampleTests-Info.plist"; sourceTree = "<group>"; };
 		E9DAA47C18C6618E00245E57 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E9DAA47E18C6618E00245E57 /* LMMediaPlayerSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerSampleTests.m; sourceTree = "<group>"; };
+		E9DAA48A18C661B100245E57 /* LMMediaAssetLibaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaAssetLibaryViewController.h; sourceTree = "<group>"; };
+		E9DAA48B18C661B100245E57 /* LMMediaAssetLibaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaAssetLibaryViewController.m; sourceTree = "<group>"; };
+		E9DAA49018C661B100245E57 /* NSArray+LMMediaPlayerShuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+LMMediaPlayerShuffle.h"; sourceTree = "<group>"; };
+		E9DAA49118C661B100245E57 /* NSArray+LMMediaPlayerShuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+LMMediaPlayerShuffle.m"; sourceTree = "<group>"; };
+		E9DAA49418C661B100245E57 /* LMMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaItem.h; sourceTree = "<group>"; };
+		E9DAA49518C661B100245E57 /* LMMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaItem.m; sourceTree = "<group>"; };
+		E9DAA49718C661B100245E57 /* LMMediaItemQueueManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaItemQueueManager.h; sourceTree = "<group>"; };
+		E9DAA49818C661B100245E57 /* LMMediaItemQueueManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaItemQueueManager.m; sourceTree = "<group>"; };
+		E9DAA49A18C661B100245E57 /* LMMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayer.h; sourceTree = "<group>"; };
+		E9DAA49B18C661B100245E57 /* LMMediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayer.m; sourceTree = "<group>"; };
+		E9DAA49D18C661B100245E57 /* LMPlayerLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMPlayerLayerView.h; sourceTree = "<group>"; };
+		E9DAA49E18C661B100245E57 /* LMPlayerLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMPlayerLayerView.m; sourceTree = "<group>"; };
+		E9DAA4A018C661B100245E57 /* LMMediaPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LMMediaPlayerView.bundle; sourceTree = "<group>"; };
+		E9DAA4A118C661B100245E57 /* LMMediaPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerView.h; sourceTree = "<group>"; };
+		E9DAA4A218C661B100245E57 /* LMMediaPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerView.m; sourceTree = "<group>"; };
+		E9DAA4A318C661B100245E57 /* LMMediaPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LMMediaPlayerView.xib; sourceTree = "<group>"; };
+		E9DAA4AE18C6623B00245E57 /* HCYoutubeParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HCYoutubeParser.h; path = Submodule/HCYoutubeParser/YoutubeParser/Classes/HCYoutubeParser.h; sourceTree = SOURCE_ROOT; };
+		E9DAA4AF18C6623B00245E57 /* HCYoutubeParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HCYoutubeParser.m; path = Submodule/HCYoutubeParser/YoutubeParser/Classes/HCYoutubeParser.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,10 +140,8 @@
 				E9DAA45F18C6618E00245E57 /* AppDelegate.h */,
 				E9DAA46018C6618E00245E57 /* AppDelegate.m */,
 				E9DAA46218C6618E00245E57 /* Main.storyboard */,
-				E9DAA46518C6618E00245E57 /* MasterViewController.h */,
-				E9DAA46618C6618E00245E57 /* MasterViewController.m */,
-				E9DAA46818C6618E00245E57 /* DetailViewController.h */,
-				E9DAA46918C6618E00245E57 /* DetailViewController.m */,
+				E9DAA48818C661B100245E57 /* Class */,
+				E9DAA48C18C661B100245E57 /* Library */,
 				E9DAA46B18C6618E00245E57 /* Images.xcassets */,
 				E9DAA45718C6618E00245E57 /* Supporting Files */,
 			);
@@ -155,6 +175,126 @@
 				E9DAA47B18C6618E00245E57 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E9DAA48818C661B100245E57 /* Class */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA48918C661B100245E57 /* MediaAssetLibaryViewController */,
+			);
+			path = Class;
+			sourceTree = "<group>";
+		};
+		E9DAA48918C661B100245E57 /* MediaAssetLibaryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA48A18C661B100245E57 /* LMMediaAssetLibaryViewController.h */,
+				E9DAA48B18C661B100245E57 /* LMMediaAssetLibaryViewController.m */,
+			);
+			path = MediaAssetLibaryViewController;
+			sourceTree = "<group>";
+		};
+		E9DAA48C18C661B100245E57 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA4AD18C661BC00245E57 /* HCYoutubeParser */,
+				E9DAA48D18C661B100245E57 /* LMMediaPlayer */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		E9DAA48D18C661B100245E57 /* LMMediaPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA48E18C661B100245E57 /* Category */,
+				E9DAA49218C661B100245E57 /* MediaPlayer */,
+				E9DAA49F18C661B100245E57 /* MediaPlayerView */,
+			);
+			path = LMMediaPlayer;
+			sourceTree = "<group>";
+		};
+		E9DAA48E18C661B100245E57 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA48F18C661B100245E57 /* NSArray+LMMediaPlayerShuffle */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		E9DAA48F18C661B100245E57 /* NSArray+LMMediaPlayerShuffle */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA49018C661B100245E57 /* NSArray+LMMediaPlayerShuffle.h */,
+				E9DAA49118C661B100245E57 /* NSArray+LMMediaPlayerShuffle.m */,
+			);
+			path = "NSArray+LMMediaPlayerShuffle";
+			sourceTree = "<group>";
+		};
+		E9DAA49218C661B100245E57 /* MediaPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA49318C661B100245E57 /* LMMediaItem */,
+				E9DAA49618C661B100245E57 /* LMMediaItemQueueManager */,
+				E9DAA49918C661B100245E57 /* LMMediaPlayer */,
+				E9DAA49C18C661B100245E57 /* LMPlayerLayerView */,
+			);
+			path = MediaPlayer;
+			sourceTree = "<group>";
+		};
+		E9DAA49318C661B100245E57 /* LMMediaItem */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA49418C661B100245E57 /* LMMediaItem.h */,
+				E9DAA49518C661B100245E57 /* LMMediaItem.m */,
+			);
+			path = LMMediaItem;
+			sourceTree = "<group>";
+		};
+		E9DAA49618C661B100245E57 /* LMMediaItemQueueManager */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA49718C661B100245E57 /* LMMediaItemQueueManager.h */,
+				E9DAA49818C661B100245E57 /* LMMediaItemQueueManager.m */,
+			);
+			path = LMMediaItemQueueManager;
+			sourceTree = "<group>";
+		};
+		E9DAA49918C661B100245E57 /* LMMediaPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA49A18C661B100245E57 /* LMMediaPlayer.h */,
+				E9DAA49B18C661B100245E57 /* LMMediaPlayer.m */,
+			);
+			path = LMMediaPlayer;
+			sourceTree = "<group>";
+		};
+		E9DAA49C18C661B100245E57 /* LMPlayerLayerView */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA49D18C661B100245E57 /* LMPlayerLayerView.h */,
+				E9DAA49E18C661B100245E57 /* LMPlayerLayerView.m */,
+			);
+			path = LMPlayerLayerView;
+			sourceTree = "<group>";
+		};
+		E9DAA49F18C661B100245E57 /* MediaPlayerView */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA4A018C661B100245E57 /* LMMediaPlayerView.bundle */,
+				E9DAA4A118C661B100245E57 /* LMMediaPlayerView.h */,
+				E9DAA4A218C661B100245E57 /* LMMediaPlayerView.m */,
+				E9DAA4A318C661B100245E57 /* LMMediaPlayerView.xib */,
+			);
+			path = MediaPlayerView;
+			sourceTree = "<group>";
+		};
+		E9DAA4AD18C661BC00245E57 /* HCYoutubeParser */ = {
+			isa = PBXGroup;
+			children = (
+				E9DAA4AE18C6623B00245E57 /* HCYoutubeParser.h */,
+				E9DAA4AF18C6623B00245E57 /* HCYoutubeParser.m */,
+			);
+			name = HCYoutubeParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -234,6 +374,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9DAA46C18C6618E00245E57 /* Images.xcassets in Resources */,
+				E9DAA4AA18C661B100245E57 /* LMMediaPlayerView.bundle in Resources */,
+				E9DAA4AC18C661B100245E57 /* LMMediaPlayerView.xib in Resources */,
 				E9DAA45B18C6618E00245E57 /* InfoPlist.strings in Resources */,
 				E9DAA46418C6618E00245E57 /* Main.storyboard in Resources */,
 			);
@@ -254,10 +396,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9DAA4A618C661B100245E57 /* LMMediaItem.m in Sources */,
+				E9DAA4A818C661B100245E57 /* LMMediaPlayer.m in Sources */,
+				E9DAA4A418C661B100245E57 /* LMMediaAssetLibaryViewController.m in Sources */,
+				E9DAA4B018C6623B00245E57 /* HCYoutubeParser.m in Sources */,
 				E9DAA46118C6618E00245E57 /* AppDelegate.m in Sources */,
-				E9DAA46718C6618E00245E57 /* MasterViewController.m in Sources */,
+				E9DAA4A918C661B100245E57 /* LMPlayerLayerView.m in Sources */,
 				E9DAA45D18C6618E00245E57 /* main.m in Sources */,
-				E9DAA46A18C6618E00245E57 /* DetailViewController.m in Sources */,
+				E9DAA4A718C661B100245E57 /* LMMediaItemQueueManager.m in Sources */,
+				E9DAA4AB18C661B100245E57 /* LMMediaPlayerView.m in Sources */,
+				E9DAA4A518C661B100245E57 /* NSArray+LMMediaPlayerShuffle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
