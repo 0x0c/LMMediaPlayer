@@ -134,6 +134,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	[previousButton_ addTarget:self	action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
 	
 	UIView *gestureView = [[UIView alloc] initWithFrame:self.frame];
+	gestureView.backgroundColor = [UIColor clearColor];
 	gestureView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	[self addSubview:gestureView];
 	[self sendSubviewToBack:gestureView];

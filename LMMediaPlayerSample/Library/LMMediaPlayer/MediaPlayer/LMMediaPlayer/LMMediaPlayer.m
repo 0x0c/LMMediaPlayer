@@ -59,7 +59,6 @@ static LMMediaPlayer *sharedPlayer;
 			NSError *e = nil;
 			AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 			[audioSession setCategory:AVAudioSessionCategoryPlayback error:&e];
-			NSLog(@"%@", [e description]);
 			[audioSession setActive:YES error: NULL];
 		});
 		
