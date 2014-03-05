@@ -320,8 +320,8 @@ static LMMediaPlayer *sharedPlayer;
 		currentQueue_ = queue_;
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleEnabled:player:)]) {
-		[self.delegate mediaPlayerDidChangeShuffleEnabled:enabled player:self];
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
+		[self.delegate mediaPlayerDidChangeShuffleMode:enabled player:self];
 	}
 }
 

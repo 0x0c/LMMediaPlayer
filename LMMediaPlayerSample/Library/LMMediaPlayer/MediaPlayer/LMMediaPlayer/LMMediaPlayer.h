@@ -43,7 +43,7 @@ extern NSString *const LMMediaPlayerStopNotification;
 - (void)mediaPlayerDidStop:(LMMediaPlayer *)player media:(LMMediaItem *)media;
 - (void)mediaPlayerDidChangeCurrentTime:(LMMediaPlayer *)player;
 - (void)mediaPlayerDidChangeRepeatMode:(LMMediaRepeatMode)mode player:(LMMediaPlayer *)player;
-- (void)mediaPlayerDidChangeShuffleEnabled:(BOOL)enabled player:(LMMediaPlayer *)player;
+- (void)mediaPlayerDidChangeShuffleMode:(BOOL)enabled player:(LMMediaPlayer *)player;
 
 @end
 

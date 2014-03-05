@@ -270,25 +270,25 @@ static LMMediaPlayerView *sharedPlayerView;
 		NSMutableString *durationString = [NSMutableString new];
 		NSInteger duration = (NSInteger)player.currentPlaybackTime;
 		if (duration / (60 * 60) > 0) {
-			[durationString appendFormat:@"%02d:",
-			 duration / (60 * 60)];
+			[durationString appendFormat:@"%02ld:",
+			 (long int)duration / (60 * 60)];
 			duration /= 60 * 60;
 		}
-		[durationString appendFormat:@"%02d:", duration / 60];
+		[durationString appendFormat:@"%02ld:", (long int)duration / 60];
 		duration %= 60;
-		[durationString appendFormat:@"%02ld", (long)duration];
+		[durationString appendFormat:@"%02ld", (long int)duration];
 		playbackTimeLabel_.text = durationString;
 		
 		durationString = [NSMutableString stringWithString:@"-"];
 		duration = (NSInteger)fabs(player.currentPlaybackTime - player.currentPlaybackDuration);
 		if (duration / (60 * 60) > 0) {
-			[durationString appendFormat:@"%02d:",
-			 duration / (60 * 60)];
+			[durationString appendFormat:@"%02ld:",
+			 (long int)duration / (60 * 60)];
 			duration /= 60 * 60;
 		}
-		[durationString appendFormat:@"%02d:", duration / 60];
+		[durationString appendFormat:@"%02ld:", (long int)duration / 60];
 		duration %= 60;
-		[durationString appendFormat:@"%02ld", (long)duration];
+		[durationString appendFormat:@"%02ld", (long int)duration];
 		remainingTimeLabel_.text = durationString;
 	}
 }
@@ -296,6 +296,16 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)mediaPlayerDidChangeRepeatMode:(LMMediaRepeatMode)mode player:(LMMediaPlayer *)player
 {
 	[self setRepeatButtonImageWithRepeatMode:mode];
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeRepeatMode:playerView:)]) {
+		[self.delegate mediaPlayerViewDidChangeRepeatMode:mode playerView:self];
+	}
+}
+
+- (void)mediaPlayerDidChangeShuffleMode:(BOOL)enabled player:(LMMediaPlayer *)player
+{
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeShuffleMode:playerView:)]) {
+		[self.delegate mediaPlayerViewDidChangeShuffleMode:enabled playerView:self];
+	}
 }
 
 #pragma mark -
