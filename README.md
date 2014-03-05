@@ -33,7 +33,7 @@ If you want to play with fullscreen mode, please add "View controller-based stat
 Usage
 ====
 
-You can play **MPMediaItem** and **http streaming contents** not only with fullscreen mode.
+You can play **MPMediaItem** and **http streaming contents** with fullscreen or non-fullscreen mode.
 
 ===
 	//Get shared player
