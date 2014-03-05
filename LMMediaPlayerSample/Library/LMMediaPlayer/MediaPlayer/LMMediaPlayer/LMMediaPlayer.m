@@ -301,7 +301,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (NSTimeInterval)currentPlaybackDuration
 {
-	return CMTimeGetSeconds(player_.currentItem.duration);
+	return CMTimeGetSeconds([[player_.currentItem asset] duration]);
 }
 
 - (void)seekTo:(NSTimeInterval)time
@@ -351,6 +351,22 @@ static LMMediaPlayer *sharedPlayer;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
+}
+
+- (UIImage *)getThumbnailAtTime:(CGFloat)time
+{
+	AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:[[self.player currentItem] asset]];
+	imageGenerator.appliesPreferredTrackTransform = YES;
+	NSError *error = NULL;
+	CMTime ctime = CMTimeMake(time, 1);
+	CGImageRef imageRef = [imageGenerator copyCGImageAtTime:ctime actualTime:NULL error:&error];
+	
+	return [[UIImage alloc] initWithCGImage:imageRef];
+}
+
+- (UIImage *)getRepresentativeThumbnail
+{
+	return [self getThumbnailAtTime:self.currentPlaybackDuration / 2];
 }
 
 @end

@@ -80,5 +80,7 @@ extern NSString *const LMMediaPlayerStopNotification;
 - (NSTimeInterval)currentPlaybackDuration;
 - (void)seekTo:(NSTimeInterval)time;
 - (void)setShuffleEnabled:(BOOL)enabled;
+- (UIImage *)getThumbnailAtTime:(CGFloat)time;
+- (UIImage *)getRepresentativeThumbnail;
 
 @end
