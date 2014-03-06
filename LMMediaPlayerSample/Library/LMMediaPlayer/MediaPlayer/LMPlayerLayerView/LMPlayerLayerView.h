@@ -11,8 +11,9 @@
 
 @interface LMPlayerLayerView : UIView
 
+@property (nonatomic, readonly) AVPlayerLayer *playerLayer;
+@property (nonatomic, readonly) AVPlayer *player;
+
 - (id)initWithFrame:(CGRect)frame audioPlayer:(AVPlayer *)player;
-- (AVPlayerLayer *)getPlayerLayer;
-- (AVPlayer *)getPlayer;
 
 @end

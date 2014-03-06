@@ -8,14 +8,6 @@
 
 #import "LMPlayerLayerView.h"
 
-@interface LMPlayerLayerView ()
-{
-	AVPlayerLayer *playerLayer_;
-	AVPlayer *player_;
-}
-
-@end
-
 @implementation LMPlayerLayerView
 
 + (Class)layerClass
@@ -31,9 +23,9 @@
 		self.backgroundColor = [UIColor blackColor];
 		[self setTranslatesAutoresizingMaskIntoConstraints:YES];
 		self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-		player_ = player;
-		playerLayer_ = [AVPlayerLayer playerLayerWithPlayer:player];
-		[self.layer addSublayer:playerLayer_];
+		_player = player;
+		_playerLayer = [AVPlayerLayer playerLayerWithPlayer:player];
+		[self.layer addSublayer:_playerLayer];
     }
 	
     return self;
@@ -42,26 +34,7 @@
 - (void)layoutSubviews
 {
 	// resize your layers based on the view's new bounds
-	playerLayer_.frame = self.bounds;
+	_playerLayer.frame = self.bounds;
 }
-
-- (AVPlayerLayer *)getPlayerLayer
-{
-	return playerLayer_;
-}
-
-- (AVPlayer *)getPlayer
-{
-	return player_;
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end
