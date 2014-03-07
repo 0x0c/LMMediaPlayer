@@ -95,16 +95,6 @@ static LMMediaPlayer *sharedPlayer;
 	[notificationCenter addObserver:self selector:@selector(stop) name:LMMediaPlayerStopNotification object:nil];
 }
 
-- (void)awake
-{
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-}
-
-- (void)freeze
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-}
-
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
 	[self playNextMedia];
@@ -221,7 +211,7 @@ static LMMediaPlayer *sharedPlayer;
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
 	if (currentQueue_.count) {
-		if (_repeatMode == LMMediaRepeatModeNone) {
+		if (_repeatMode == LMMediaRepeatModeDefault) {
 			if (_index >= currentQueue_.count - 1) {
 				_index = 0;
 				[self stop];
@@ -240,6 +230,9 @@ static LMMediaPlayer *sharedPlayer;
 			}
 			[self playMedia:currentQueue_[_index]];
 		}
+		else if (_repeatMode == LMMediaRepeatModeNone) {
+			[self stop];
+		}
 		else {
 			[self playMedia:currentQueue_[_index]];
 		}
@@ -255,7 +248,7 @@ static LMMediaPlayer *sharedPlayer;
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
 	if (currentQueue_.count) {
-		if (_repeatMode == LMMediaRepeatModeNone) {
+		if (_repeatMode == LMMediaRepeatModeDefault) {
 			if (_index - 1 < 0) {
 				_index = 0;
 				[self stop];

@@ -60,8 +60,6 @@ extern NSString *const LMMediaPlayerStopNotification;
 + (instancetype)sharedPlayer;
 - (void)pauseOtherPlayer;
 - (void)stopOtherPlayer;
-- (void)awake;
-- (void)freeze;
 - (void)addMedia:(LMMediaItem *)media;
 - (void)removeMediaAtIndex:(NSUInteger)index;
 - (void)replaceMediaAtIndex:(LMMediaItem *)media index:(NSInteger)index;

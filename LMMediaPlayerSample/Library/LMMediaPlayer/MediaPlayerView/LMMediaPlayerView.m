@@ -189,7 +189,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerBecomeForgroundMode:(NSNotification *)notification
 {
-	[[videoLayer_ getPlayerLayer] setPlayer:[videoLayer_ getPlayer]];
+	[videoLayer_.playerLayer setPlayer:videoLayer_.player];
 }
 
 - (void)mediaPlayerBecomeBackgroundMode:(NSNotification *)notification
@@ -197,7 +197,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	double delayInSeconds = 0.01;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-		[[videoLayer_ getPlayerLayer] setPlayer:nil];
+		[videoLayer_.playerLayer setPlayer:nil];
 		if (self.mediaPlayer.playbackState == LMMediaPlaybackStatePlaying) {
 			[self.mediaPlayer play];
 		}
