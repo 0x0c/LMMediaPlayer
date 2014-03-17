@@ -77,6 +77,7 @@ NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButt
 	IBOutlet UIButton *fullscreenButton_;
 	BOOL fullscreen_;
 	BOOL seeking_;
+	BOOL needToSetPlayer_;
 	UIView *superView_;
 	AVPlayerLayer *currentPlayerLayer_;
 	NSMutableDictionary *buttonImages_;
@@ -102,6 +103,15 @@ static LMMediaPlayerView *sharedPlayerView;
 	return [[UINib nibWithNibName:@"LMMediaPlayerView" bundle:nil] instantiateWithOwner:nil options:nil][0];
 }
 
+- (void)drawRect:(CGRect)rect
+{
+	[super drawRect:rect];
+	
+	if (needToSetPlayer_) {
+		[videoLayer_.playerLayer setPlayer:videoLayer_.player];
+	}
+}
+
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -118,6 +128,8 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeForgroundMode:) name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+	
+	needToSetPlayer_ = NO;
 	
 	userInterfaceHidden_ = NO;
 	
@@ -189,7 +201,8 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerBecomeForgroundMode:(NSNotification *)notification
 {
-	[videoLayer_.playerLayer setPlayer:videoLayer_.player];
+	needToSetPlayer_ = YES;
+	[self setNeedsDisplay];
 }
 
 - (void)mediaPlayerBecomeBackgroundMode:(NSNotification *)notification
@@ -243,7 +256,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			[self addSubview:videoLayer_];
 			[self sendSubviewToBack:videoLayer_];
 		});
-
+		
 		videoLayer_.hidden = NO;
 	}
 	else {
