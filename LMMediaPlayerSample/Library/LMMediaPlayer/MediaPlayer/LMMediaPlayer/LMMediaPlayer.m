@@ -54,14 +54,6 @@ static LMMediaPlayer *sharedPlayer;
 		_repeatMode = LMMediaRepeatModeNone;
 		_shuffleMode = YES;
 		
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			NSError *e = nil;
-			AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-			[audioSession setCategory:AVAudioSessionCategoryPlayback error:&e];
-			[audioSession setActive:YES error: NULL];
-		});
-		
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		[notificationCenter addObserver:self selector:@selector(pause) name:LMMediaPlayerPauseNotification object:nil];
 		[notificationCenter addObserver:self selector:@selector(stop) name:LMMediaPlayerStopNotification object:nil];
@@ -333,16 +325,15 @@ static LMMediaPlayer *sharedPlayer;
 		[self.delegate mediaPlayerWillChangeState:state];
 	}
 	
-	[self updateLockScreenInfo];
+	if (state == LMMediaPlaybackStatePlaying) {
+		[self updateLockScreenInfo];
+		NSError *e = nil;
+		AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+		[audioSession setCategory:AVAudioSessionCategoryPlayback error:&e];
+		[audioSession setActive:YES error: NULL];
+	}
 	
 	playbackState_ = state;
-}
-
-- (void)updatePlayingMusicInfo:(NSNotification *)notification
-{
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
-		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
-	}
 }
 
 - (UIImage *)getThumbnailAtTime:(CGFloat)time

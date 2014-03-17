@@ -28,7 +28,6 @@ extern NSString *LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey;
 extern NSString *LMMediaPlayerViewRepeatButtonRepeatNoneImageKey;
 extern NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 
-@class LMPlayerLayerView;
 @class LMMediaPlayerView;
 
 @protocol LMMediaPlayerViewDelegate <NSObject>
