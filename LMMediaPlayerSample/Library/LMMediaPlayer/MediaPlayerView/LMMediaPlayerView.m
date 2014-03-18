@@ -317,6 +317,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerDidChangeShuffleMode:(BOOL)enabled player:(LMMediaPlayer *)player
 {
+	[self setShuggleButtonImageWithShuffleMode:enabled];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeShuffleMode:playerView:)]) {
 		[self.delegate mediaPlayerViewDidChangeShuffleMode:enabled playerView:self];
 	}
