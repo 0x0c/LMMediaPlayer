@@ -383,6 +383,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
 	}
+	[self setRepeatButtonImageWithRepeatMode:_mediaPlayer.repeatMode];
 }
 
 - (IBAction)repeatButtonPressed:(id)sender
@@ -404,6 +405,18 @@ static LMMediaPlayerView *sharedPlayerView;
 			break;
 	}
 	[self setRepeatButtonImageWithRepeatMode:_mediaPlayer.repeatMode];
+}
+
+- (void)setShuggleButtonImageWithShuffleMode:(BOOL)mode
+{
+	if (mode) {
+		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledImageKey] forState:UIControlStateNormal];
+		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey] forState:UIControlStateSelected];
+	}
+	else {
+		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
+		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
+	}
 }
 
 - (void)setRepeatButtonImageWithRepeatMode:(LMMediaRepeatMode)mode
