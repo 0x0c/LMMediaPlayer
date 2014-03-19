@@ -133,6 +133,9 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)setup
 {
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
+	if (mainWindow_) {
+		mainWindow_ = [[UIApplication sharedApplication] windows][0];
+	}
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeForgroundMode:) name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -450,6 +453,49 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (IBAction)fullscreenButtonPressed:(id)sender
 {
+	[self setFullscreen:!fullscreen_];
+	fullscreen_ = !fullscreen_;
+}
+
+#pragma mark -
+
+- (void)setHeaderViewHidden:(BOOL)hidden
+{
+	headerView_.hidden = hidden;
+}
+
+- (void)setFooterViewHidden:(BOOL)hidden
+{
+	footerView_.hidden = hidden;
+}
+
+- (void)setUserInterfaceHidden:(BOOL)hidden
+{
+	userInterfaceHidden_ = hidden;
+	if (hidden) {
+		[UIView animateWithDuration:0.3 animations:^{
+			headerView_.alpha = 0;
+			footerView_.alpha = 0;
+			_currentTimeSlider.alpha = 0;
+			previousButton_.alpha = 0;
+			nextButton_.alpha = 0;
+		} completion:^(BOOL finished) {
+		}];
+	}
+	else {
+		[UIView animateWithDuration:0.3 animations:^{
+			headerView_.alpha = 1;
+			footerView_.alpha = 1;
+			_currentTimeSlider.alpha = 1;
+			previousButton_.alpha = 1;
+			nextButton_.alpha = 1;
+		} completion:^(BOOL finished) {
+		}];
+	}
+}
+
+- (void)setFullscreen:(BOOL)fullscreen
+{
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewWillChangeFullscreenMode:!fullscreen_];
 	}
@@ -460,10 +506,10 @@ static LMMediaPlayerView *sharedPlayerView;
 		viewController.view.frame = [UIScreen mainScreen].bounds;
 	});
 	CGRect newRect;
-	if (fullscreen_) {
+	if (fullscreen == NO) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
-
+		
 		[self removeFromSuperview];
 		newRect = superView_.bounds;
 		self.frame = newRect;
@@ -502,47 +548,10 @@ static LMMediaPlayerView *sharedPlayerView;
 	[UIView animateWithDuration:kFullscreenTransitionDuration animations:^{
 		self.alpha = 1;
 	}];
-	fullscreen_ = !fullscreen_;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen_];
 	}
-}
-
-#pragma mark -
-
-- (void)setHeaderViewHidden:(BOOL)hidden
-{
-	headerView_.hidden = hidden;
-}
-
-- (void)setFooterViewHidden:(BOOL)hidden
-{
-	footerView_.hidden = hidden;
-}
-
-- (void)setUserInterfaceHidden:(BOOL)hidden
-{
-	userInterfaceHidden_ = hidden;
-	if (hidden) {
-		[UIView animateWithDuration:0.3 animations:^{
-			headerView_.alpha = 0;
-			footerView_.alpha = 0;
-			_currentTimeSlider.alpha = 0;
-			previousButton_.alpha = 0;
-			nextButton_.alpha = 0;
-		} completion:^(BOOL finished) {
-		}];
-	}
-	else {
-		[UIView animateWithDuration:0.3 animations:^{
-			headerView_.alpha = 1;
-			footerView_.alpha = 1;
-			_currentTimeSlider.alpha = 1;
-			previousButton_.alpha = 1;
-			nextButton_.alpha = 1;
-		} completion:^(BOOL finished) {
-		}];
-	}
+	[[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
 }
 
 - (void)setButtonImages:(NSDictionary *)info

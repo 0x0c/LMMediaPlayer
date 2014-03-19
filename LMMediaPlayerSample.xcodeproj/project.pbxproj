@@ -535,6 +535,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LMMediaPlayerSample/LMMediaPlayerSample-Prefix.pch";
 				INFOPLIST_FILE = "LMMediaPlayerSample/LMMediaPlayerSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -548,6 +549,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LMMediaPlayerSample/LMMediaPlayerSample-Prefix.pch";
 				INFOPLIST_FILE = "LMMediaPlayerSample/LMMediaPlayerSample-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -614,6 +616,7 @@
 				E9DAA48418C6618E00245E57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9DAA48518C6618E00245E57 /* Build configuration list for PBXNativeTarget "LMMediaPlayerSampleTests" */ = {
 			isa = XCConfigurationList;
@@ -622,6 +625,7 @@
 				E9DAA48718C6618E00245E57 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
