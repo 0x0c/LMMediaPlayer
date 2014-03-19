@@ -80,12 +80,14 @@ NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButt
 	BOOL needToSetPlayer_;
 	UIView *superView_;
 	AVPlayerLayer *currentPlayerLayer_;
-	NSMutableDictionary *buttonImages_;
+	NSMutableDictionary *buttonImages_;	
 }
 
 @end
 
 @implementation LMMediaPlayerView
+
+@synthesize isFullscreen = fullscreen_;
 
 static LMMediaPlayerView *sharedPlayerView;
 
