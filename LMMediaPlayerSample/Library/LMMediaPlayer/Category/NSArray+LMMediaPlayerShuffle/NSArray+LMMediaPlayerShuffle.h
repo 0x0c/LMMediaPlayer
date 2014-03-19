@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSArray (Shuffle)
+@interface NSArray (LMMediaPlayerShuffle)
 
 - (NSArray *)shuffledArray;
 
 @end
 
-@interface NSMutableArray (Shuffle)
+@interface NSMutableArray (LMMediaPlayerShuffle)
 
 - (void)shuffle;
 

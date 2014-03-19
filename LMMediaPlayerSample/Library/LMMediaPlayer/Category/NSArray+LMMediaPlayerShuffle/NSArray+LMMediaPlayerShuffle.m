@@ -8,7 +8,7 @@
 
 #import "NSArray+LMMediaPlayerShuffle.h"
 
-@implementation NSArray (Shuffle)
+@implementation NSArray (LMMediaPlayerShuffle)
 
 - (NSArray *)shuffledArray
 {
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation NSMutableArray (Shuffle)
+@implementation NSMutableArray (LMMediaPlayerShuffle)
 
 - (void)shuffle
 {
