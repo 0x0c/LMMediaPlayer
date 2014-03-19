@@ -497,13 +497,16 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)setFullscreen:(BOOL)fullscreen
 {
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
-		[self.delegate mediaPlayerViewWillChangeFullscreenMode:!fullscreen_];
+		[self.delegate mediaPlayerViewWillChangeFullscreenMode:!fullscreen];
 	}
 	static LMMediaPlayerFullscreenViewController *viewController;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
 		viewController.view.frame = [UIScreen mainScreen].bounds;
+		if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
+			viewController.wantsFullScreenLayout = YES;
+		}
 	});
 	CGRect newRect;
 	if (fullscreen == NO) {
@@ -526,12 +529,12 @@ static LMMediaPlayerView *sharedPlayerView;
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 		superView_ = self.superview;
-		newRect = [[UIScreen mainScreen] bounds];
+		newRect = mainWindow_.frame;
 		
 		UIViewController *rootViewController = [mainWindow_ rootViewController];
 		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
-			newRect = CGRectMake(0, 0, CGRectGetHeight(newRect), CGRectGetWidth(newRect));
+			newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
 		}
 		
 		[self removeFromSuperview];
@@ -549,8 +552,9 @@ static LMMediaPlayerView *sharedPlayerView;
 		self.alpha = 1;
 	}];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
-		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen_];
+		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen];
 	}
+	[[UIApplication sharedApplication] setStatusBarHidden:fullscreen];
 	[[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
 }
 
