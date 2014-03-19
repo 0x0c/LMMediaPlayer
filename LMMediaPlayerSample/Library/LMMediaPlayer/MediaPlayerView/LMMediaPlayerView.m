@@ -62,27 +62,6 @@ NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButt
 
 @end
 
-@implementation UIViewController (LMMediaPlayerPrefersStatusBarHidden)
-
-- (void)mediaPlayerPrefersStatusBarHidden:(BOOL)hidden
-{
-	Method fromMethod = class_getInstanceMethod([self class], @selector(prefersStatusBarHidden));
-	Method toMethod = class_getInstanceMethod([self class], @selector(lm_media_player_prefersStatusBarHidden));
-	method_exchangeImplementations(fromMethod, toMethod);
-	objc_setAssociatedObject(self, (__bridge const void *)(kLMMediaPlayerPrefersStatusBarHidden), [NSNumber numberWithBool:hidden], OBJC_ASSOCIATION_COPY);
-	[self setNeedsStatusBarAppearanceUpdate];
-	objc_setAssociatedObject(self, (__bridge const void *)(kLMMediaPlayerPrefersStatusBarHidden), nil, OBJC_ASSOCIATION_COPY);
-	method_exchangeImplementations(toMethod, fromMethod);
-}
-
-- (BOOL)lm_media_player_prefersStatusBarHidden
-{
-	NSNumber *hidden = (id)objc_getAssociatedObject(self, (__bridge const void *)(kLMMediaPlayerPrefersStatusBarHidden));
-	return [hidden boolValue];
-}
-
-@end
-
 @interface LMMediaPlayerView ()
 {
 	LMPlayerLayerView *videoLayer_;
@@ -203,7 +182,7 @@ static LMMediaPlayerView *sharedPlayerView;
 					   LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey	:	[[self class] getImageForFilename:@"repeat_one"],
 					   LMMediaPlayerViewRepeatButtonRepeatAllImageKey			:	[[self class] getImageForFilename:@"repeat_all"],
 					   LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey	:	[[self class] getImageForFilename:@"repeat_all"],
-					   LMMediaPlayerViewFullscreenButtonImageKey				:	[[self class] getImageForFilename:@"fullscreen"],
+					   LMMediaPlayerViewFullscreenButtonImageKey					:	[[self class] getImageForFilename:@"fullscreen"],
 					   LMMediaPlayerViewFullscreenButtonSelectedImageKey		:	[[self class] getImageForFilename:@"fullscreen"],
 					   LMMediaPlayerViewUnfullscreenButtonImageKey				:	[[self class] getImageForFilename:@"unfullscreen"],
 					   LMMediaPlayerViewUnfullscreenButtonSelectedImageKey		:	[[self class] getImageForFilename:@"unfullscreen"]
@@ -484,48 +463,39 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (fullscreen_) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
-		UIViewController *rootViewController = [[[UIApplication sharedApplication] windows][0] rootViewController];
-		if ([rootViewController respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-			[rootViewController mediaPlayerPrefersStatusBarHidden:NO];
-		}
-		else {
-			[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-		}
-		
+
 		[self removeFromSuperview];
 		newRect = superView_.bounds;
 		self.frame = newRect;
 		[superView_ addSubview:self];
-		[viewController dismissViewControllerAnimated:NO completion:^{
-		}];
+		[mainWindow_ makeKeyAndVisible];
+		[[[UIApplication sharedApplication] delegate] setWindow:mainWindow_];
+		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+		dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kFullscreenTransitionDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+			[[UIApplication sharedApplication] setStatusBarOrientation:[mainWindow_ rootViewController].interfaceOrientation];
+			[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+		});
 	}
 	else {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 		superView_ = self.superview;
-		UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-		if (window == nil) {
-			window = [[UIApplication sharedApplication] windows][0];
-		}
-		newRect = window.frame;
+		newRect = mainWindow_.frame;
 		
-		UIViewController *rootViewController = [[[UIApplication sharedApplication] windows][0] rootViewController];
-		if ([rootViewController respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-			[rootViewController mediaPlayerPrefersStatusBarHidden:YES];
-		} else {
-			[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-		}
-		
+		UIViewController *rootViewController = [mainWindow_ rootViewController];
 		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
-			newRect = CGRectMake(0, 0, CGRectGetHeight(window.frame), CGRectGetWidth(window.frame));
+			newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
 		}
 		
 		[self removeFromSuperview];
-//		[[window subviews][0] addSubview:self];
 		[viewController.view addSubview:self];
-		[rootViewController presentViewController:viewController animated:NO completion:^{
-		}];
+		UIWindow *newWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+		newWindow.windowLevel = UIWindowLevelAlert;
+		newWindow.rootViewController = viewController;
+		[newWindow addSubview:viewController.view];
+		[newWindow makeKeyAndVisible];
+		[[[UIApplication sharedApplication] delegate] setWindow:newWindow];
 	}
 	self.frame = newRect;
 	self.alpha = 0;
@@ -536,7 +506,6 @@ static LMMediaPlayerView *sharedPlayerView;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen_];
 	}
-	[[UIApplication sharedApplication] setStatusBarHidden:fullscreen_ withAnimation:UIStatusBarAnimationFade];
 }
 
 #pragma mark -
