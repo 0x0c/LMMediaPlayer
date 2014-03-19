@@ -1,7 +1,7 @@
 LMMediaPlayer
 ====
 
-LMMediaPlayer is a video and audio player for iPhone.
+LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
 
 ![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/2.png)
 
