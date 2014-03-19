@@ -133,7 +133,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)setup
 {
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
-	if (mainWindow_) {
+	if (mainWindow_ == nil) {
 		mainWindow_ = [[UIApplication sharedApplication] windows][0];
 	}
 	
@@ -526,12 +526,12 @@ static LMMediaPlayerView *sharedPlayerView;
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 		superView_ = self.superview;
-		newRect = mainWindow_.frame;
+		newRect = [[UIScreen mainScreen] bounds];
 		
 		UIViewController *rootViewController = [mainWindow_ rootViewController];
 		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
-			newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
+			newRect = CGRectMake(0, 0, CGRectGetHeight(newRect), CGRectGetWidth(newRect));
 		}
 		
 		[self removeFromSuperview];
