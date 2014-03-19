@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="077-OQ-G8z">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="077-OQ-G8z">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
@@ -167,11 +167,15 @@
                 <constraint firstAttribute="trailing" secondItem="zy1-iS-KVp" secondAttribute="trailing" id="CEc-Vw-b2o"/>
                 <constraint firstItem="oc7-kf-peg" firstAttribute="leading" secondItem="1hC-He-NDs" secondAttribute="leading" id="K60-dr-lE8"/>
                 <constraint firstAttribute="centerY" secondItem="qWF-ZD-TKU" secondAttribute="centerY" id="MB5-ns-DpW"/>
+                <constraint firstItem="077-OQ-G8z" firstAttribute="top" secondItem="1hC-He-NDs" secondAttribute="top" id="XCj-SK-4jf"/>
+                <constraint firstAttribute="trailing" secondItem="077-OQ-G8z" secondAttribute="trailing" id="bbj-dd-33U"/>
                 <constraint firstAttribute="bottom" secondItem="oc7-kf-peg" secondAttribute="bottom" id="bnm-vT-DBR"/>
                 <constraint firstItem="GIL-kJ-GRw" firstAttribute="leading" secondItem="1hC-He-NDs" secondAttribute="leading" id="c2k-xb-IVo"/>
+                <constraint firstAttribute="bottom" secondItem="077-OQ-G8z" secondAttribute="bottom" id="fax-Lc-GXv"/>
                 <constraint firstAttribute="trailing" secondItem="oc7-kf-peg" secondAttribute="trailing" id="hu9-a7-RCn"/>
                 <constraint firstItem="qWF-ZD-TKU" firstAttribute="leading" secondItem="1hC-He-NDs" secondAttribute="leading" id="iZo-5l-hgq"/>
                 <constraint firstAttribute="trailing" secondItem="GIL-kJ-GRw" secondAttribute="trailing" id="ig1-6P-Om6"/>
+                <constraint firstItem="077-OQ-G8z" firstAttribute="leading" secondItem="1hC-He-NDs" secondAttribute="leading" id="skA-WF-gbJ"/>
                 <constraint firstItem="GIL-kJ-GRw" firstAttribute="top" secondItem="1hC-He-NDs" secondAttribute="top" id="wGk-tl-b0S"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
