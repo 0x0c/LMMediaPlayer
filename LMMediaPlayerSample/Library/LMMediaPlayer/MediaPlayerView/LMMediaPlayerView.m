@@ -454,7 +454,6 @@ static LMMediaPlayerView *sharedPlayerView;
 - (IBAction)fullscreenButtonPressed:(id)sender
 {
 	[self setFullscreen:!fullscreen_];
-	fullscreen_ = !fullscreen_;
 }
 
 #pragma mark -
@@ -551,6 +550,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	[UIView animateWithDuration:kFullscreenTransitionDuration animations:^{
 		self.alpha = 1;
 	}];
+	fullscreen_ = fullscreen;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen];
 	}
