@@ -65,17 +65,17 @@
 	
 	<option value="//api/name/addMedia:">&nbsp;&nbsp;&nbsp;&nbsp;- addMedia:</option>
 	
-	<option value="//api/name/awake">&nbsp;&nbsp;&nbsp;&nbsp;- awake</option>
-	
 	<option value="//api/name/currentPlaybackDuration">&nbsp;&nbsp;&nbsp;&nbsp;- currentPlaybackDuration</option>
 	
 	<option value="//api/name/currentPlaybackTime">&nbsp;&nbsp;&nbsp;&nbsp;- currentPlaybackTime</option>
 	
 	<option value="//api/name/dealloc">&nbsp;&nbsp;&nbsp;&nbsp;- dealloc</option>
 	
-	<option value="//api/name/freeze">&nbsp;&nbsp;&nbsp;&nbsp;- freeze</option>
-	
 	<option value="//api/name/getQueue">&nbsp;&nbsp;&nbsp;&nbsp;- getQueue</option>
+	
+	<option value="//api/name/getRepresentativeThumbnail">&nbsp;&nbsp;&nbsp;&nbsp;- getRepresentativeThumbnail</option>
+	
+	<option value="//api/name/getThumbnailAtTime:">&nbsp;&nbsp;&nbsp;&nbsp;- getThumbnailAtTime:</option>
 	
 	<option value="//api/name/init">&nbsp;&nbsp;&nbsp;&nbsp;- init</option>
 	
@@ -116,8 +116,6 @@
 	<option value="//api/name/stopOtherPlayer">&nbsp;&nbsp;&nbsp;&nbsp;- stopOtherPlayer</option>
 	
 	<option value="//api/name/updateLockScreenInfo">&nbsp;&nbsp;&nbsp;&nbsp;- updateLockScreenInfo</option>
-	
-	<option value="//api/name/updatePlayingMusicInfo:">&nbsp;&nbsp;&nbsp;&nbsp;- updatePlayingMusicInfo:</option>
 	
 	
 	
@@ -171,17 +169,17 @@
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addMedia:">addMedia:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/awake">awake</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/currentPlaybackDuration">currentPlaybackDuration</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/currentPlaybackTime">currentPlaybackTime</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/dealloc">dealloc</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/freeze">freeze</a></span></li>
-	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getQueue">getQueue</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getRepresentativeThumbnail">getRepresentativeThumbnail</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/getThumbnailAtTime:">getThumbnailAtTime:</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/init">init</a></span></li>
 	
@@ -222,8 +220,6 @@
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/stopOtherPlayer">stopOtherPlayer</a></span></li>
 	
 	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/updateLockScreenInfo">updateLockScreenInfo</a></span></li>
-	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/updatePlayingMusicInfo:">updatePlayingMusicInfo:</a></span></li>
 	
 </ul></li>
 
@@ -336,20 +332,6 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/stopOtherPlayer">&ndash;&nbsp;stopOtherPlayer</a></code>
-		
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/awake">&ndash;&nbsp;awake</a></code>
-		
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/freeze">&ndash;&nbsp;freeze</a></code>
 		
 	</span>
 	
@@ -480,6 +462,20 @@
 	</span>
 	
 	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getThumbnailAtTime:">&ndash;&nbsp;getThumbnailAtTime:</a></code>
+		
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/getRepresentativeThumbnail">&ndash;&nbsp;getRepresentativeThumbnail</a></code>
+		
+	</span>
+	
+	
 </li>
 						</ul>
 						
@@ -519,13 +515,6 @@
 </li><li>
 	<span class="tooltip">
 		<code><a href="#//api/name/setCurrentState:">&ndash;&nbsp;setCurrentState:</a></code>
-		
-	</span>
-	
-	
-</li><li>
-	<span class="tooltip">
-		<code><a href="#//api/name/updatePlayingMusicInfo:">&ndash;&nbsp;updatePlayingMusicInfo:</a></code>
 		
 	</span>
 	
@@ -659,17 +648,6 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/awake" title="awake"></a>
-	<h3 class="subsubtitle method-title">awake</h3>
-	
-	
-
-	<div class="method-subsection method-declaration"><code>- (void)awake</code></div>
-
-    
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/currentPlaybackDuration" title="currentPlaybackDuration"></a>
 	<h3 class="subsubtitle method-title">currentPlaybackDuration</h3>
 	
@@ -703,23 +681,34 @@
 </div>
 						
 						<div class="section-method">
-	<a name="//api/name/freeze" title="freeze"></a>
-	<h3 class="subsubtitle method-title">freeze</h3>
-	
-	
-
-	<div class="method-subsection method-declaration"><code>- (void)freeze</code></div>
-
-    
-</div>
-						
-						<div class="section-method">
 	<a name="//api/name/getQueue" title="getQueue"></a>
 	<h3 class="subsubtitle method-title">getQueue</h3>
 	
 	
 
 	<div class="method-subsection method-declaration"><code>- (NSArray *)getQueue</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getRepresentativeThumbnail" title="getRepresentativeThumbnail"></a>
+	<h3 class="subsubtitle method-title">getRepresentativeThumbnail</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (UIImage *)getRepresentativeThumbnail</code></div>
+
+    
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/getThumbnailAtTime:" title="getThumbnailAtTime:"></a>
+	<h3 class="subsubtitle method-title">getThumbnailAtTime:</h3>
+	
+	
+
+	<div class="method-subsection method-declaration"><code>- (UIImage *)getThumbnailAtTime:(CGFloat)<em>time</em></code></div>
 
     
 </div>
@@ -944,17 +933,6 @@
     
 </div>
 						
-						<div class="section-method">
-	<a name="//api/name/updatePlayingMusicInfo:" title="updatePlayingMusicInfo:"></a>
-	<h3 class="subsubtitle method-title">updatePlayingMusicInfo:</h3>
-	
-	
-
-	<div class="method-subsection method-declaration"><code>- (void)updatePlayingMusicInfo:(NSNotification *)<em>notification</em></code></div>
-
-    
-</div>
-						
 					</div>
 					
 					
@@ -968,7 +946,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2014 Akira Matsuda. All rights reserved. (Last updated: 2014-03-05)</span><br />
+						<p><span class="copyright">&copy; 2014 Akira Matsuda. All rights reserved. (Last updated: 2014-03-20)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2 (build 963)</a>.</span></p>
 						
