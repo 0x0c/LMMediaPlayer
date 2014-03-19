@@ -41,6 +41,8 @@ extern NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 - (void)mediaPlayerViewDidFinishPlaying:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
 - (void)mediaPlayerViewDidChangeRepeatMode:(LMMediaRepeatMode)mode playerView:(LMMediaPlayerView *)playerView;
 - (void)mediaPlayerViewDidChangeShuffleMode:(BOOL)enabled playerView:(LMMediaPlayerView *)playerView;
+- (void)mediaPlayerViewWillChangeFullscreenMode:(BOOL)fullscreen;
+- (void)mediaPlayerViewDidChangeFullscreenMode:(BOOL)fullscreen;
 
 @end
 
