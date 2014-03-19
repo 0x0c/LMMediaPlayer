@@ -37,7 +37,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
 	if (currentPlaylist_) {
 		musics_ = [currentPlaylist_ items];
 		self.title = [currentPlaylist_ valueForProperty:MPMediaPlaylistPropertyName];
@@ -82,7 +81,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
 	[super viewDidAppear:animated];
-	
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 	[self becomeFirstResponder];
 }
@@ -103,6 +101,11 @@
 
 	[[UIApplication sharedApplication] endReceivingRemoteControlEvents];
 	[self resignFirstResponder];
+}
+
+- (BOOL)shouldAutorotate
+{
+	return NO;
 }
 
 #pragma mark - LMMediaPlayerViewDelegate
