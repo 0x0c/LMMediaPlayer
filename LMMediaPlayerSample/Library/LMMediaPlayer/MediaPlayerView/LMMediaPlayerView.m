@@ -500,7 +500,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 	
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
-		[self.delegate mediaPlayerViewWillChangeFullscreenMode:!fullscreen];
+		[self.delegate mediaPlayerViewWillChangeFullscreenMode:fullscreen];
 	}
 	static LMMediaPlayerFullscreenViewController *viewController;
 	static dispatch_once_t onceToken;
