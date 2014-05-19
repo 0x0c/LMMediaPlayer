@@ -297,7 +297,7 @@ static LMMediaPlayer *sharedPlayer;
 {
 	_shuffleMode = enabled;
 	if ([self numberOfQueue] > 0 && _shuffleMode) {
-		shffledQueue_ = [[currentQueue_ shuffledArray] mutableCopy];
+		shffledQueue_ = [[currentQueue_ lm_shuffledArray] mutableCopy];
 		currentQueue_ = shffledQueue_;
 	}
 	else {

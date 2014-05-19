@@ -10,7 +10,7 @@
 
 @implementation NSArray (LMMediaPlayerShuffle)
 
-- (NSArray *)shuffledArray
+- (NSArray *)lm_shuffledArray
 {
 	NSMutableArray *results = [NSMutableArray arrayWithArray:self];
 	NSUInteger i = [results count];
@@ -26,7 +26,7 @@
 
 @implementation NSMutableArray (LMMediaPlayerShuffle)
 
-- (void)shuffle
+- (void)lm_shuffle
 {
 	NSUInteger i = [self count];
 	while(--i) {

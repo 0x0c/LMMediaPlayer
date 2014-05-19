@@ -10,12 +10,12 @@
 
 @interface NSArray (LMMediaPlayerShuffle)
 
-- (NSArray *)shuffledArray;
+- (NSArray *)lm_shuffledArray;
 
 @end
 
 @interface NSMutableArray (LMMediaPlayerShuffle)
 
-- (void)shuffle;
+- (void)lm_shuffle;
 
 @end
