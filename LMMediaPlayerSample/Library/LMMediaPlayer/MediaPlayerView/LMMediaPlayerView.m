@@ -495,6 +495,10 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setFullscreen:(BOOL)fullscreen
 {
+	if (fullscreen_ == fullscreen) {
+		return;
+	}
+	
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewWillChangeFullscreenMode:!fullscreen];
 	}
