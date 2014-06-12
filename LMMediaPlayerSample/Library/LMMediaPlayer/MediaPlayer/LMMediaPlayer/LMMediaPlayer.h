@@ -13,20 +13,18 @@
 
 @class LMMediaPlayer;
 
-enum {
+typedef NS_ENUM(NSUInteger, LMMediaPlaybackState) {
 	LMMediaPlaybackStateStopped,
 	LMMediaPlaybackStatePlaying,
 	LMMediaPlaybackStatePaused
 };
-typedef NSInteger LMMediaPlaybackState;
 
-enum {
+typedef NS_ENUM(NSUInteger, LMMediaRepeatMode) {
 	LMMediaRepeatModeDefault,
 	LMMediaRepeatModeNone,
 	LMMediaRepeatModeOne,
 	LMMediaRepeatModeAll
 };
-typedef NSInteger LMMediaRepeatMode;
 
 extern NSString *const LMMediaPlayerPauseNotification;
 extern NSString *const LMMediaPlayerStopNotification;
