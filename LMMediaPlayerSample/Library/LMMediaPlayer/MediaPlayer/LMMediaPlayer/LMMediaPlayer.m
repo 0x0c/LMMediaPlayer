@@ -138,7 +138,7 @@ static LMMediaPlayer *sharedPlayer;
 {
 	[self stop];
 	
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
 		NSURL *url = [media getAssetURL];
 		_nowPlayingItem = media;
 		if (player_) {
@@ -185,7 +185,7 @@ static LMMediaPlayer *sharedPlayer;
 	[player_ pause];
 	[player_ seekToTime:CMTimeMake(0, 1)];
 	[self setCurrentState:LMMediaPlaybackStateStopped];
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
 		[self.delegate mediaPlayerDidStop:self media:_nowPlayingItem];
 	}
 	_nowPlayingItem = nil;
@@ -199,7 +199,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playNextMedia
 {
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
 	if (currentQueue_.count) {
@@ -236,7 +236,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playPreviousMedia
 {
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
 	if (currentQueue_.count) {
@@ -304,7 +304,7 @@ static LMMediaPlayer *sharedPlayer;
 		currentQueue_ = queue_;
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
 		[self.delegate mediaPlayerDidChangeShuffleMode:enabled player:self];
 	}
 }
@@ -312,7 +312,7 @@ static LMMediaPlayer *sharedPlayer;
 - (void)setRepeatMode:(LMMediaRepeatMode)repeatMode
 {
 	_repeatMode = repeatMode;
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeRepeatMode:player:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidChangeRepeatMode:player:)]) {
 		[self.delegate mediaPlayerDidChangeRepeatMode:repeatMode player:self];
 	}
 }
@@ -321,7 +321,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)setCurrentState:(LMMediaPlaybackState)state
 {
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillChangeState:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillChangeState:)]) {
 		[self.delegate mediaPlayerWillChangeState:state];
 	}
 	

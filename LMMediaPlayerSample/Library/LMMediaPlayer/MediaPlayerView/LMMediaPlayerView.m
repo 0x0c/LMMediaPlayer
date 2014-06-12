@@ -232,7 +232,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerWillChangeState:(LMMediaPlaybackState)state
 {
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeState:state:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeState:state:)]) {
 		[self.delegate mediaPlayerViewWillChangeState:self state:state];
 	}
 	
@@ -251,7 +251,11 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (BOOL)mediaPlayerWillStartPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
-	return [self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartPlaying:media:)] && [self.delegate mediaPlayerViewWillStartPlaying:self media:media];
+	BOOL result = NO;
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartPlaying:media:)] && [self.delegate mediaPlayerViewWillStartPlaying:self media:media]) {
+		result = YES;
+	}
+	return result;
 }
 
 - (void)mediaPlayerDidStartPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
@@ -275,14 +279,14 @@ static LMMediaPlayerView *sharedPlayerView;
 		artworkImageView_.hidden = NO;
 		artworkImageView_.image = [media getArtworkImageWithSize:self.frame.size];
 	}
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidStartPlaying:media:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewDidStartPlaying:media:)]) {
 		[self.delegate mediaPlayerViewDidStartPlaying:self media:media];
 	}
 }
 
 - (void)mediaPlayerDidFinishPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFinishPlaying:media:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerViewDidFinishPlaying:self media:media];
 	}
 }
@@ -321,7 +325,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)mediaPlayerDidChangeRepeatMode:(LMMediaRepeatMode)mode player:(LMMediaPlayer *)player
 {
 	[self setRepeatButtonImageWithRepeatMode:mode];
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeRepeatMode:playerView:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeRepeatMode:playerView:)]) {
 		[self.delegate mediaPlayerViewDidChangeRepeatMode:mode playerView:self];
 	}
 }
@@ -329,7 +333,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)mediaPlayerDidChangeShuffleMode:(BOOL)enabled player:(LMMediaPlayer *)player
 {
 	[self setShuggleButtonImageWithShuffleMode:enabled];
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeShuffleMode:playerView:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeShuffleMode:playerView:)]) {
 		[self.delegate mediaPlayerViewDidChangeShuffleMode:enabled playerView:self];
 	}
 }
@@ -505,7 +509,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		return;
 	}
 	
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewWillChangeFullscreenMode:fullscreen];
 	}
 	static LMMediaPlayerFullscreenViewController *viewController;
@@ -561,7 +565,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		self.alpha = 1;
 	}];
 	fullscreen_ = fullscreen;
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
+	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen];
 	}
 	[[UIApplication sharedApplication] setStatusBarHidden:fullscreen];
