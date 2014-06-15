@@ -57,6 +57,30 @@ You can play **MPMediaItem** and **http streaming contents** with fullscreen or 
 	[player.mediaPlayer play];
 ===
 
+without player view.
+
+===
+	//Get shared player
+	LMMediaPlayer *player = [LMMediaPlayer sharedPlayer];
+	
+	//Create media item with URL.
+	LMMediaItem *item1 = [[LMMediaItem alloc] initWithInfo:@{
+		LMMediaItemInfoURLKey:[NSURL URLWithString:@"video or audio url"],
+		LMMediaItemInfoURLKey:[NSNumber numberWithInteger:LMMediaItemContentTypeVideo]
+	}];
+	
+	//Create media item with MPMediaItem.
+	MPMediaItem *mediaItem = 
+	LMMediaItem *item2 = [[LMMediaItem alloc] initWithMetaMedia:mediaItem contentType:LMMediaItemContentTypeVideo];
+	
+	//Add queue.
+	[player addMedia:item1];
+	[player addMedia:item2];
+	
+	//Play it!
+	[playermediaPlayer play];
+===
+
 Already implemented repeat mode and shuffle mode.
 
 ===
@@ -68,7 +92,8 @@ Already implemented repeat mode and shuffle mode.
 	[player.mediaPlayer setShuffleEnabled:YES];
 ===
 
-Of course, you can play video or audio in background mode and can control with control center.
+Of course, you can play video or audio in background mode and can control with control center.
+Please check document in the repository.
 
 Contacts
 ====
