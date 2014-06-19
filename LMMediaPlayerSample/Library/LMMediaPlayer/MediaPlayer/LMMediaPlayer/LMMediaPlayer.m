@@ -65,6 +65,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)dealloc
 {
+	self.delegate = nil;
 	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	[notificationCenter removeObserver:self name:LMMediaPlayerPauseNotification object:nil];
 	[notificationCenter removeObserver:self name:LMMediaPlayerStopNotification object:nil];
@@ -156,7 +157,7 @@ static LMMediaPlayer *sharedPlayer;
 		player_.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 		__weak LMMediaPlayer *bself = self;
 		playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-			if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
+			if (bself.delegate != nil && [bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
 				[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
 			}
 		}];

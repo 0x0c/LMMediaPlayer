@@ -120,6 +120,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)dealloc
 {
+	self.delegate = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
