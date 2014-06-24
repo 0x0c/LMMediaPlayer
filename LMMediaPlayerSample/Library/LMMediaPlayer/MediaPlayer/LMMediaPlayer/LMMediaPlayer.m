@@ -353,4 +353,13 @@ static LMMediaPlayer *sharedPlayer;
 	return [self getThumbnailAtTime:self.currentPlaybackDuration / 2];
 }
 
+- (NSError *)setAudioSessionCategory:(NSString *)category
+{
+	NSError *e = nil;
+	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+	[audioSession setCategory:category error:&e];
+	
+	return e;
+}
+
 @end

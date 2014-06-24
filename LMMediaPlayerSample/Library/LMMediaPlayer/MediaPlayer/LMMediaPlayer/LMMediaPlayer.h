@@ -78,5 +78,6 @@ extern NSString *const LMMediaPlayerStopNotification;
 - (void)setShuffleEnabled:(BOOL)enabled;
 - (UIImage *)getThumbnailAtTime:(CGFloat)time;
 - (UIImage *)getRepresentativeThumbnail;
+- (NSError *)setAudioSessionCategory:(NSString *)category;
 
 @end
