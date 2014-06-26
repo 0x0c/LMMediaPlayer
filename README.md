@@ -78,7 +78,7 @@ without player view.
 	[player addMedia:item2];
 	
 	//Play it!
-	[playermediaPlayer play];
+	[player play];
 ===
 
 Already implemented repeat mode and shuffle mode.
