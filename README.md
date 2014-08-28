@@ -5,8 +5,6 @@
 [![License](https://img.shields.io/cocoapods/l/LMMediaPlayer.svg?style=flat)](http://cocoadocs.org/docsets/LMMediaPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/LMMediaPlayer.svg?style=flat)](http://cocoadocs.org/docsets/LMMediaPlayer)
 
-## Usage
-
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
