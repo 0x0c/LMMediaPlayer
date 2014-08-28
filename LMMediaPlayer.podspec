@@ -12,8 +12,7 @@ Pod::Spec.new do |s|
   s.version          = "0.1.0"
   s.summary          = "Video and audio player with replaceable UI component."
   s.homepage         = "https://github.com/0x0c/LMMediaPlayer"
-
-  s.screenshots     = "raw.github.com/0x0c/LMMediaPlayer/master/images/2.png", "raw.github.com/0x0c/LMMediaPlayer/master/images/1.png", "raw.github.com/0x0c/LMMediaPlayer/master/images/3.png"
+  
   s.license          = 'MIT'
   s.author           = { "Akira Matsuda" => "akira.matsuda@me.com" }
   s.source           = { :git => "https://github.com/0x0c/LMMediaPlayer.git", :tag => s.version.to_s }
