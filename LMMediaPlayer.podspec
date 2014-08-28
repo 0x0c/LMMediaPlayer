@@ -10,29 +10,54 @@
 Pod::Spec.new do |s|
   s.name             = "LMMediaPlayer"
   s.version          = "0.1.0"
-  s.summary          = "A short description of LMMediaPlayer."
-  s.description      = <<-DESC
-                       An optional longer description of LMMediaPlayer
-
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
-                       DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/LMMediaPlayer"
+  s.summary          = "Video and audio player with replaceable UI component."
+  s.homepage         = "https://github.com/0x0c/LMMediaPlayer"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "Akira Matsuda" => "akira.m.itachi@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/LMMediaPlayer.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/0x0c/LMMediaPlayer.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '6.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes'
+  s.source_files = 'Pod/Classes/Category/NSArray+LMMediaPlayerShuffle/*.{h,m}', 'Pod/Classes/Category/MediaPlayerView/*.{h,m}', 'Pod/Classes/Category/MediaPlayer/LMMediaItem/*.{h,m}', 'Pod/Classes/Category/MediaPlayer/LMMediaItemQueueManager/*.{h,m}', 'Pod/Classes/Category/MediaPlayer/LMMediaPlayer/*.{h,m}'
   s.resource_bundles = {
-    'LMMediaPlayer' => ['Pod/Assets/*.png']
+    'LMMediaPlayer' => ['Pod/Assets/*']
   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
+  s.frameworks = 'UIKit', 'AVFoundation', 'MediaPlayer'
   # s.dependency 'AFNetworking', '~> 2.3'
+
+    s.description  = <<-DESC
+LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
+
+![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/2.png)
+
+![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/1.png)
+![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/3.png)
+
+Requirements
+====
+
+- Runs on iOS 6.0 or later.
+- Must be complied with ARC.
+
+Intstallation
+===
+
+First, please add these frameworks.
+
+===
+  #import <MediaPlayer/MediaPlayer.h>
+  #import <AVFoundation/AVFoundation.h>
+===
+
+Second, add files which is contained "LMMediaPlayer" folder.
+
+That's it.
+
+If you want to play with fullscreen mode, please add "View controller-based status bar appearance" key and set value with "NO" at your Info.plist
+                   DESC
 end
