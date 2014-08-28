@@ -34,7 +34,7 @@ You can play **MPMediaItem** and **http streaming contents** with fullscreen or 
 	//Create media item with URL.
 	LMMediaItem *item1 = [[LMMediaItem alloc] initWithInfo:@{
 		LMMediaItemInfoURLKey:[NSURL URLWithString:@"video or audio url"],
-		LMMediaItemInfoURLKey:[NSNumber numberWithInteger:LMMediaItemContentTypeVideo]
+		LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)
 	}];
 	
 	//Create media item with MPMediaItem.
@@ -56,7 +56,7 @@ without player view.
 	//Create media item with URL.
 	LMMediaItem *item1 = [[LMMediaItem alloc] initWithInfo:@{
 		LMMediaItemInfoURLKey:[NSURL URLWithString:@"video or audio url"],
-		LMMediaItemInfoURLKey:[NSNumber numberWithInteger:LMMediaItemContentTypeVideo]
+		LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)
 	}];
 	
 	//Create media item with MPMediaItem.
