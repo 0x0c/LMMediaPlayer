@@ -1,0 +1,10 @@
+target 'LMMediaPlayer', :exclusive => true do
+  pod "LMMediaPlayer", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "LMMediaPlayer", :path => "../"
+
+  pod 'Specta', '~> 0.2.1'
+  pod 'Expecta'
+end
