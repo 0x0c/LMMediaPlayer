@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/0x0c/LMMediaPlayer"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
-  s.author           = { "Akira Matsuda" => "akira.m.itachi@gmail.com" }
+  s.author           = { "Akira Matsuda" => "akira.matsuda@me.com" }
   s.source           = { :git => "https://github.com/0x0c/LMMediaPlayer.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
