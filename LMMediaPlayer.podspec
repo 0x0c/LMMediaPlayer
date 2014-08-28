@@ -9,14 +9,13 @@
 
 Pod::Spec.new do |s|
   s.name             = "LMMediaPlayer"
-  s.version          = "0.1.0"
+  s.version          = "0.1.1"
   s.summary          = "Video and audio player with replaceable UI component."
   s.homepage         = "https://github.com/0x0c/LMMediaPlayer"
   
   s.license          = 'MIT'
   s.author           = { "Akira Matsuda" => "akira.matsuda@me.com" }
   s.source           = { :git => "https://github.com/0x0c/LMMediaPlayer.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, '6.0'
   s.requires_arc = true
@@ -28,7 +27,6 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'AVFoundation', 'MediaPlayer'
-  # s.dependency 'AFNetworking', '~> 2.3'
 
     s.description  = <<-DESC
 LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
