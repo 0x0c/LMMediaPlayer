@@ -26,10 +26,7 @@ it, simply add the following line to your Podfile:
 
     pod "LMMediaPlayer"
 
-If you want to play with fullscreen mode, please add "View controller-based status bar appearance" key and set value with "NO" at your Info.plist
-
 ## Usage
-
 
 You can play **MPMediaItem** and **http streaming contents** with fullscreen or non-fullscreen mode.
 
@@ -91,11 +88,11 @@ Already implemented repeat mode and shuffle mode.
 ===
 
 Of course, you can play video or audio in background mode and can control with control center.
-Please check document in the repository.
+If you want to play with fullscreen mode, please add "View controller-based status bar appearance" key and set value with "NO" at your Info.plist
 
 ## Author
 
-Akira Matsuda, [akira.m.itachi@gmail.com](mailto:akira.m.itachi@gmail.com)
+Akira Matsuda, [akira.matsuda@me.com](mailto:akira.matsuda@me.com)
 
 ## License
 
