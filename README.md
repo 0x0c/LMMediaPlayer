@@ -5,8 +5,6 @@
 [![License](https://img.shields.io/cocoapods/l/LMMediaPlayer.svg?style=flat)](http://cocoadocs.org/docsets/LMMediaPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/LMMediaPlayer.svg?style=flat)](http://cocoadocs.org/docsets/LMMediaPlayer)
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
 
 ![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/2.png)
@@ -30,7 +28,6 @@ it, simply add the following line to your Podfile:
 
 You can play **MPMediaItem** and **http streaming contents** with fullscreen or non-fullscreen mode.
 
-===
 	//Get shared player
 	LMMediaPlayerView *player = [LMMediaPlayerView sharedPlayerView];
 	
@@ -50,11 +47,9 @@ You can play **MPMediaItem** and **http streaming contents** with fullscreen or 
 	
 	//Play it!
 	[player.mediaPlayer play];
-===
 
 without player view.
 
-===
 	//Get shared player
 	LMMediaPlayer *player = [LMMediaPlayer sharedPlayer];
 	
@@ -74,18 +69,15 @@ without player view.
 	
 	//Play it!
 	[player play];
-===
 
 Already implemented repeat mode and shuffle mode.
 
-===
 	LMMediaPlayerView *player = [LMMediaPlayerView sharedPlayerView];
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeNone;
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeAll;
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeOne;
 	
 	[player.mediaPlayer setShuffleEnabled:YES];
-===
 
 Of course, you can play video or audio in background mode and can control with control center.
 If you want to play with fullscreen mode, please add "View controller-based status bar appearance" key and set value with "NO" at your Info.plist
