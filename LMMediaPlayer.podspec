@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
     'LMMediaPlayer' => ['Pod/Assets/*']
   }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'AVFoundation', 'MediaPlayer'
   # s.dependency 'AFNetworking', '~> 2.3'
 
