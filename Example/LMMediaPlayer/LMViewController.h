@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LMMediaPlayerView.h"
 
-@interface LMViewController : UIViewController
+@interface LMViewController : UITableViewController<LMMediaPlayerViewDelegate>
 
 @end
