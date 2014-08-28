@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/Category/NSArray+LMMediaPlayerShuffle/*.{h,m}', 'Pod/Classes/Category/MediaPlayerView/*.{h,m}', 'Pod/Classes/Category/MediaPlayer/LMMediaItem/*.{h,m}', 'Pod/Classes/Category/MediaPlayer/LMMediaItemQueueManager/*.{h,m}', 'Pod/Classes/Category/MediaPlayer/LMMediaPlayer/*.{h,m}'
+  s.source_files = 'Pod/Classes/Category/NSArray+LMMediaPlayerShuffle/*.{h,m}', 'Pod/Classes/MediaPlayerView/*.{h,m}', 'Pod/Classes/MediaPlayer/LMMediaItem/*.{h,m}', 'Pod/Classes/MediaPlayer/LMMediaItemQueueManager/*.{h,m}', 'Pod/Classes/MediaPlayer/LMMediaPlayer/*.{h,m}'
   s.resource_bundles = {
     'LMMediaPlayer' => ['Pod/Assets/*']
   }
