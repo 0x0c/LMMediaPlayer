@@ -142,7 +142,9 @@ static LMMediaPlayer *sharedPlayer;
 	
 	if (media != nil && self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
 		NSURL *url = [media getAssetURL];
+		LM_RELEASE(_nowPlayingItem);
 		_nowPlayingItem = media;
+		LM_RETAIN(_nowPlayingItem);
 		[self removeTimeObserver:playerObserver_];
 		[self replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
 		[self play];
