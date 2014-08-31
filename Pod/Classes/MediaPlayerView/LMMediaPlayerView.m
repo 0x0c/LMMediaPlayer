@@ -13,24 +13,24 @@
 static CGFloat const kFullscreenTransitionDuration = 0.2;
 static NSString *const kLMMediaPlayerPrefersStatusBarHidden = @"com.akira.matsuda.LMMediaPlayerPrefersStatusBarHidden";
 
-NSString *LMMediaPlayerViewPlayButtonImageKey = @"playButtonImageKey";
-NSString *LMMediaPlayerViewPlayButtonSelectedImageKey = @"playButtonSelectedImageKey";
-NSString *LMMediaPlayerViewStopButtonImageKey = @"stopButtonImageKey";
-NSString *LMMediaPlayerViewStopButtonSelectedImageKey = @"stopButtonSelectedImageKey";
-NSString *LMMediaPlayerViewFullscreenButtonImageKey = @"fullscreenButtonImageKey";
-NSString *LMMediaPlayerViewFullscreenButtonSelectedImageKey = @"fullscreenButtonSelectedImageKey";
-NSString *LMMediaPlayerViewUnfullscreenButtonImageKey = @"unfullscreenButtonImageKey";
-NSString *LMMediaPlayerViewUnfullscreenButtonSelectedImageKey = @"unfullscreenButtonSelectedImageKey";
-NSString *LMMediaPlayerViewShuffleButtonShuffledImageKey = @"shuffleButtonShuffledImageKey";
-NSString *LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey = @"shuffleButtonShuffledSelectedImageKey";
-NSString *LMMediaPlayerViewShuffleButtonUnshuffledImageKey = @"shuffleButtonUnshuffledImageKey";
-NSString *LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey = @"shuffleButtonUnshuffledSelectedImageKey";
-NSString *LMMediaPlayerViewRepeatButtonRepeatOneImageKey = @"repeatButtonRepeatOneImageKey";
-NSString *LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey = @"repeatButtonRepeatOneSelectedImageKey";
-NSString *LMMediaPlayerViewRepeatButtonRepeatAllImageKey = @"repeatButtonRepeatAllImageKey";
-NSString *LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey = @"repeatButtonRepeatAllSelectedImageKey";
-NSString *LMMediaPlayerViewRepeatButtonRepeatNoneImageKey = @"repeatButtonRepeatNoneImageKey";
-NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButtonRepeatNoneSelectedImageKey";
+NSString *const LMMediaPlayerViewPlayButtonImageKey = @"playButtonImageKey";
+NSString *const LMMediaPlayerViewPlayButtonSelectedImageKey = @"playButtonSelectedImageKey";
+NSString *const LMMediaPlayerViewStopButtonImageKey = @"stopButtonImageKey";
+NSString *const LMMediaPlayerViewStopButtonSelectedImageKey = @"stopButtonSelectedImageKey";
+NSString *const LMMediaPlayerViewFullscreenButtonImageKey = @"fullscreenButtonImageKey";
+NSString *const LMMediaPlayerViewFullscreenButtonSelectedImageKey = @"fullscreenButtonSelectedImageKey";
+NSString *const LMMediaPlayerViewUnfullscreenButtonImageKey = @"unfullscreenButtonImageKey";
+NSString *const LMMediaPlayerViewUnfullscreenButtonSelectedImageKey = @"unfullscreenButtonSelectedImageKey";
+NSString *const LMMediaPlayerViewShuffleButtonShuffledImageKey = @"shuffleButtonShuffledImageKey";
+NSString *const LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey = @"shuffleButtonShuffledSelectedImageKey";
+NSString *const LMMediaPlayerViewShuffleButtonUnshuffledImageKey = @"shuffleButtonUnshuffledImageKey";
+NSString *const LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey = @"shuffleButtonUnshuffledSelectedImageKey";
+NSString *const LMMediaPlayerViewRepeatButtonRepeatOneImageKey = @"repeatButtonRepeatOneImageKey";
+NSString *const LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey = @"repeatButtonRepeatOneSelectedImageKey";
+NSString *const LMMediaPlayerViewRepeatButtonRepeatAllImageKey = @"repeatButtonRepeatAllImageKey";
+NSString *const LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey = @"repeatButtonRepeatAllSelectedImageKey";
+NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneImageKey = @"repeatButtonRepeatNoneImageKey";
+NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButtonRepeatNoneSelectedImageKey";
 
 @interface UIViewController (LMMediaPlayerPrefersStatusBarHidden)
 

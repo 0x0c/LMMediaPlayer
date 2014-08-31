@@ -10,24 +10,24 @@
 #import <UIKit/UIKit.h>
 #import "LMMediaPlayer.h"
 
-extern NSString *LMMediaPlayerViewPlayButtonImageKey;
-extern NSString *LMMediaPlayerViewPlayButtonSelectedImageKey;
-extern NSString *LMMediaPlayerViewStopButtonImageKey;
-extern NSString *LMMediaPlayerViewStopButtonSelectedImageKey;
-extern NSString *LMMediaPlayerViewFullscreenButtonImageKey;
-extern NSString *LMMediaPlayerViewFullscreenButtonSelectedImageKey;
-extern NSString *LMMediaPlayerViewUnfullscreenButtonImageKey;
-extern NSString *LMMediaPlayerViewUnfullscreenButtonSelectedImageKey;
-extern NSString *LMMediaPlayerViewShuffleButtonShuffledImageKey;
-extern NSString *LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey;
-extern NSString *LMMediaPlayerViewShuffleButtonUnshuffledImageKey;
-extern NSString *LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey;
-extern NSString *LMMediaPlayerViewRepeatButtonRepeatOneImageKey;
-extern NSString *LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey;
-extern NSString *LMMediaPlayerViewRepeatButtonRepeatAllImageKey;
-extern NSString *LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey;
-extern NSString *LMMediaPlayerViewRepeatButtonRepeatNoneImageKey;
-extern NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
+extern NSString *const LMMediaPlayerViewPlayButtonImageKey;
+extern NSString *const LMMediaPlayerViewPlayButtonSelectedImageKey;
+extern NSString *const LMMediaPlayerViewStopButtonImageKey;
+extern NSString *const LMMediaPlayerViewStopButtonSelectedImageKey;
+extern NSString *const LMMediaPlayerViewFullscreenButtonImageKey;
+extern NSString *const LMMediaPlayerViewFullscreenButtonSelectedImageKey;
+extern NSString *const LMMediaPlayerViewUnfullscreenButtonImageKey;
+extern NSString *const LMMediaPlayerViewUnfullscreenButtonSelectedImageKey;
+extern NSString *const LMMediaPlayerViewShuffleButtonShuffledImageKey;
+extern NSString *const LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey;
+extern NSString *const LMMediaPlayerViewShuffleButtonUnshuffledImageKey;
+extern NSString *const LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey;
+extern NSString *const LMMediaPlayerViewRepeatButtonRepeatOneImageKey;
+extern NSString *const LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey;
+extern NSString *const LMMediaPlayerViewRepeatButtonRepeatAllImageKey;
+extern NSString *const LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey;
+extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneImageKey;
+extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 
 @class LMMediaPlayerView;
 
