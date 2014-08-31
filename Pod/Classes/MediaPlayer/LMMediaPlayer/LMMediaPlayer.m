@@ -140,7 +140,7 @@ static LMMediaPlayer *sharedPlayer;
 {
 	[self stop];
 	
-	if (media != nil && self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
+	if (media != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
 		NSURL *url = [media getAssetURL];
 		LM_RELEASE(_nowPlayingItem);
 		_nowPlayingItem = media;
@@ -155,7 +155,7 @@ static LMMediaPlayer *sharedPlayer;
 		self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 		__block LMMediaPlayer *bself = self;
 		playerObserver_ = [self addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-			if (bself.delegate != nil && [bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
+			if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
 				[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
 			}
 		}];
@@ -184,7 +184,7 @@ static LMMediaPlayer *sharedPlayer;
 	[self pause];
 	[self seekToTime:CMTimeMake(0, 1)];
 	[self setCurrentState:LMMediaPlaybackStateStopped];
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
 		[self.delegate mediaPlayerDidStop:self media:_nowPlayingItem];
 	}
 	_nowPlayingItem = nil;
@@ -198,7 +198,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playNextMedia
 {
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
 	if (currentQueue_.count) {
@@ -235,7 +235,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playPreviousMedia
 {
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
 	if (currentQueue_.count) {
@@ -305,7 +305,7 @@ static LMMediaPlayer *sharedPlayer;
 		currentQueue_ = queue_;
 	}
 	
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
 		[self.delegate mediaPlayerDidChangeShuffleMode:enabled player:self];
 	}
 }
@@ -313,7 +313,7 @@ static LMMediaPlayer *sharedPlayer;
 - (void)setRepeatMode:(LMMediaRepeatMode)repeatMode
 {
 	_repeatMode = repeatMode;
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerDidChangeRepeatMode:player:)]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeRepeatMode:player:)]) {
 		[self.delegate mediaPlayerDidChangeRepeatMode:repeatMode player:self];
 	}
 }
@@ -322,7 +322,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)setCurrentState:(LMMediaPlaybackState)state
 {
-	if (self.delegate != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillChangeState:)]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillChangeState:)]) {
 		[self.delegate mediaPlayerWillChangeState:state];
 	}
 	
