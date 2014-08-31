@@ -122,7 +122,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	[super drawRect:rect];
 	
 	if (needToSetPlayer_) {
-		[playerLayer_ setPlayer:self.mediaPlayer];
+		[playerLayer_ setPlayer:self.mediaPlayer.corePlayer];
 	}
 }
 
@@ -297,7 +297,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		artworkImageView_.hidden = YES;
 		self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 		[playerLayer_ removeFromSuperlayer];
-		playerLayer_ = [AVPlayerLayer playerLayerWithPlayer:player];
+		playerLayer_ = [AVPlayerLayer playerLayerWithPlayer:player.corePlayer];
 		playerLayer_.frame = self.frame;
 		[self.layer insertSublayer:playerLayer_ atIndex:0];
 		

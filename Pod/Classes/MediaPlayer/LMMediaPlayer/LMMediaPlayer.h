@@ -46,7 +46,7 @@ extern NSString *const LMMediaPlayerStopNotification;
 
 @end
 
-@interface LMMediaPlayer : AVPlayer
+@interface LMMediaPlayer : NSObject
 
 @property (nonatomic, assign) id<LMMediaPlayerDelegate> delegate;
 @property (nonatomic, readonly) LMMediaItem *nowPlayingItem;
@@ -56,13 +56,14 @@ extern NSString *const LMMediaPlayerStopNotification;
 @property (nonatomic, readonly) NSInteger index;
 
 + (instancetype)sharedPlayer;
+- (AVPlayer *)corePlayer;
 - (void)pauseOtherPlayer;
 - (void)stopOtherPlayer;
 - (void)addMedia:(LMMediaItem *)media;
 - (void)removeMediaAtIndex:(NSUInteger)index;
 - (void)replaceMediaAtIndex:(LMMediaItem *)media index:(NSInteger)index;
 - (void)removeAllMediaInQueue;
-- (void)setCurrentQueue:(NSArray *)queue;
+- (void)setQueue:(NSArray *)queue;
 - (void)playMedia:(LMMediaItem *)media;
 - (void)play;
 - (void)playAtIndex:(NSInteger)index;

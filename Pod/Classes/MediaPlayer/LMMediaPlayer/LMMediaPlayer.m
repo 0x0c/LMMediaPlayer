@@ -17,13 +17,13 @@ NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification"
 @interface LMMediaPlayer ()
 {
 	NSMutableArray *queue_;
-	NSMutableArray *shffledQueue_;
-	NSMutableArray *currentQueue_;
 	
 	LMMediaPlaybackState playbackState_;
-	
+	AVPlayer *player_;
 	id playerObserver_;
 }
+
+@property (nonatomic, copy) NSMutableArray *currentQueue;
 
 @end
 
@@ -47,8 +47,9 @@ static LMMediaPlayer *sharedPlayer;
 {
 	self = [super init];
 	if (self) {
+		player_ = [AVPlayer new];
 		queue_ = [NSMutableArray new];
-		currentQueue_ = queue_;
+		self.currentQueue = queue_;
 		_repeatMode = LMMediaRepeatModeNone;
 		_shuffleMode = YES;
 		
@@ -68,7 +69,17 @@ static LMMediaPlayer *sharedPlayer;
 	[notificationCenter removeObserver:self name:LMMediaPlayerPauseNotification object:nil];
 	[notificationCenter removeObserver:self name:LMMediaPlayerStopNotification object:nil];
 	[notificationCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+	LM_RELEASE(player_);
+	LM_RELEASE(queue_);
+	LM_RELEASE(_currentQueue);
 	LM_DEALLOC(super);
+}
+
+#pragma mark -
+
+- (AVPlayer *)corePlayer
+{
+	return player_;
 }
 
 - (void)pauseOtherPlayer
@@ -94,30 +105,30 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)addMedia:(LMMediaItem *)media
 {
-	[currentQueue_ addObject:media];
+	[self.currentQueue addObject:media];
 }
 
 - (void)removeMediaAtIndex:(NSUInteger)index
 {
-	[currentQueue_ removeObjectAtIndex:index];
+	[self.currentQueue removeObjectAtIndex:index];
 }
 
 - (void)replaceMediaAtIndex:(LMMediaItem *)media index:(NSInteger)index
 {
-	[currentQueue_ replaceObjectAtIndex:index withObject:media];
+	[self.currentQueue replaceObjectAtIndex:index withObject:media];
 }
 
 - (void)removeAllMediaInQueue
 {
-	[currentQueue_ removeAllObjects];
+	[self.currentQueue removeAllObjects];
 }
 
-- (void)setCurrentQueue:(NSArray *)queue
+- (void)setQueue:(NSArray *)queue
 {
 	for (LMMediaItem *item in queue) {
 		[queue_ addObject:item];
 	}
-	currentQueue_ = queue_;
+	self.currentQueue = queue_;
 }
 
 - (void)updateLockScreenInfo
@@ -145,16 +156,16 @@ static LMMediaPlayer *sharedPlayer;
 		LM_RELEASE(_nowPlayingItem);
 		_nowPlayingItem = media;
 		LM_RETAIN(_nowPlayingItem);
-		[self removeTimeObserver:playerObserver_];
-		[self replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
+		[player_ removeTimeObserver:playerObserver_];
+		[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
 		[self play];
 		[self setCurrentState:LMMediaPlaybackStatePlaying];
 		if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
 			[self.delegate mediaPlayerDidStartPlaying:self media:media];
 		}
-		self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+		player_.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 		__block LMMediaPlayer *bself = self;
-		playerObserver_ = [self addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+		playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
 			if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
 				[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
 			}
@@ -165,24 +176,24 @@ static LMMediaPlayer *sharedPlayer;
 - (void)play
 {
 	if (_nowPlayingItem == nil) {
-		[self playMedia:currentQueue_.firstObject];
+		[self playMedia:self.currentQueue.firstObject];
 	}
 	else {
-		[super play];
+		[player_ play];
 		[self setCurrentState:LMMediaPlaybackStatePlaying];
 	}
 }
 
 - (void)playAtIndex:(NSInteger)index
 {
-	_index = MAX(0, MIN(index, currentQueue_.count - 1));
-	[self playMedia:currentQueue_[_index]];
+	_index = MAX(0, MIN(index, self.currentQueue.count - 1));
+	[self playMedia:self.currentQueue[_index]];
 }
 
 - (void)stop
 {
 	[self pause];
-	[self seekToTime:CMTimeMake(0, 1)];
+	[player_ seekToTime:CMTimeMake(0, 1)];
 	[self setCurrentState:LMMediaPlaybackStateStopped];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
 		[self.delegate mediaPlayerDidStop:self media:_nowPlayingItem];
@@ -192,7 +203,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)pause
 {
-	[super pause];
+	[player_ pause];
 	[self setCurrentState:LMMediaPlaybackStatePaused];
 }
 
@@ -201,31 +212,31 @@ static LMMediaPlayer *sharedPlayer;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
-	if (currentQueue_.count) {
+	if (self.currentQueue.count) {
 		if (_repeatMode == LMMediaRepeatModeDefault) {
-			if (_index >= currentQueue_.count - 1) {
+			if (_index >= self.currentQueue.count - 1) {
 				_index = 0;
 				[self stop];
 			}
 			else {
 				_index++;
-				[self playMedia:currentQueue_[_index]];
+				[self playMedia:self.currentQueue[_index]];
 			}
 		}
 		else if (_repeatMode == LMMediaRepeatModeAll) {
-			if (_index >= currentQueue_.count - 1) {
+			if (_index >= self.currentQueue.count - 1) {
 				_index = 0;
 			}
 			else {
 				_index++;
 			}
-			[self playMedia:currentQueue_[_index]];
+			[self playMedia:self.currentQueue[_index]];
 		}
 		else if (_repeatMode == LMMediaRepeatModeNone) {
 			[self stop];
 		}
 		else {
-			[self playMedia:currentQueue_[_index]];
+			[self playMedia:self.currentQueue[_index]];
 		}
 	}
 	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll){
@@ -238,7 +249,7 @@ static LMMediaPlayer *sharedPlayer;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerDidFinishPlaying:self media:_nowPlayingItem];
 	}
-	if (currentQueue_.count) {
+	if (self.currentQueue.count) {
 		if (_repeatMode == LMMediaRepeatModeDefault) {
 			if (_index - 1 < 0) {
 				_index = 0;
@@ -246,20 +257,20 @@ static LMMediaPlayer *sharedPlayer;
 			}
 			else {
 				_index--;
-				[self playMedia:currentQueue_[_index]];
+				[self playMedia:self.currentQueue[_index]];
 			}
 		}
 		else if (_repeatMode == LMMediaRepeatModeAll) {
 			if (_index - 1 < 0) {
-				_index = currentQueue_.count - 1;
+				_index = self.currentQueue.count - 1;
 			}
 			else {
 				_index--;
 			}
-			[self playMedia:currentQueue_[_index]];
+			[self playMedia:self.currentQueue[_index]];
 		}
 		else {
-			[self playMedia:currentQueue_[_index]];
+			[self playMedia:self.currentQueue[_index]];
 		}
 	}
 	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll){
@@ -269,40 +280,41 @@ static LMMediaPlayer *sharedPlayer;
 
 - (NSArray *)getQueue
 {
-	NSArray *newArray = [currentQueue_ copy];
+	NSArray *newArray = [self.currentQueue copy];
 	LM_AUTORELEASE(newArray);
 	return newArray;
 }
 
 - (NSUInteger)numberOfQueue
 {
-	return currentQueue_.count;
+	return self.currentQueue.count;
 }
 
 - (NSTimeInterval)currentPlaybackTime
 {
-	return self.currentTime.value == 0 ? 0 : self.currentTime.value / self.currentTime.timescale;
+	return player_.currentTime.value == 0 ? 0 : player_.currentTime.value / player_.currentTime.timescale;
 }
 
 - (NSTimeInterval)currentPlaybackDuration
 {
-	return CMTimeGetSeconds([[self.currentItem asset] duration]);
+	return CMTimeGetSeconds([[player_.currentItem asset] duration]);
 }
 
 - (void)seekTo:(NSTimeInterval)time
 {
-	[self seekToTime:CMTimeMake(time, 1)];
+	[player_ seekToTime:CMTimeMake(time, 1)];
 }
 
 - (void)setShuffleEnabled:(BOOL)enabled
 {
 	_shuffleMode = enabled;
 	if ([self numberOfQueue] > 0 && _shuffleMode) {
-		shffledQueue_ = [[currentQueue_ lm_shuffledArray] mutableCopy];
-		currentQueue_ = shffledQueue_;
+		NSMutableArray *newArray = [[self.currentQueue lm_shuffledArray] mutableCopy];
+		self.currentQueue = newArray;
+		LM_RELEASE(newArray);
 	}
 	else {
-		currentQueue_ = queue_;
+		self.currentQueue = queue_;
 	}
 	
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
@@ -339,7 +351,7 @@ static LMMediaPlayer *sharedPlayer;
 
 - (UIImage *)getThumbnailAtTime:(CGFloat)time
 {
-	AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:[[self currentItem] asset]];
+	AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:[[player_ currentItem] asset]];
 	imageGenerator.appliesPreferredTrackTransform = YES;
 	NSError *error = NULL;
 	CMTime ctime = CMTimeMake(time, 1);
