@@ -32,6 +32,15 @@
 	return self;
 }
 
+- (void)dealloc
+{
+	playerView_.delegate = nil;
+#if !__has_feature(objc_arc)
+	[super dealloc];
+	[musics_ release];
+#endif
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -40,7 +49,11 @@
 		self.title = [currentPlaylist_ valueForProperty:MPMediaPlaylistPropertyName];
 	}
 	else {
-		musics_ = [[[MPMediaQuery alloc] init] items];
+		MPMediaQuery *q = [[MPMediaQuery alloc] init];
+		musics_ = [q items];
+#if !__has_feature(objc_arc)
+		[q release];
+#endif
 		playlists_ = [[MPMediaQuery playlistsQuery] collections];
 	}
 	playerView_ = [LMMediaPlayerView sharedPlayerView];
@@ -52,6 +65,9 @@
 		LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path}];
 		[playerView_.mediaPlayer addMedia:item];
 		[playerView_.mediaPlayer play];
+#if !__has_feature(objc_arc)
+		[item release];
+#endif
 	});
 }
 
@@ -66,10 +82,15 @@
 {
 	[super viewWillAppear:animated];
 	
+	playerView_.delegate = self;
+	
 	UIView *baseView = [[UIView alloc] initWithFrame:playerView_.frame];
 	baseView.backgroundColor = [UIColor blackColor];
 	[baseView addSubview:playerView_];
 	self.tableView.tableHeaderView = baseView;
+#if !__has_feature(objc_arc)
+	[baseView release];
+#endif
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -117,6 +138,9 @@
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+#if !__has_feature(objc_arc)
+		[cell autorelease];
+#endif
 	}
 	
 	if (indexPath.section == 0) {
@@ -157,6 +181,9 @@
 			NSNumber *type = [musics_[indexPath.row] valueForProperty:MPMediaItemPropertyMediaType];
 			LMMediaItem *item = [[LMMediaItem alloc] initWithMetaMedia:musics_[indexPath.row] contentType:([type integerValue] & MPMediaTypeMusicVideo) ? LMMediaItemContentTypeVideo : LMMediaItemContentTypeAudio];
 			[playerView_.mediaPlayer addMedia:item];
+#if !__has_feature(objc_arc)
+			[item release];
+#endif
 		}
 		else {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DRM content" message:@"You cannot add this content because of DRM." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -167,6 +194,9 @@
 	else {
 		LMViewController *viewController = [[LMViewController alloc] initWithPlaylist:playlists_[indexPath.row]];
 		[self.navigationController pushViewController:viewController animated:YES];
+#if !__has_feature(objc_arc)
+		[viewController release];
+#endif
 	}
 }
 

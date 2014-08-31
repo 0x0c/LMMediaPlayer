@@ -9,6 +9,7 @@
 #import "LMMediaPlayer.h"
 #import "NSArray+LMMediaPlayerShuffle.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "LMMediaPlayerHelper.h"
 
 NSString *const LMMediaPlayerPauseNotification = @"LMMediaPlayerPauseNotification";
 NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification";
@@ -67,6 +68,7 @@ static LMMediaPlayer *sharedPlayer;
 	[notificationCenter removeObserver:self name:LMMediaPlayerPauseNotification object:nil];
 	[notificationCenter removeObserver:self name:LMMediaPlayerStopNotification object:nil];
 	[notificationCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+	LM_DEALLOC(super);
 }
 
 - (void)pauseOtherPlayer
@@ -128,8 +130,10 @@ static LMMediaPlayer *sharedPlayer;
 	if (artworkImage) {
 		MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:artworkImage];
 		[songInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
+		LM_AUTORELEASE(artwork);
 	}
 	[[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:songInfo];
+	LM_AUTORELEASE(songInfo);
 }
 
 - (void)playMedia:(LMMediaItem *)media
@@ -147,7 +151,7 @@ static LMMediaPlayer *sharedPlayer;
 			[self.delegate mediaPlayerDidStartPlaying:self media:media];
 		}
 		self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
-		__weak LMMediaPlayer *bself = self;
+		__block LMMediaPlayer *bself = self;
 		playerObserver_ = [self addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
 			if (bself.delegate != nil && [bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
 				[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
@@ -263,7 +267,9 @@ static LMMediaPlayer *sharedPlayer;
 
 - (NSArray *)getQueue
 {
-	return [currentQueue_ copy];
+	NSArray *newArray = [currentQueue_ copy];
+	LM_AUTORELEASE(newArray);
+	return newArray;
 }
 
 - (NSUInteger)numberOfQueue
@@ -336,8 +342,12 @@ static LMMediaPlayer *sharedPlayer;
 	NSError *error = NULL;
 	CMTime ctime = CMTimeMake(time, 1);
 	CGImageRef imageRef = [imageGenerator copyCGImageAtTime:ctime actualTime:NULL error:&error];
+	LM_RELEASE(imageGenerator);
+	UIImage *resultImage = [[UIImage alloc] initWithCGImage:imageRef];
+	LM_AUTORELEASE(resultImage);
+	CGImageRelease(imageRef);
 	
-	return [[UIImage alloc] initWithCGImage:imageRef];
+	return resultImage;
 }
 
 - (UIImage *)getRepresentativeThumbnail

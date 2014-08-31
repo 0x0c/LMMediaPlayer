@@ -31,6 +31,7 @@
 		E94B353819AF1267001889E8 /* LMMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B352D19AF1267001889E8 /* LMMediaPlayer.m */; };
 		E94B353919AF1267001889E8 /* LMMediaPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B353019AF1267001889E8 /* LMMediaPlayerView.m */; };
 		E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E94B353C19AF14A6001889E8 /* sample.mp4 */; };
+		E9B7202E19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7202D19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,8 @@
 		E94B352F19AF1267001889E8 /* LMMediaPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerView.h; sourceTree = "<group>"; };
 		E94B353019AF1267001889E8 /* LMMediaPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerView.m; sourceTree = "<group>"; };
 		E94B353C19AF14A6001889E8 /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
+		E9B7202C19B2C6F700F7E4D1 /* LMMediaPlayerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerHelper.h; sourceTree = "<group>"; };
+		E9B7202D19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				E94B352019AF1267001889E8 /* Category */,
+				E9B7202B19B2C6CF00F7E4D1 /* Hepler */,
 				E94B352419AF1267001889E8 /* MediaPlayer */,
 				E94B352E19AF1267001889E8 /* MediaPlayerView */,
 			);
@@ -293,6 +297,15 @@
 				E94B353019AF1267001889E8 /* LMMediaPlayerView.m */,
 			);
 			path = MediaPlayerView;
+			sourceTree = "<group>";
+		};
+		E9B7202B19B2C6CF00F7E4D1 /* Hepler */ = {
+			isa = PBXGroup;
+			children = (
+				E9B7202C19B2C6F700F7E4D1 /* LMMediaPlayerHelper.h */,
+				E9B7202D19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m */,
+			);
+			path = Hepler;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,6 +482,7 @@
 				6003F5A7195388D20070C39A /* LMViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				E94B353719AF1267001889E8 /* LMMediaItemQueueManager.m in Sources */,
+				E9B7202E19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m in Sources */,
 				E94B353519AF1267001889E8 /* NSArray+LMMediaPlayerShuffle.m in Sources */,
 				E94B353919AF1267001889E8 /* LMMediaPlayerView.m in Sources */,
 			);
@@ -598,6 +612,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LMMediaPlayer/LMMediaPlayer-Prefix.pch";
 				INFOPLIST_FILE = "LMMediaPlayer/LMMediaPlayer-Info.plist";
@@ -613,6 +628,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LMMediaPlayer/LMMediaPlayer-Prefix.pch";
 				INFOPLIST_FILE = "LMMediaPlayer/LMMediaPlayer-Info.plist";

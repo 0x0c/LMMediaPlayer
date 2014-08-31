@@ -9,9 +9,9 @@
 #import "LMMediaPlayerView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <objc/runtime.h>
+#import "LMMediaPlayerHelper.h"
 
 static CGFloat const kFullscreenTransitionDuration = 0.2;
-static NSString *const kLMMediaPlayerPrefersStatusBarHidden = @"com.akira.matsuda.LMMediaPlayerPrefersStatusBarHidden";
 
 NSString *const LMMediaPlayerViewPlayButtonImageKey = @"playButtonImageKey";
 NSString *const LMMediaPlayerViewPlayButtonSelectedImageKey = @"playButtonSelectedImageKey";
@@ -129,9 +129,24 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)dealloc
 {
 	self.delegate = nil;
-	self.mediaPlayer.delegate = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+	
+	LM_RELEASE(playbackTimeLabel_);
+	LM_RELEASE(remainingTimeLabel_);
+	LM_RELEASE(headerView_);
+	LM_RELEASE(footerView_);
+	LM_RELEASE(artworkImageView_);
+	LM_RELEASE(playButton_);
+	LM_RELEASE(nextButton_);
+	LM_RELEASE(previousButton_);
+	LM_RELEASE(shuffleButton_);
+	LM_RELEASE(repeatButton_);
+	LM_RELEASE(fullscreenButton_);
+	LM_RELEASE(_mediaPlayer);
+	LM_RELEASE(buttonImages_);
+	LM_RETAIN(mainWindow_);
+	LM_DEALLOC(super);
 }
 
 - (void)awakeFromNib
@@ -154,12 +169,15 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
 	[self addGestureRecognizer:gesture];
+	LM_RELEASE(gesture);
+	
 	[self setTranslatesAutoresizingMaskIntoConstraints:YES];
 	self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
 	if (mainWindow_ == nil) {
 		mainWindow_ = [[UIApplication sharedApplication] windows][0];
+		LM_RETAIN(mainWindow_);
 	}
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeForgroundMode:) name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -318,8 +336,9 @@ static LMMediaPlayerView *sharedPlayerView;
 		duration %= 60;
 		[durationString appendFormat:@"%02ld", (long int)duration];
 		playbackTimeLabel_.text = durationString;
+		LM_RELEASE(durationString);
 		
-		durationString = [NSMutableString stringWithString:@"-"];
+		durationString = [[NSMutableString alloc] initWithString:@"-"];
 		duration = (NSInteger)fabs(player.currentPlaybackTime - player.currentPlaybackDuration);
 		if (duration / (60 * 60) > 0) {
 			[durationString appendFormat:@"%02ld:",
@@ -330,6 +349,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		duration %= 60;
 		[durationString appendFormat:@"%02ld", (long int)duration];
 		remainingTimeLabel_.text = durationString;
+		LM_RELEASE(durationString);
 	}
 }
 
@@ -370,7 +390,9 @@ static LMMediaPlayerView *sharedPlayerView;
 	duration %= 60;
 	[durationString appendFormat:@"%02ld", (long int)duration];
 	playbackTimeLabel_.text = durationString;
-	durationString = [NSMutableString stringWithString:@"-"];
+	LM_RELEASE(durationString);
+
+	durationString = [[NSMutableString alloc] initWithString:@"-"];
 	duration = (NSInteger)_mediaPlayer.currentPlaybackDuration - currentTime;
 	if (duration / (60 * 60) > 0) {
 		[durationString appendFormat:@"%02ld:",
@@ -381,6 +403,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	duration %= 60;
 	[durationString appendFormat:@"%02ld", (long int)duration];
 	remainingTimeLabel_.text = durationString;
+	LM_RELEASE(durationString);
 }
 
 - (void)endSeek:(id)sender
@@ -569,6 +592,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		newRect = superView_.bounds;
 		self.frame = newRect;
 		[superView_ addSubview:self];
+		LM_RELEASE(superView_);
 		[mainWindow_ makeKeyAndVisible];
 		[[[UIApplication sharedApplication] delegate] setWindow:mainWindow_];
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
@@ -581,6 +605,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 		superView_ = self.superview;
+		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
 		
 		UIViewController *rootViewController = [mainWindow_ rootViewController];
@@ -597,6 +622,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[newWindow addSubview:viewController.view];
 		[newWindow makeKeyAndVisible];
 		[[[UIApplication sharedApplication] delegate] setWindow:newWindow];
+		LM_RELEASE(newWindow);
 	}
 	self.frame = newRect;
 	self.alpha = 0;

@@ -9,6 +9,7 @@
 #import "LMMediaItem.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
+#import "LMMediaPlayerHelper.h"
 
 @interface LMMediaItem ()
 {
@@ -36,6 +37,16 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 @synthesize albumTitle = albumTitle_;
 @synthesize artist = artist_;
 @synthesize assetURL = url_;
+
+- (void)dealloc
+{
+	LM_RELEASE(title_);
+	LM_RELEASE(albumTitle_);
+	LM_RELEASE(artist_);
+	LM_RELEASE(artworkImage_);
+	LM_RELEASE(url_);
+	LM_DEALLOC(super);
+}
 
 - (instancetype)initWithMetaMedia:(id)media contentType:(LMMediaItemContentType)type
 {
@@ -91,24 +102,36 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 - (id)copyWithZone:(NSZone *)zone
 {
 	NSMutableDictionary *newInfo = [NSMutableDictionary new];
-	if (title_) {
-		newInfo[LMMediaItemInfoTitleKey] = [title_ copy];
+	if (self.title) {
+		NSString *newString = [self.title copy];
+		LM_AUTORELEASE(newString);
+		newInfo[LMMediaItemInfoTitleKey] = newString ?: [NSNull null];
 	}
-	if (albumTitle_) {
-		newInfo[LMMediaItemInfoAlubumTitleKey] = [albumTitle_ copy];
+	if (self.albumTitle) {
+		NSString *newString = [self.albumTitle copy];
+		LM_AUTORELEASE(newString);
+		newInfo[LMMediaItemInfoAlubumTitleKey] = newString ?: [NSNull null];
 	}
-	if (artist_) {
-		newInfo[LMMediaItemInfoArtistKey] = [artist_ copy];
+	if (self.artist) {
+		NSString *newString = [self.artist copy];
+		LM_AUTORELEASE(newString);
+		newInfo[LMMediaItemInfoArtistKey] = newString ?: [NSNull null];
 	}
 	if (artworkImage_) {
-		newInfo[LMMediaItemInfoArtworkKey] = [artworkImage_ copy];
+		UIImage *newImage = [artworkImage_ copy];
+		LM_AUTORELEASE(newImage);
+		newInfo[LMMediaItemInfoArtworkKey] = newImage ?: [NSNull null];
 	}
-	if (url_) {
-		newInfo[LMMediaItemInfoURLKey] = [url_ copy];
+	if (self.assetURL) {
+		NSURL *newURL = [self.assetURL copy];
+		LM_AUTORELEASE(newURL);
+		newInfo[LMMediaItemInfoURLKey] = newURL ?: [NSNull null];
 	}
 	newInfo[LMMediaItemInfoContentTypeKey] = [NSNumber numberWithInteger:contentType_];
 	
 	LMMediaItem *newObject = [[[self class] allocWithZone:zone] initWithInfo:newInfo];
+	LM_RELEASE(newInfo);
+	
 	return newObject;
 }
 
