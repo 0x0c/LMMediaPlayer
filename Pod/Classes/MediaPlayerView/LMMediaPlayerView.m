@@ -111,8 +111,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	self = [super initWithFrame:frame];
 	if (self) {
-		_mediaPlayer = [[LMMediaPlayer alloc] init];
-		_mediaPlayer.delegate = self;
+		[self setup];
 	}
 	
 	return self;
@@ -139,6 +138,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	[super awakeFromNib];
 	[self setup];
+	[self setupUserInterface];
 }
 
 - (void)layoutSubviews
@@ -155,7 +155,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
 	[self addGestureRecognizer:gesture];
 	[self setTranslatesAutoresizingMaskIntoConstraints:YES];
-
+	self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
 	if (mainWindow_ == nil) {
 		mainWindow_ = [[UIApplication sharedApplication] windows][0];
@@ -165,12 +166,14 @@ static LMMediaPlayerView *sharedPlayerView;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	
 	needToSetPlayer_ = NO;
-	
 	userInterfaceHidden_ = NO;
 	
 	_mediaPlayer = [[LMMediaPlayer alloc] init];
 	_mediaPlayer.delegate = self;
-	
+}
+
+- (void)setupUserInterface
+{
 	artworkImageView_.contentMode = UIViewContentModeScaleAspectFit;
 	
 	[_currentTimeSlider addTarget:self action:@selector(beginSeek:) forControlEvents:UIControlEventTouchDown];
@@ -223,8 +226,6 @@ static LMMediaPlayerView *sharedPlayerView;
 	[shuffleButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
-	
-	self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 }
 
 - (void)mediaPlayerBecomeForgroundMode:(NSNotification *)notification
