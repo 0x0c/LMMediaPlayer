@@ -566,7 +566,6 @@ static LMMediaPlayerView *sharedPlayerView;
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 		
-		[self removeFromSuperview];
 		newRect = superView_.bounds;
 		self.frame = newRect;
 		[superView_ addSubview:self];
