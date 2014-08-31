@@ -56,7 +56,6 @@ static LMMediaPlayer *sharedPlayer;
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		[notificationCenter addObserver:self selector:@selector(pause) name:LMMediaPlayerPauseNotification object:nil];
 		[notificationCenter addObserver:self selector:@selector(stop) name:LMMediaPlayerStopNotification object:nil];
-		[notificationCenter addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	}
 	
 	return self;
@@ -150,7 +149,7 @@ static LMMediaPlayer *sharedPlayer;
 - (void)playMedia:(LMMediaItem *)media
 {
 	[self stop];
-	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	if (media != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
 		NSURL *url = [media getAssetURL];
 		_nowPlayingItem = media;
@@ -202,6 +201,7 @@ static LMMediaPlayer *sharedPlayer;
 - (void)pause
 {
 	[player_ pause];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	[self setCurrentState:LMMediaPlaybackStatePaused];
 }
 

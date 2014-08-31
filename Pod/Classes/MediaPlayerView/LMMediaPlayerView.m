@@ -351,6 +351,9 @@ static LMMediaPlayerView *sharedPlayerView;
 		remainingTimeLabel_.text = durationString;
 		LM_RELEASE(durationString);
 	}
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
+		[self.delegate mediaPlayerDidChangeCurrentTime:self];
+	}
 }
 
 - (void)mediaPlayerDidChangeRepeatMode:(LMMediaRepeatMode)mode player:(LMMediaPlayer *)player
