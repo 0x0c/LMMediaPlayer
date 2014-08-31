@@ -54,8 +54,8 @@ extern NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 @property (nonatomic, strong) IBOutlet UISlider *currentTimeSlider;
 @property (nonatomic, readonly) BOOL isFullscreen;
 
-+ (id)sharedPlayerView;
-+ (id)create;
++ (instancetype)sharedPlayerView;
++ (instancetype)create;
 - (void)setUserInterfaceHidden:(BOOL)hidden;
 - (void)setHeaderViewHidden:(BOOL)hidden;
 - (void)setFooterViewHidden:(BOOL)hidden;

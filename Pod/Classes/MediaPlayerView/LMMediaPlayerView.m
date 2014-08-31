@@ -93,7 +93,7 @@ NSString *LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButt
 
 static LMMediaPlayerView *sharedPlayerView;
 
-+ (id)sharedPlayerView
++ (instancetype)sharedPlayerView
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
@@ -102,9 +102,20 @@ static LMMediaPlayerView *sharedPlayerView;
 	return sharedPlayerView;
 }
 
-+ (id)create
++ (instancetype)create
 {
 	return [[UINib nibWithNibName:@"LMMediaPlayerView" bundle:nil] instantiateWithOwner:nil options:nil][0];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+	self = [super initWithFrame:frame];
+	if (self) {
+		_mediaPlayer = [[LMMediaPlayer alloc] init];
+		_mediaPlayer.delegate = self;
+	}
+	
+	return self;
 }
 
 - (void)drawRect:(CGRect)rect
@@ -119,6 +130,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)dealloc
 {
 	self.delegate = nil;
+	self.mediaPlayer.delegate = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
