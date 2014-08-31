@@ -59,6 +59,7 @@ extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 - (void)setUserInterfaceHidden:(BOOL)hidden;
 - (void)setHeaderViewHidden:(BOOL)hidden;
 - (void)setFooterViewHidden:(BOOL)hidden;
+- (void)setFullscreen:(BOOL)fullscreen animated:(BOOL)animated;
 - (void)setFullscreen:(BOOL)fullscreen;
 - (void)setButtonImages:(NSDictionary *)info;
 

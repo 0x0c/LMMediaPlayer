@@ -564,7 +564,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 }
 
-- (void)setFullscreen:(BOOL)fullscreen
+- (void)setFullscreen:(BOOL)fullscreen animated:(BOOL)animated
 {
 	if (fullscreen_ == fullscreen) {
 		return;
@@ -625,16 +625,23 @@ static LMMediaPlayerView *sharedPlayerView;
 		LM_RELEASE(newWindow);
 	}
 	self.frame = newRect;
-	self.alpha = 0;
-	[UIView animateWithDuration:kFullscreenTransitionDuration animations:^{
-		self.alpha = 1;
-	}];
+	if (animated) {
+		self.alpha = 0;
+		[UIView animateWithDuration:kFullscreenTransitionDuration animations:^{
+			self.alpha = 1;
+		}];
+	}
 	fullscreen_ = fullscreen;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen];
 	}
 	[[UIApplication sharedApplication] setStatusBarHidden:fullscreen];
 	[[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+}
+
+- (void)setFullscreen:(BOOL)fullscreen
+{
+	[self setFullscreen:fullscreen animated:NO];
 }
 
 - (void)setButtonImages:(NSDictionary *)info

@@ -23,7 +23,7 @@ NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification"
 	id playerObserver_;
 }
 
-@property (nonatomic, copy) NSMutableArray *currentQueue;
+@property (nonatomic, strong) NSMutableArray *currentQueue;
 
 @end
 
