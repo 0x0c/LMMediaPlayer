@@ -15,7 +15,6 @@ LMMediaPlayer is a video and audio player for iPhone with changeable user interf
 ## Requirements
 
 - Runs on iOS 6.0 or later.
-- Must be complied with ARC.
 
 ## Installation
 
