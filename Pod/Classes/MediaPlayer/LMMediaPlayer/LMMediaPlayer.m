@@ -99,7 +99,10 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
-	[self playNextMedia];
+	AVPlayerItem *item = notification.object;
+	if (player_.currentItem == item) {
+		[self playNextMedia];
+	}
 }
 
 - (void)addMedia:(LMMediaItem *)media
