@@ -97,7 +97,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedPlayerView = [LMMediaPlayerView create];
+		sharedPlayerView = [[self class] create];
 	});
 	return sharedPlayerView;
 }

@@ -37,7 +37,7 @@ static LMMediaPlayer *sharedPlayer;
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedPlayer = [LMMediaPlayer new];
+		sharedPlayer = [[self class] new];
 	});
 	
 	return sharedPlayer;
