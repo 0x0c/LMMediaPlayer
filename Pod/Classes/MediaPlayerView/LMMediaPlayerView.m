@@ -176,8 +176,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
 	if (mainWindow_ == nil) {
 		mainWindow_ = [[UIApplication sharedApplication] windows][0];
-		LM_RETAIN(mainWindow_);
 	}
+	LM_RETAIN(mainWindow_);
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeForgroundMode:) name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
