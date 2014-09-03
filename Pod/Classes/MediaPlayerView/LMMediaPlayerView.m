@@ -145,7 +145,6 @@ static LMMediaPlayerView *sharedPlayerView;
 	LM_RELEASE(fullscreenButton_);
 	LM_RELEASE(_mediaPlayer);
 	LM_RELEASE(buttonImages_);
-	LM_RETAIN(mainWindow_);
 	LM_DEALLOC(super);
 }
 
