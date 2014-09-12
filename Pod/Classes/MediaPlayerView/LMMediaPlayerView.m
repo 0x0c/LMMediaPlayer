@@ -575,17 +575,15 @@ static LMMediaPlayerView *sharedPlayerView;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewWillChangeFullscreenMode:fullscreen];
 	}
-	static LMMediaPlayerFullscreenViewController *viewController;
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
-		viewController.view.frame = [UIScreen mainScreen].bounds;
+	
+	LMMediaPlayerFullscreenViewController *viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
+	LM_AUTORELEASE(viewController);
+	viewController.view.frame = [UIScreen mainScreen].bounds;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_6_1
-		viewController.wantsFullScreenLayout = YES;
+	viewController.wantsFullScreenLayout = YES;
 #else
-		viewController.extendedLayoutIncludesOpaqueBars = YES;
+	viewController.extendedLayoutIncludesOpaqueBars = YES;
 #endif
-	});
 	CGRect newRect;
 	if (fullscreen == NO) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];

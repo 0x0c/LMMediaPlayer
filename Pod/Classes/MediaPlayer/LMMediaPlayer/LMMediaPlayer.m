@@ -175,6 +175,9 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)play
 {
+	if (playbackState_ == LMMediaPlaybackStateStopped) {
+		[player_ seekToTime:CMTimeMake(0, 1)];
+	}
 	if (_nowPlayingItem == nil) {
 		[self playMedia:self.currentQueue.firstObject];
 	}
@@ -193,7 +196,6 @@ static LMMediaPlayer *sharedPlayer;
 - (void)stop
 {
 	[self pause];
-	[player_ seekToTime:CMTimeMake(0, 1)];
 	[self setCurrentState:LMMediaPlaybackStateStopped];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
 		[self.delegate mediaPlayerDidStop:self media:_nowPlayingItem];
