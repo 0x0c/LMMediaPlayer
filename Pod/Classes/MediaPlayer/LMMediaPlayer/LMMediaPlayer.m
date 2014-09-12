@@ -112,16 +112,27 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)removeMediaAtIndex:(NSUInteger)index
 {
+	LMMediaItem *item = _currentQueue[index];
+	if (item == _nowPlayingItem) {
+		_nowPlayingItem = nil;
+		[self playNextMedia];
+	}
 	[self.currentQueue removeObjectAtIndex:index];
 }
 
 - (void)replaceMediaAtIndex:(LMMediaItem *)media index:(NSInteger)index
 {
+	LMMediaItem *item = _currentQueue[index];
+	if (item == _nowPlayingItem) {
+		_nowPlayingItem = nil;
+	}
 	[self.currentQueue replaceObjectAtIndex:index withObject:media];
 }
 
 - (void)removeAllMediaInQueue
 {
+	_nowPlayingItem = nil;
+	[self stop];
 	[self.currentQueue removeAllObjects];
 }
 
