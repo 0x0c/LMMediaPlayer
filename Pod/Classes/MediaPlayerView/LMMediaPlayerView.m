@@ -579,11 +579,13 @@ static LMMediaPlayerView *sharedPlayerView;
 	LMMediaPlayerFullscreenViewController *viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
 	LM_AUTORELEASE(viewController);
 	viewController.view.frame = [UIScreen mainScreen].bounds;
-#if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_6_1
-	viewController.wantsFullScreenLayout = YES;
-#else
-	viewController.extendedLayoutIncludesOpaqueBars = YES;
-#endif
+	if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+		viewController.extendedLayoutIncludesOpaqueBars = YES;
+	}
+	else {
+		viewController.wantsFullScreenLayout = YES;
+	}
+	
 	CGRect newRect;
 	if (fullscreen == NO) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
