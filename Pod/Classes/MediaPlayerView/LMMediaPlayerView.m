@@ -610,13 +610,13 @@ static LMMediaPlayerView *sharedPlayerView;
 		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
 		
-#if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_7_1
-		UIViewController *rootViewController = [mainWindow_ rootViewController];
-		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
-		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
-			newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
+		if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
+			UIViewController *rootViewController = [mainWindow_ rootViewController];
+			UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
+			if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
+				newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
+			}
 		}
-#endif
 		[self removeFromSuperview];
 		[viewController.view addSubview:self];
 		UIWindow *newWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
