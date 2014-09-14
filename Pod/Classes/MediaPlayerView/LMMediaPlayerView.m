@@ -596,12 +596,8 @@ static LMMediaPlayerView *sharedPlayerView;
 		[mainWindow_ makeKeyAndVisible];
 		[[[UIApplication sharedApplication] delegate] setWindow:mainWindow_];
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-//		if (self != nil) {
-//			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kFullscreenTransitionDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-				[[UIApplication sharedApplication] setStatusBarOrientation:[mainWindow_ rootViewController].interfaceOrientation];
-				[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-//			});			
-//		}
+		[[UIApplication sharedApplication] setStatusBarOrientation:[mainWindow_ rootViewController].interfaceOrientation];
+		[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 	}
 	else {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
