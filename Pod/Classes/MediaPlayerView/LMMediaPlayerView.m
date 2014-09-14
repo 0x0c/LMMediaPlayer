@@ -596,12 +596,12 @@ static LMMediaPlayerView *sharedPlayerView;
 		[mainWindow_ makeKeyAndVisible];
 		[[[UIApplication sharedApplication] delegate] setWindow:mainWindow_];
 		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-		if (self != nil) {
-			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kFullscreenTransitionDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//		if (self != nil) {
+//			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kFullscreenTransitionDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 				[[UIApplication sharedApplication] setStatusBarOrientation:[mainWindow_ rootViewController].interfaceOrientation];
 				[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-			});			
-		}
+//			});			
+//		}
 	}
 	else {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
@@ -610,7 +610,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
 		
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_8_0
+#if __IPHONE_OS_VERSION_MAX_ALLOWED <= __IPHONE_7_1
 		UIViewController *rootViewController = [mainWindow_ rootViewController];
 		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
