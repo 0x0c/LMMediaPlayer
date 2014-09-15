@@ -104,7 +104,8 @@ static LMMediaPlayerView *sharedPlayerView;
 
 + (instancetype)create
 {
-	return [[UINib nibWithNibName:@"LMMediaPlayerView" bundle:nil] instantiateWithOwner:nil options:nil][0];
+	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+	return [[UINib nibWithNibName:@"LMMediaPlayerView" bundle:bundle] instantiateWithOwner:nil options:nil][0];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
