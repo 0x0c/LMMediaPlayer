@@ -284,9 +284,13 @@ static LMMediaPlayerView *sharedPlayerView;
 - (BOOL)mediaPlayerWillStartPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
 	BOOL result = NO;
-	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartPlaying:media:)] && [self.delegate mediaPlayerViewWillStartPlaying:self media:media]) {
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartPlaying:media:)] == YES) {
+		result = [self.delegate mediaPlayerViewWillStartPlaying:self media:media];
+	}
+	else {
 		result = YES;
 	}
+	
 	return result;
 }
 

@@ -164,28 +164,31 @@ static LMMediaPlayer *sharedPlayer;
 {
 	[self stop];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-	if (media != nil && [self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] && [self.delegate mediaPlayerWillStartPlaying:self media:media]) {
-		NSURL *url = [media getAssetURL];
-		_nowPlayingItem = media;
-		[player_ removeTimeObserver:playerObserver_];
-		[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
-		[self play];
-		[self setCurrentState:LMMediaPlaybackStatePlaying];
-		if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
-			[self.delegate mediaPlayerDidStartPlaying:self media:media];
-		}
-		player_.usesExternalPlaybackWhileExternalScreenIsActive = YES;
-		__block LMMediaPlayer *bself = self;
-		playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-			if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
-				[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
+	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] == NO || [self.delegate mediaPlayerWillStartPlaying:self media:media] == YES) {
+		if (media != nil) {
+			NSURL *url = [media getAssetURL];
+			_nowPlayingItem = media;
+			[player_ removeTimeObserver:playerObserver_];
+			[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
+			[self play];
+			[self setCurrentState:LMMediaPlaybackStatePlaying];
+			if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
+				[self.delegate mediaPlayerDidStartPlaying:self media:media];
 			}
-		}];
+			player_.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+			__block LMMediaPlayer *bself = self;
+			playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
+				if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
+					[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
+				}
+			}];
+		}
 	}
 }
 
 - (void)play
 {
+	
 	if (playbackState_ == LMMediaPlaybackStateStopped) {
 		[player_ seekToTime:CMTimeMake(0, 1)];
 	}
