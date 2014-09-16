@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/**/*.{h,m}'
   s.resource_bundles = {
-    'LMMediaPlayer' => ['Pod/Assets/*']
+    'LMMediaPlayer' => ['Pod/Assets/LMMediaPlayerView.bundle', 'Pod/Assets/LMMediaPlayerView.xib']
   }
 
   s.public_header_files = 'Pod/Classes/**/*.h'
