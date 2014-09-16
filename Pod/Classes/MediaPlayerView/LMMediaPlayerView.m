@@ -104,8 +104,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 + (instancetype)create
 {
-	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	return [[UINib nibWithNibName:@"LMMediaPlayerView" bundle:bundle] instantiateWithOwner:nil options:nil][0];
+	return [[UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle mainBundle]] instantiateWithOwner:nil options:nil][0];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -660,6 +659,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		version = @"6";
 	}
 	UIImage *image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@/%@.png", [[NSBundle mainBundle] pathForResource:@"LMMediaPlayerView" ofType:@"bundle"], version, filename]];
+	
 	return image;
 }
 

@@ -13,7 +13,6 @@
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
-		6003F59E195388D20070C39A /* LMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* LMAppDelegate.m */; };
 		6003F5A1195388D20070C39A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6003F59F195388D20070C39A /* Main.storyboard */; };
 		6003F5A7195388D20070C39A /* LMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* LMViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
@@ -23,15 +22,8 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		A73668C881864D758DB9CE8E /* libPods-LMMediaPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E47F90859134B90894A0A06 /* libPods-LMMediaPlayer.a */; };
-		E94B353219AF1267001889E8 /* LMMediaPlayerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E94B351C19AF1267001889E8 /* LMMediaPlayerView.bundle */; };
-		E94B353319AF1267001889E8 /* LMMediaPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E94B351D19AF1267001889E8 /* LMMediaPlayerView.xib */; };
-		E94B353519AF1267001889E8 /* NSArray+LMMediaPlayerShuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B352319AF1267001889E8 /* NSArray+LMMediaPlayerShuffle.m */; };
-		E94B353619AF1267001889E8 /* LMMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B352719AF1267001889E8 /* LMMediaItem.m */; };
-		E94B353719AF1267001889E8 /* LMMediaItemQueueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B352A19AF1267001889E8 /* LMMediaItemQueueManager.m */; };
-		E94B353819AF1267001889E8 /* LMMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B352D19AF1267001889E8 /* LMMediaPlayer.m */; };
-		E94B353919AF1267001889E8 /* LMMediaPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E94B353019AF1267001889E8 /* LMMediaPlayerView.m */; };
 		E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E94B353C19AF14A6001889E8 /* sample.mp4 */; };
-		E9B7202E19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7202D19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m */; };
+		E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* LMAppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,8 +64,6 @@
 		BB0BEC98945053160D841919 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		C37A2301A7254035914241AB /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BB7CE85C0842D2B3F680DE /* Pods-LMMediaPlayer.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LMMediaPlayer.xcconfig"; path = "Pods/Pods-LMMediaPlayer.xcconfig"; sourceTree = "<group>"; };
-		E94B351C19AF1267001889E8 /* LMMediaPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LMMediaPlayerView.bundle; sourceTree = "<group>"; };
-		E94B351D19AF1267001889E8 /* LMMediaPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LMMediaPlayerView.xib; sourceTree = "<group>"; };
 		E94B352219AF1267001889E8 /* NSArray+LMMediaPlayerShuffle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+LMMediaPlayerShuffle.h"; sourceTree = "<group>"; };
 		E94B352319AF1267001889E8 /* NSArray+LMMediaPlayerShuffle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+LMMediaPlayerShuffle.m"; sourceTree = "<group>"; };
 		E94B352619AF1267001889E8 /* LMMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaItem.h; sourceTree = "<group>"; };
@@ -85,8 +75,10 @@
 		E94B352F19AF1267001889E8 /* LMMediaPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerView.h; sourceTree = "<group>"; };
 		E94B353019AF1267001889E8 /* LMMediaPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerView.m; sourceTree = "<group>"; };
 		E94B353C19AF14A6001889E8 /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
+		E980AF2119C85CEA003FF2AF /* LMMediaPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LMMediaPlayerView.bundle; sourceTree = "<group>"; };
 		E9B7202C19B2C6F700F7E4D1 /* LMMediaPlayerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerHelper.h; sourceTree = "<group>"; };
 		E9B7202D19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerHelper.m; sourceTree = "<group>"; };
+		E9B890A719C8B1DF00F22638 /* LMMediaPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LMMediaPlayerView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,8 +211,8 @@
 		E94B351A19AF1267001889E8 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				E94B351C19AF1267001889E8 /* LMMediaPlayerView.bundle */,
-				E94B351D19AF1267001889E8 /* LMMediaPlayerView.xib */,
+				E9B890A719C8B1DF00F22638 /* LMMediaPlayerView.xib */,
+				E980AF2119C85CEA003FF2AF /* LMMediaPlayerView.bundle */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -389,11 +381,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E94B353219AF1267001889E8 /* LMMediaPlayerView.bundle in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
-				E94B353319AF1267001889E8 /* LMMediaPlayerView.xib in Resources */,
 				E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,15 +466,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E94B353619AF1267001889E8 /* LMMediaItem.m in Sources */,
-				E94B353819AF1267001889E8 /* LMMediaPlayer.m in Sources */,
-				6003F59E195388D20070C39A /* LMAppDelegate.m in Sources */,
 				6003F5A7195388D20070C39A /* LMViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
-				E94B353719AF1267001889E8 /* LMMediaItemQueueManager.m in Sources */,
-				E9B7202E19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m in Sources */,
-				E94B353519AF1267001889E8 /* NSArray+LMMediaPlayerShuffle.m in Sources */,
-				E94B353919AF1267001889E8 /* LMMediaPlayerView.m in Sources */,
+				E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

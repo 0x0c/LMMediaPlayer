@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "LMMediaPlayer"
-  s.version          = "0.1.5"
+  s.version          = "0.1.6"
   s.summary          = "Video and audio player with replaceable UI component."
   s.homepage         = "https://github.com/0x0c/LMMediaPlayer"
   
@@ -21,9 +21,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*.{h,m}'
-  s.resource_bundles = {
-    'LMMediaPlayer' => ['Pod/Assets/LMMediaPlayerView.bundle', 'Pod/Assets/LMMediaPlayerView.xib']
-  }
+  s.resources = ['Pod/Assets/LMMediaPlayerView.xib', 'Pod/Assets/LMMediaPlayerView.bundle']
 
   s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit', 'AVFoundation', 'MediaPlayer'
