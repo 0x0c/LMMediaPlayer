@@ -583,7 +583,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	LMMediaPlayerFullscreenViewController *viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
 	LM_AUTORELEASE(viewController);
 	viewController.view.frame = [UIScreen mainScreen].bounds;
-	if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] == NSOrderedAscending) {
+	
+	if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 		viewController.extendedLayoutIncludesOpaqueBars = YES;
 	}
 	else {
@@ -612,13 +613,18 @@ static LMMediaPlayerView *sharedPlayerView;
 		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
 		
-		if ([[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending) {
-			UIViewController *rootViewController = [mainWindow_ rootViewController];
-			UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
-			if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
+		UIViewController *rootViewController = [mainWindow_ rootViewController];
+		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
+		
+		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
+			if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
+				newRect = CGRectMake(0, 0, CGRectGetWidth(mainWindow_.frame), CGRectGetHeight(mainWindow_.frame));
+			}
+			else {
 				newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
 			}
 		}
+		
 		[self removeFromSuperview];
 		[viewController.view addSubview:self];
 		UIWindow *newWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
