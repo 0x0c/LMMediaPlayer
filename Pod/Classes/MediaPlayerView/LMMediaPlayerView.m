@@ -162,14 +162,19 @@ static LMMediaPlayerView *sharedPlayerView;
 	playerLayer_.frame = self.bounds;
 }
 
+- (void)setShowInterface:(BOOL)showInterface
+{
+	headerView_.hidden = !showInterface;
+	footerView_.hidden = !showInterface;
+	_currentTimeSlider.hidden = !showInterface;
+	previousButton_.hidden = !showInterface;
+	nextButton_.hidden = !showInterface;
+}
+
 #pragma mark -
 
 - (void)setup
 {
-	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
-	[self addGestureRecognizer:gesture];
-	LM_RELEASE(gesture);
-	
 	[self setTranslatesAutoresizingMaskIntoConstraints:YES];
 	self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	
@@ -191,6 +196,10 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setupUserInterface
 {
+	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
+	[self addGestureRecognizer:gesture];
+	LM_RELEASE(gesture);
+	
 	artworkImageView_.contentMode = UIViewContentModeScaleAspectFit;
 	
 	[_currentTimeSlider addTarget:self action:@selector(beginSeek:) forControlEvents:UIControlEventTouchDown];
