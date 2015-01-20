@@ -318,7 +318,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	else {
 		playerLayer_.hidden = YES;
 		artworkImageView_.hidden = NO;
-		artworkImageView_.image = [media getArtworkImageWithSize:self.frame.size];
+		artworkImageView_.image = [media artworkImageWithSize:self.frame.size];
 	}
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidStartPlaying:media:)]) {
 		[self.delegate mediaPlayerViewDidStartPlaying:self media:media];

@@ -150,7 +150,9 @@ static LMMediaPlayer *sharedPlayer;
 	[songInfo setObject:[_nowPlayingItem getTitle] ?: @"" forKey:MPMediaItemPropertyTitle];
 	[songInfo setObject:[_nowPlayingItem getAlbumTitle] ?: @"" forKey:MPMediaItemPropertyAlbumTitle];
 	[songInfo setObject:[_nowPlayingItem getArtistString] ?: @"" forKey:MPMediaItemPropertyArtist];
-	UIImage *artworkImage = [_nowPlayingItem getArtworkImageWithSize:CGSizeMake(320, 320)];
+	[songInfo setObject:@([self currentPlaybackTime]) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+	[songInfo setObject:@([self currentPlaybackDuration]) forKey:MPMediaItemPropertyPlaybackDuration];
+	UIImage *artworkImage = [_nowPlayingItem artworkImageWithSize:CGSizeMake(320, 320)];
 	if (artworkImage) {
 		MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:artworkImage];
 		[songInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];

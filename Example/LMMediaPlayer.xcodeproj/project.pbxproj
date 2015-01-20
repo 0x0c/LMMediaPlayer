@@ -352,6 +352,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Akira Matsuda";
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
 					};

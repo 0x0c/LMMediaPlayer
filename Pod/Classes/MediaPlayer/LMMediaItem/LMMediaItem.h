@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, LMMediaItemContentType) {
 
 - (instancetype)initWithMetaMedia:(id)media contentType:(LMMediaItemContentType)type;
 - (instancetype)initWithInfo:(NSDictionary *)info;
-- (UIImage *)getArtworkImageWithSize:(CGSize)size;
+- (UIImage *)artworkImageWithSize:(CGSize)size;
 - (void)setArtworkImage:(UIImage *)image;
 - (BOOL)isVideo;
 
