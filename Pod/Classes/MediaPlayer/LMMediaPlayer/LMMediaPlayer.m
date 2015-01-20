@@ -220,7 +220,6 @@ static LMMediaPlayer *sharedPlayer;
 - (void)pause
 {
 	[player_ pause];
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	[self setCurrentState:LMMediaPlaybackStatePaused];
 }
 
