@@ -71,14 +71,14 @@ extern NSString *const LMMediaPlayerStopNotification;
 - (void)pause;
 - (void)playNextMedia;
 - (void)playPreviousMedia;
-- (NSArray *)getQueue;
+- (NSArray *)queue;
 - (NSUInteger)numberOfQueue;
 - (NSTimeInterval)currentPlaybackTime;
 - (NSTimeInterval)currentPlaybackDuration;
 - (void)seekTo:(NSTimeInterval)time;
 - (void)setShuffleEnabled:(BOOL)enabled;
-- (UIImage *)getThumbnailAtTime:(CGFloat)time;
-- (UIImage *)getRepresentativeThumbnail;
+- (UIImage *)thumbnailAtTime:(CGFloat)time;
+- (UIImage *)representativeThumbnail;
 - (NSError *)setAudioSessionCategory:(NSString *)category;
 
 @end

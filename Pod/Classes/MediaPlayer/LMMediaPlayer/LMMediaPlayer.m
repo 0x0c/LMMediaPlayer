@@ -294,7 +294,7 @@ static LMMediaPlayer *sharedPlayer;
 	}
 }
 
-- (NSArray *)getQueue
+- (NSArray *)queue
 {
 	NSArray *newArray = [self.currentQueue copy];
 	LM_AUTORELEASE(newArray);
@@ -369,7 +369,7 @@ static LMMediaPlayer *sharedPlayer;
 	playbackState_ = state;
 }
 
-- (UIImage *)getThumbnailAtTime:(CGFloat)time
+- (UIImage *)thumbnailAtTime:(CGFloat)time
 {
 	AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:[[player_ currentItem] asset]];
 	imageGenerator.appliesPreferredTrackTransform = YES;
@@ -384,9 +384,9 @@ static LMMediaPlayer *sharedPlayer;
 	return resultImage;
 }
 
-- (UIImage *)getRepresentativeThumbnail
+- (UIImage *)representativeThumbnail
 {
-	return [self getThumbnailAtTime:self.currentPlaybackDuration / 2];
+	return [self thumbnailAtTime:self.currentPlaybackDuration / 2];
 }
 
 - (NSError *)setAudioSessionCategory:(NSString *)category

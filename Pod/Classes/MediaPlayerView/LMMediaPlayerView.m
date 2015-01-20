@@ -217,24 +217,24 @@ static LMMediaPlayerView *sharedPlayerView;
 	[_mediaPlayer setShuffleEnabled:NO];
 	[_mediaPlayer setRepeatMode:LMMediaRepeatModeNone];
 	
-	buttonImages_ = [@{LMMediaPlayerViewPlayButtonImageKey						:	[[self class] getImageForFilename:@"play"],
-					   LMMediaPlayerViewPlayButtonSelectedImageKey				:	[[self class] getImageForFilename:@"play"],
-					   LMMediaPlayerViewStopButtonImageKey						:	[[self class] getImageForFilename:@"pause"],
-					   LMMediaPlayerViewStopButtonSelectedImageKey				:	[[self class] getImageForFilename:@"pause"],
-					   LMMediaPlayerViewShuffleButtonShuffledImageKey			:	[[self class] getImageForFilename:@"shuffle"],
-					   LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey	:	[[self class] getImageForFilename:@"shuffle"],
-					   LMMediaPlayerViewShuffleButtonUnshuffledImageKey			:	[[self class] getImageForFilename:@"unshuffle"],
-					   LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey	:	[[self class] getImageForFilename:@"unshuffle"],
-					   LMMediaPlayerViewRepeatButtonRepeatNoneImageKey			:	[[self class] getImageForFilename:@"repeat_none"],
-					   LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey	:	[[self class] getImageForFilename:@"repeat_none"],
-					   LMMediaPlayerViewRepeatButtonRepeatOneImageKey			:	[[self class] getImageForFilename:@"repeat_one"],
-					   LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey	:	[[self class] getImageForFilename:@"repeat_one"],
-					   LMMediaPlayerViewRepeatButtonRepeatAllImageKey			:	[[self class] getImageForFilename:@"repeat_all"],
-					   LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey	:	[[self class] getImageForFilename:@"repeat_all"],
-					   LMMediaPlayerViewFullscreenButtonImageKey				:	[[self class] getImageForFilename:@"fullscreen"],
-					   LMMediaPlayerViewFullscreenButtonSelectedImageKey		:	[[self class] getImageForFilename:@"fullscreen"],
-					   LMMediaPlayerViewUnfullscreenButtonImageKey				:	[[self class] getImageForFilename:@"unfullscreen"],
-					   LMMediaPlayerViewUnfullscreenButtonSelectedImageKey		:	[[self class] getImageForFilename:@"unfullscreen"]
+	buttonImages_ = [@{LMMediaPlayerViewPlayButtonImageKey						:	[[self class] imageForFilename:@"play"],
+					   LMMediaPlayerViewPlayButtonSelectedImageKey				:	[[self class] imageForFilename:@"play"],
+					   LMMediaPlayerViewStopButtonImageKey						:	[[self class] imageForFilename:@"pause"],
+					   LMMediaPlayerViewStopButtonSelectedImageKey				:	[[self class] imageForFilename:@"pause"],
+					   LMMediaPlayerViewShuffleButtonShuffledImageKey			:	[[self class] imageForFilename:@"shuffle"],
+					   LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey	:	[[self class] imageForFilename:@"shuffle"],
+					   LMMediaPlayerViewShuffleButtonUnshuffledImageKey			:	[[self class] imageForFilename:@"unshuffle"],
+					   LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey	:	[[self class] imageForFilename:@"unshuffle"],
+					   LMMediaPlayerViewRepeatButtonRepeatNoneImageKey			:	[[self class] imageForFilename:@"repeat_none"],
+					   LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey	:	[[self class] imageForFilename:@"repeat_none"],
+					   LMMediaPlayerViewRepeatButtonRepeatOneImageKey			:	[[self class] imageForFilename:@"repeat_one"],
+					   LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey	:	[[self class] imageForFilename:@"repeat_one"],
+					   LMMediaPlayerViewRepeatButtonRepeatAllImageKey			:	[[self class] imageForFilename:@"repeat_all"],
+					   LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey	:	[[self class] imageForFilename:@"repeat_all"],
+					   LMMediaPlayerViewFullscreenButtonImageKey				:	[[self class] imageForFilename:@"fullscreen"],
+					   LMMediaPlayerViewFullscreenButtonSelectedImageKey		:	[[self class] imageForFilename:@"fullscreen"],
+					   LMMediaPlayerViewUnfullscreenButtonImageKey				:	[[self class] imageForFilename:@"unfullscreen"],
+					   LMMediaPlayerViewUnfullscreenButtonSelectedImageKey		:	[[self class] imageForFilename:@"unfullscreen"]
 					   } mutableCopy];
 	
 	[playButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
@@ -671,7 +671,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 }
 
-+ (UIImage *)getImageForFilename:(NSString *)filename
++ (UIImage *)imageForFilename:(NSString *)filename
 {
 	NSString *version = @"7";
 	if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
