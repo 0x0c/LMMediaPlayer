@@ -171,7 +171,6 @@ static LMMediaPlayer *sharedPlayer;
 			[player_ removeTimeObserver:playerObserver_];
 			[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
 			[self play];
-			[self setCurrentState:LMMediaPlaybackStatePlaying];
 			if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
 				[self.delegate mediaPlayerDidStartPlaying:self media:media];
 			}
@@ -188,7 +187,6 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)play
 {
-	
 	if (playbackState_ == LMMediaPlaybackStateStopped) {
 		[player_ seekToTime:CMTimeMake(0, 1)];
 	}
@@ -197,8 +195,9 @@ static LMMediaPlayer *sharedPlayer;
 	}
 	else {
 		[player_ play];
-		[self setCurrentState:LMMediaPlaybackStatePlaying];
 	}
+    
+    [self setCurrentState:LMMediaPlaybackStatePlaying];
 }
 
 - (void)playAtIndex:(NSInteger)index
@@ -352,6 +351,10 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)setCurrentState:(LMMediaPlaybackState)state
 {
+    if (state == playbackState_) {
+        return;
+    }
+    
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillChangeState:)]) {
 		[self.delegate mediaPlayerWillChangeState:state];
 	}
