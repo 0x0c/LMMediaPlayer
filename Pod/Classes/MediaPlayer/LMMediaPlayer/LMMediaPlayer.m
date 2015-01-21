@@ -254,7 +254,7 @@ static LMMediaPlayer *sharedPlayer;
 			[self stop];
 		}
 		else {
-			[self playMedia:self.currentQueue[_index]];
+			[self playMedia:self.nowPlayingItem];
 		}
 	}
 	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll){

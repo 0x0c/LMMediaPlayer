@@ -379,7 +379,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerDidChangeShuffleMode:(BOOL)enabled player:(LMMediaPlayer *)player
 {
-	[self setShuggleButtonImageWithShuffleMode:enabled];
+	[self setShuffleButtonImageWithShuffleMode:enabled];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeShuffleMode:playerView:)]) {
 		[self.delegate mediaPlayerViewDidChangeShuffleMode:enabled playerView:self];
 	}
@@ -500,7 +500,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	[self setRepeatButtonImageWithRepeatMode:_mediaPlayer.repeatMode];
 }
 
-- (void)setShuggleButtonImageWithShuffleMode:(BOOL)mode
+- (void)setShuffleButtonImageWithShuffleMode:(BOOL)mode
 {
 	if (mode) {
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledImageKey] forState:UIControlStateNormal];

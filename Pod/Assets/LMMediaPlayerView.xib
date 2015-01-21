@@ -88,7 +88,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gwr-a1-XwM">
-                            <rect key="frame" x="230" y="4" width="35" height="35"/>
+                            <rect key="frame" x="235" y="4" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="DdA-mY-0fd"/>
                                 <constraint firstAttribute="width" constant="35" id="Gi1-uZ-3x5"/>
@@ -116,7 +116,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Qi-Gq-8h6">
-                            <rect key="frame" x="18" y="11" width="247" height="21"/>
+                            <rect key="frame" x="18" y="11" width="204" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -127,12 +127,12 @@
                         <constraint firstItem="9Qi-Gq-8h6" firstAttribute="top" secondItem="GIL-kJ-GRw" secondAttribute="top" constant="11" id="5EV-RQ-nTc"/>
                         <constraint firstAttribute="centerY" secondItem="gwr-a1-XwM" secondAttribute="centerY" id="8U3-RP-BCS"/>
                         <constraint firstAttribute="trailing" secondItem="gdm-wB-X2t" secondAttribute="trailing" constant="12" id="D6O-mp-kdP"/>
-                        <constraint firstItem="gdm-wB-X2t" firstAttribute="leading" secondItem="gwr-a1-XwM" secondAttribute="trailing" constant="8" id="LKy-CR-E7x"/>
+                        <constraint firstItem="gdm-wB-X2t" firstAttribute="leading" secondItem="gwr-a1-XwM" secondAttribute="trailing" constant="3" id="LKy-CR-E7x"/>
+                        <constraint firstItem="gwr-a1-XwM" firstAttribute="leading" secondItem="9Qi-Gq-8h6" secondAttribute="trailing" constant="13" id="NMf-rN-2LZ"/>
                         <constraint firstItem="9Qi-Gq-8h6" firstAttribute="leading" secondItem="GIL-kJ-GRw" secondAttribute="leading" constant="18" id="Zvd-rL-Ne9"/>
                         <constraint firstAttribute="bottom" secondItem="9Qi-Gq-8h6" secondAttribute="bottom" constant="12" id="aus-9L-lpw"/>
                         <constraint firstAttribute="height" constant="44" id="lSK-HM-Lxp"/>
                         <constraint firstAttribute="centerY" secondItem="gdm-wB-X2t" secondAttribute="centerY" id="rep-eI-5fV"/>
-                        <constraint firstItem="gdm-wB-X2t" firstAttribute="leading" secondItem="9Qi-Gq-8h6" secondAttribute="trailing" constant="8" id="scc-Ph-tBG"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qWF-ZD-TKU">
