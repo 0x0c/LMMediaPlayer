@@ -28,6 +28,7 @@ extern NSString *const LMMediaPlayerViewRepeatButtonRepeatAllImageKey;
 extern NSString *const LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey;
 extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneImageKey;
 extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
+extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 
 @class LMMediaPlayerView;
 
@@ -56,6 +57,7 @@ extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nonatomic, readonly) BOOL isFullscreen;
 @property (nonatomic, assign) BOOL showInterface;
+@property (nonatomic, readonly) UIButton *actionButton;
 
 + (instancetype)sharedPlayerView;
 + (instancetype)create;

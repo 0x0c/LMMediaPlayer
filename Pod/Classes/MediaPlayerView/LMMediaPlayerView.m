@@ -12,6 +12,8 @@
 #import "LMMediaPlayerHelper.h"
 
 static CGFloat const kFullscreenTransitionDuration = 0.2;
+static CGFloat const kActionButtonDefaultEdgeLength = 35;
+static CGFloat const kActionButtonDefaultRightMergin = 8;
 
 NSString *const LMMediaPlayerViewPlayButtonImageKey = @"playButtonImageKey";
 NSString *const LMMediaPlayerViewPlayButtonSelectedImageKey = @"playButtonSelectedImageKey";
@@ -31,6 +33,7 @@ NSString *const LMMediaPlayerViewRepeatButtonRepeatAllImageKey = @"repeatButtonR
 NSString *const LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey = @"repeatButtonRepeatAllSelectedImageKey";
 NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneImageKey = @"repeatButtonRepeatNoneImageKey";
 NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repeatButtonRepeatNoneSelectedImageKey";
+NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActionButtonImageKey";
 
 @interface UIViewController (LMMediaPlayerPrefersStatusBarHidden)
 
@@ -64,17 +67,20 @@ NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey = @"repe
 @interface LMMediaPlayerView ()
 {
 	BOOL userInterfaceHidden_;
-	IBOutlet UILabel *playbackTimeLabel_;
-	IBOutlet UILabel *remainingTimeLabel_;
-	IBOutlet UIView *headerView_;
-	IBOutlet UIView *footerView_;
-	IBOutlet UIImageView *artworkImageView_;
-	IBOutlet UIButton *playButton_;
-	IBOutlet UIButton *nextButton_;
-	IBOutlet UIButton *previousButton_;
-	IBOutlet UIButton *shuffleButton_;
-	IBOutlet UIButton *repeatButton_;
-	IBOutlet UIButton *fullscreenButton_;
+	__unsafe_unretained IBOutlet UILabel *playbackTimeLabel_;
+	__unsafe_unretained IBOutlet UILabel *remainingTimeLabel_;
+	__unsafe_unretained IBOutlet UIView *headerView_;
+	__unsafe_unretained IBOutlet UIView *footerView_;
+	__unsafe_unretained IBOutlet UIImageView *artworkImageView_;
+	__unsafe_unretained IBOutlet UIButton *playButton_;
+	__unsafe_unretained IBOutlet UIButton *nextButton_;
+	__unsafe_unretained IBOutlet UIButton *previousButton_;
+	__unsafe_unretained IBOutlet UIButton *shuffleButton_;
+	__unsafe_unretained IBOutlet UIButton *repeatButton_;
+	__unsafe_unretained IBOutlet UIButton *fullscreenButton_;
+	__unsafe_unretained IBOutlet UIButton *actionButton_;
+	__unsafe_unretained IBOutlet NSLayoutConstraint *actionButtonWidth_;
+	__unsafe_unretained IBOutlet NSLayoutConstraint *actionButtonRightMergin;
 	BOOL fullscreen_;
 	BOOL seeking_;
 	BOOL needToSetPlayer_;
@@ -171,6 +177,11 @@ static LMMediaPlayerView *sharedPlayerView;
 	nextButton_.hidden = !showInterface;
 }
 
+- (UIButton *)actionButton
+{
+	return actionButton_;
+}
+
 #pragma mark -
 
 - (void)setup
@@ -252,6 +263,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	[shuffleButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
+	actionButtonWidth_.constant = 0;
+	actionButtonRightMergin.constant = 0;
 }
 
 - (void)mediaPlayerBecomeForgroundMode:(NSNotification *)notification
@@ -667,8 +680,19 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setButtonImages:(NSDictionary *)info
 {
+	BOOL actionButtonImageAvailable = NO;
 	for (NSString *key in info) {
 		buttonImages_[key] = info[key];
+		if ([key isEqualToString:LMMediaPlayerViewActionButtonImageKey]) {
+			[actionButton_ setImage:info[key] forState:UIControlStateNormal];
+			actionButtonImageAvailable = YES;
+			actionButtonWidth_.constant = kActionButtonDefaultEdgeLength;
+			actionButtonRightMergin.constant = kActionButtonDefaultRightMergin;
+		}
+	}
+	if (actionButtonImageAvailable == NO) {
+		actionButtonWidth_.constant = 0;
+		actionButtonRightMergin.constant = 0;
 	}
 }
 
