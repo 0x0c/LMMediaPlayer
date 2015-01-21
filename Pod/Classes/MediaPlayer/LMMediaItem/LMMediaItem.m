@@ -19,7 +19,6 @@
 	NSString *artist_;
 	UIImage *artworkImage_;
 	NSURL *url_;
-	LMMediaItemContentType contentType_;
 }
 
 @end
@@ -53,7 +52,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	self = [super init];
 	if (self) {
 		metaMedia_ = media;
-		contentType_ = type;
+		_contentType = type;
 	}
 	
 	return self;
@@ -68,7 +67,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		artist_ = ([info[LMMediaItemInfoArtistKey] isKindOfClass:[NSString class]] ? [info[LMMediaItemInfoArtistKey] copy] : nil);
 		artworkImage_ = ([info[LMMediaItemInfoArtworkKey] isKindOfClass:[UIImage class]] ? [info[LMMediaItemInfoArtworkKey] copy] : nil);
 		url_ = ([info[LMMediaItemInfoURLKey] isKindOfClass:[NSURL class]] ? [info[LMMediaItemInfoURLKey] copy] : nil);
-		contentType_ = (LMMediaItemContentType)([info[LMMediaItemInfoContentTypeKey] isKindOfClass:[NSNumber class]] ? [info[LMMediaItemInfoContentTypeKey] integerValue] : -1);
+		_contentType = (LMMediaItemContentType)([info[LMMediaItemInfoContentTypeKey] isKindOfClass:[NSNumber class]] ? [info[LMMediaItemInfoContentTypeKey] integerValue] : -1);
 	}
 	
 	return self;
@@ -83,7 +82,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		artist_ = [coder decodeObjectForKey:LMMediaItemInfoArtistKey];
 		artworkImage_ = [coder decodeObjectForKey:LMMediaItemInfoArtworkKey];
 		url_ = [coder decodeObjectForKey:LMMediaItemInfoURLKey];
-		contentType_ = (LMMediaItemContentType)[[coder decodeObjectForKey:LMMediaItemInfoContentTypeKey] integerValue];
+		_contentType = (LMMediaItemContentType)[[coder decodeObjectForKey:LMMediaItemInfoContentTypeKey] integerValue];
 	}
 	
 	return self;
@@ -96,7 +95,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	[coder encodeObject:artist_ forKey:LMMediaItemInfoArtistKey];
 	[coder encodeObject:artworkImage_ forKey:LMMediaItemInfoArtworkKey];
 	[coder encodeObject:url_ forKey:LMMediaItemInfoURLKey];
-	[coder encodeObject:[NSNumber numberWithInteger:contentType_] forKey:LMMediaItemInfoContentTypeKey];
+	[coder encodeObject:[NSNumber numberWithInteger:_contentType] forKey:LMMediaItemInfoContentTypeKey];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -127,7 +126,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		LM_AUTORELEASE(newURL);
 		newInfo[LMMediaItemInfoURLKey] = newURL ?: [NSNull null];
 	}
-	newInfo[LMMediaItemInfoContentTypeKey] = [NSNumber numberWithInteger:contentType_];
+	newInfo[LMMediaItemInfoContentTypeKey] = [NSNumber numberWithInteger:_contentType];
 	
 	LMMediaItem *newObject = [[[self class] allocWithZone:zone] initWithInfo:newInfo];
 	LM_RELEASE(newInfo);
@@ -191,7 +190,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 
 - (BOOL)isVideo
 {
-	return contentType_;
+	return _contentType == LMMediaItemContentTypeVideo;
 }
 
 - (NSString *)description
@@ -201,7 +200,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 			  @"artist":artist_ ?: @"nil",
 			  @"url":url_ ?: @"nil",
 			  @"artwork":artworkImage_ ?: @"nil",
-			  @"content type":contentType_ == LMMediaItemContentTypeAudio ? @"LMMediaItemContentTypeAudio" : @"LMMediaItemContentTypeVideo",
+			  @"content type":_contentType == LMMediaItemContentTypeAudio ? @"LMMediaItemContentTypeAudio" : @"LMMediaItemContentTypeVideo",
 			  @"meta media":metaMedia_ ?: @"nil"} description];
 }
 

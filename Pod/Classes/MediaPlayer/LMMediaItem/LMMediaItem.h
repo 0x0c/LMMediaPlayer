@@ -35,5 +35,6 @@ typedef NS_ENUM(NSUInteger, LMMediaItemContentType) {
 @property (nonatomic, copy, getter = getArtistString) NSString *artist;
 @property (nonatomic, copy) id metaMedia;
 @property (nonatomic, copy, getter = getAssetURL) NSURL *assetURL;
+@property (nonatomic, readonly) LMMediaItemContentType contentType;
 
 @end
