@@ -263,6 +263,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	[shuffleButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
+	
+	[actionButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	actionButtonWidth_.constant = 0;
 	actionButtonRightMergin.constant = 0;
 }
@@ -680,20 +682,43 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setButtonImages:(NSDictionary *)info
 {
-	BOOL actionButtonImageAvailable = NO;
 	for (NSString *key in info) {
 		buttonImages_[key] = info[key];
-		if ([key isEqualToString:LMMediaPlayerViewActionButtonImageKey]) {
-			[actionButton_ setImage:info[key] forState:UIControlStateNormal];
-			actionButtonImageAvailable = YES;
-			actionButtonWidth_.constant = kActionButtonDefaultEdgeLength;
-			actionButtonRightMergin.constant = kActionButtonDefaultRightMergin;
-		}
 	}
-	if (actionButtonImageAvailable == NO) {
+	if ([buttonImages_[LMMediaPlayerViewActionButtonImageKey] isKindOfClass:[UIImage class]]) {
+		actionButtonWidth_.constant = kActionButtonDefaultEdgeLength;
+		actionButtonRightMergin.constant = kActionButtonDefaultRightMergin;
+		[actionButton_ setImage:info[LMMediaPlayerViewActionButtonImageKey] forState:UIControlStateNormal];
+	}
+	else {
 		actionButtonWidth_.constant = 0;
 		actionButtonRightMergin.constant = 0;
 	}
+	[self updateButtonImages];
+}
+
+- (void)updateButtonImages
+{
+	if (self.mediaPlayer.playbackState == LMMediaPlaybackStatePlaying) {
+		[playButton_ setImage:buttonImages_[LMMediaPlayerViewStopButtonImageKey] forState:UIControlStateNormal];
+		[playButton_ setImage:buttonImages_[LMMediaPlayerViewStopButtonSelectedImageKey] forState:UIControlStateSelected];
+	}
+	else {
+		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] forState:UIControlStateNormal];
+		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] forState:UIControlStateSelected];
+	}
+	
+	if (self.isFullscreen) {
+		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
+		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
+	}
+	else {
+		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
+		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
+	}
+	
+	[self setRepeatButtonImageWithRepeatMode:self.mediaPlayer.repeatMode];
+	[self setShuffleButtonImageWithShuffleMode:self.mediaPlayer.shuffleMode];
 }
 
 + (UIImage *)imageForFilename:(NSString *)filename
