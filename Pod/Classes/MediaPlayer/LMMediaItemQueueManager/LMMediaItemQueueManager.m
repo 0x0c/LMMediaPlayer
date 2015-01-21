@@ -13,7 +13,7 @@ static NSString *const kLMMediaItemQueueManagerQueueList = @"kLMMediaItemQueueMa
 
 @implementation LMMediaItemQueueManager
 
-+ (NSArray *)getQueueList
++ (NSArray *)queueList
 {
 	return [[NSUserDefaults standardUserDefaults] arrayForKey:kLMMediaItemQueueManagerQueueList];
 }
@@ -21,7 +21,7 @@ static NSString *const kLMMediaItemQueueManagerQueueList = @"kLMMediaItemQueueMa
 + (void)removeQueueWithKey:(NSString *)key
 {
 	[[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-	NSMutableArray *keys = [NSMutableArray arrayWithArray:[LMMediaItemQueueManager getQueueList]];
+	NSMutableArray *keys = [NSMutableArray arrayWithArray:[LMMediaItemQueueManager queueList]];
 	for (NSString *k in keys) {
 		if ([k isEqualToString:key]) {
 			[keys removeObject:k];
@@ -42,7 +42,7 @@ static NSString *const kLMMediaItemQueueManagerQueueList = @"kLMMediaItemQueueMa
 	}
 	[[NSUserDefaults standardUserDefaults] setObject:saveArray forKey:key];
 	
-	NSMutableArray *keys = [NSMutableArray arrayWithArray:[LMMediaItemQueueManager getQueueList]];
+	NSMutableArray *keys = [NSMutableArray arrayWithArray:[LMMediaItemQueueManager queueList]];
 	[keys addObject:key];
 	[[NSUserDefaults standardUserDefaults] setObject:keys forKey:kLMMediaItemQueueManagerQueueList];
 }

@@ -11,7 +11,7 @@
 
 @interface LMMediaItemQueueManager : NSObject
 
-+ (NSArray *)getQueueList;
++ (NSArray *)queueList;
 + (void)removeQueueWithKey:(NSString *)key;
 + (void)saveQueueWithKey:(NSString *)key queue:(NSArray *)queue;
 + (NSArray *)loadQueueWithKey:(NSString *)key;
