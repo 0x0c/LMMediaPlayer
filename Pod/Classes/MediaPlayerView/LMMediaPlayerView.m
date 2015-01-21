@@ -299,6 +299,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	else {
 		result = YES;
 	}
+	self.titleLabel.text = media.title;
 	
 	return result;
 }

@@ -63,6 +63,7 @@
 	dispatch_once(&onceToken, ^{
 		NSURL *path = [[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
 		LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path}];
+		item.title = @"sample.mp4";
 		[playerView_.mediaPlayer addMedia:item];
 		[playerView_.mediaPlayer play];
 #if !__has_feature(objc_arc)

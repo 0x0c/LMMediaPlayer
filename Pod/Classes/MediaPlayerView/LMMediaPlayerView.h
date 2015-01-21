@@ -53,6 +53,7 @@ extern NSString *const LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey;
 @property (nonatomic, assign) id<LMMediaPlayerViewDelegate> delegate;
 @property (nonatomic, readonly) LMMediaPlayer *mediaPlayer;
 @property (nonatomic, strong) IBOutlet UISlider *currentTimeSlider;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nonatomic, readonly) BOOL isFullscreen;
 @property (nonatomic, assign) BOOL showInterface;
 
