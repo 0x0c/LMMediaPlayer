@@ -85,6 +85,13 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 	NSMutableDictionary *buttonImages_;
 	AVPlayerLayer *playerLayer_;
 	
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+	UIVisualEffectView *headerBlurView_;
+	UIVisualEffectView *footerBlurView_;
+	UIVisualEffectView *nextButtonBlurView_;
+	UIVisualEffectView *previousButtonBlurView_;
+#endif
+	
 	UIWindow *mainWindow_;
 }
 
@@ -175,35 +182,30 @@ static LMMediaPlayerView *sharedPlayerView;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
 	if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
 		_bluredUserInterface = bluredUserInterface;
-		static UIVisualEffectView *headerView;
-		static UIVisualEffectView *footerView;
-		static UIVisualEffectView *nextButtonView;
-		static UIVisualEffectView *previousButtonView;
 		if (_bluredUserInterface == YES) {
-			static dispatch_once_t onceToken;
-			dispatch_once(&onceToken, ^{
-				headerView = [[UIVisualEffectView alloc] initWithEffect:effect];
-				footerView = [[UIVisualEffectView alloc] initWithEffect:effect];
-				nextButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
-				previousButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
+			if (headerBlurView_ == nil) {
+				headerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
+				footerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
+				nextButtonBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
+				previousButtonBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
 				
-				headerView.frame = headerView_.bounds;
-				headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				headerBlurView_.frame = headerView_.bounds;
+				headerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 				
-				footerView.frame = footerView_.bounds;
-				footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				footerBlurView_.frame = footerView_.bounds;
+				footerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 				
-				nextButtonView.frame = _nextButton.bounds;
-				nextButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				nextButtonBlurView_.frame = _nextButton.bounds;
+				nextButtonBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 				
-				previousButtonView.frame = _previousButton.bounds;
-				previousButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				previousButtonBlurView_.frame = _previousButton.bounds;
+				previousButtonBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 				
-				[headerView_ insertSubview:headerView atIndex:0];
-				[footerView_ insertSubview:footerView atIndex:0];
-				[_nextButton.superview insertSubview:nextButtonView atIndex:0];
-				[_previousButton.superview insertSubview:previousButtonView atIndex:0];
-			});
+				[headerView_ insertSubview:headerBlurView_ atIndex:0];
+				[footerView_ insertSubview:footerBlurView_ atIndex:0];
+				[_nextButton.superview insertSubview:nextButtonBlurView_ atIndex:0];
+				[_previousButton.superview insertSubview:previousButtonBlurView_ atIndex:0];				
+			}
 			
 			headerView_.backgroundColor = [UIColor clearColor];
 			footerView_.backgroundColor = [UIColor clearColor];
@@ -218,7 +220,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			_previousButton.backgroundColor = backgroundColor;
 		}
 		
-		headerView.hidden = footerView.hidden = nextButtonView.hidden = previousButtonView.hidden = !_bluredUserInterface;		
+		headerBlurView_.hidden = footerBlurView_.hidden = nextButtonBlurView_.hidden = previousButtonBlurView_.hidden = !_bluredUserInterface;
 	}
 #endif
 }
