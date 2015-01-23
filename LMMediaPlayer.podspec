@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "LMMediaPlayer"
-  s.version          = "0.2.2"
+  s.version          = "0.3.0"
   s.summary          = "Video and audio player with replaceable UI component."
   s.homepage         = "https://github.com/0x0c/LMMediaPlayer"
 
