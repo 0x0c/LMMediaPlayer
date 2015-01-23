@@ -207,15 +207,15 @@ static LMMediaPlayerView *sharedPlayerView;
 			
 			headerView_.backgroundColor = [UIColor clearColor];
 			footerView_.backgroundColor = [UIColor clearColor];
-			_nextButton.superview.backgroundColor = [UIColor clearColor];
-			_previousButton.superview.backgroundColor = [UIColor clearColor];
+			_nextButton.backgroundColor = [UIColor clearColor];
+			_previousButton.backgroundColor = [UIColor clearColor];
 		}
 		else {
 			UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 			headerView_.backgroundColor = backgroundColor;
 			footerView_.backgroundColor = backgroundColor;
-			_nextButton.superview.backgroundColor = backgroundColor;
-			_previousButton.superview.backgroundColor = backgroundColor;
+			_nextButton.backgroundColor = backgroundColor;
+			_previousButton.backgroundColor = backgroundColor;
 		}
 		
 		headerView.hidden = footerView.hidden = nextButtonView.hidden = previousButtonView.hidden = !_bluredUserInterface;		
