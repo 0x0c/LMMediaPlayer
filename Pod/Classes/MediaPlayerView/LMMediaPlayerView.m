@@ -88,8 +88,6 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
 	UIVisualEffectView *headerBlurView_;
 	UIVisualEffectView *footerBlurView_;
-	UIVisualEffectView *nextButtonBlurView_;
-	UIVisualEffectView *previousButtonBlurView_;
 #endif
 	
 	UIWindow *mainWindow_;
@@ -186,8 +184,6 @@ static LMMediaPlayerView *sharedPlayerView;
 			if (headerBlurView_ == nil) {
 				headerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
 				footerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
-				nextButtonBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
-				previousButtonBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
 				
 				headerBlurView_.frame = headerView_.bounds;
 				headerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -195,32 +191,20 @@ static LMMediaPlayerView *sharedPlayerView;
 				footerBlurView_.frame = footerView_.bounds;
 				footerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 				
-				nextButtonBlurView_.frame = _nextButton.bounds;
-				nextButtonBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-				
-				previousButtonBlurView_.frame = _previousButton.bounds;
-				previousButtonBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-				
 				[headerView_ insertSubview:headerBlurView_ atIndex:0];
 				[footerView_ insertSubview:footerBlurView_ atIndex:0];
-				[_nextButton.superview insertSubview:nextButtonBlurView_ atIndex:0];
-				[_previousButton.superview insertSubview:previousButtonBlurView_ atIndex:0];				
 			}
 			
 			headerView_.backgroundColor = [UIColor clearColor];
 			footerView_.backgroundColor = [UIColor clearColor];
-			_nextButton.backgroundColor = [UIColor clearColor];
-			_previousButton.backgroundColor = [UIColor clearColor];
 		}
 		else {
 			UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 			headerView_.backgroundColor = backgroundColor;
 			footerView_.backgroundColor = backgroundColor;
-			_nextButton.backgroundColor = backgroundColor;
-			_previousButton.backgroundColor = backgroundColor;
 		}
 		
-		headerBlurView_.hidden = footerBlurView_.hidden = nextButtonBlurView_.hidden = previousButtonBlurView_.hidden = !_bluredUserInterface;
+		headerBlurView_.hidden = footerBlurView_.hidden = !_bluredUserInterface;
 	}
 #endif
 }
@@ -266,8 +250,6 @@ static LMMediaPlayerView *sharedPlayerView;
 		
 	UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 	footerView_.backgroundColor = headerView_.backgroundColor = backgroundColor;
-	_nextButton.backgroundColor = _previousButton.backgroundColor = backgroundColor;
-	_nextButton.superview.backgroundColor = _previousButton.superview.backgroundColor = [UIColor clearColor];
 	[_mediaPlayer setShuffleEnabled:NO];
 	[_mediaPlayer setRepeatMode:LMMediaRepeatModeNone];
 	
