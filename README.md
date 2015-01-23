@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/LMMediaPlayer.svg?style=flat)](http://cocoadocs.org/docsets/LMMediaPlayer)
 [![Platform](https://img.shields.io/cocoapods/p/LMMediaPlayer.svg?style=flat)](http://cocoadocs.org/docsets/LMMediaPlayer)
 
-LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
+LMMediaPlayer is a video and an audio player for iPhone with replaceable user interface.
 
 ![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/1.png)
 ![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/2.png)
