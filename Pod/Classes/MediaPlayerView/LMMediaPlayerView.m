@@ -173,51 +173,53 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)setBluredUserInterface:(BOOL)bluredUserInterface visualEffect:(UIVisualEffect *)effect
 {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
-	_bluredUserInterface = bluredUserInterface;
-	static UIVisualEffectView *headerView;
-	static UIVisualEffectView *footerView;
-	static UIVisualEffectView *nextButtonView;
-	static UIVisualEffectView *previousButtonView;
-	if (_bluredUserInterface == YES) {
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			headerView = [[UIVisualEffectView alloc] initWithEffect:effect];
-			footerView = [[UIVisualEffectView alloc] initWithEffect:effect];
-			nextButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
-			previousButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
-
-			headerView.frame = headerView_.bounds;
-			headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
+		_bluredUserInterface = bluredUserInterface;
+		static UIVisualEffectView *headerView;
+		static UIVisualEffectView *footerView;
+		static UIVisualEffectView *nextButtonView;
+		static UIVisualEffectView *previousButtonView;
+		if (_bluredUserInterface == YES) {
+			static dispatch_once_t onceToken;
+			dispatch_once(&onceToken, ^{
+				headerView = [[UIVisualEffectView alloc] initWithEffect:effect];
+				footerView = [[UIVisualEffectView alloc] initWithEffect:effect];
+				nextButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
+				previousButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
+				
+				headerView.frame = headerView_.bounds;
+				headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				
+				footerView.frame = footerView_.bounds;
+				footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				
+				nextButtonView.frame = _nextButton.bounds;
+				nextButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				
+				previousButtonView.frame = _previousButton.bounds;
+				previousButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+				
+				[headerView_ insertSubview:headerView atIndex:0];
+				[footerView_ insertSubview:footerView atIndex:0];
+				[_nextButton.superview insertSubview:nextButtonView atIndex:0];
+				[_previousButton.superview insertSubview:previousButtonView atIndex:0];
+			});
 			
-			footerView.frame = footerView_.bounds;
-			footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			nextButtonView.frame = _nextButton.bounds;
-			nextButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			previousButtonView.frame = _previousButton.bounds;
-			previousButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-			
-			[headerView_ insertSubview:headerView atIndex:0];
-			[footerView_ insertSubview:footerView atIndex:0];
-			[_nextButton.superview insertSubview:nextButtonView atIndex:0];
-			[_previousButton.superview insertSubview:previousButtonView atIndex:0];
-		});
+			headerView_.backgroundColor = [UIColor clearColor];
+			footerView_.backgroundColor = [UIColor clearColor];
+			_nextButton.superview.backgroundColor = [UIColor clearColor];
+			_previousButton.superview.backgroundColor = [UIColor clearColor];
+		}
+		else {
+			UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
+			headerView_.backgroundColor = backgroundColor;
+			footerView_.backgroundColor = backgroundColor;
+			_nextButton.superview.backgroundColor = backgroundColor;
+			_previousButton.superview.backgroundColor = backgroundColor;
+		}
 		
-		headerView_.backgroundColor = [UIColor clearColor];
-		footerView_.backgroundColor = [UIColor clearColor];
-		_nextButton.backgroundColor = [UIColor clearColor];
-		_previousButton.backgroundColor = [UIColor clearColor];
+		headerView.hidden = footerView.hidden = nextButtonView.hidden = previousButtonView.hidden = !_bluredUserInterface;		
 	}
-	else {
-		UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
-		headerView_.backgroundColor = backgroundColor;
-		footerView_.backgroundColor = backgroundColor;
-		_nextButton.backgroundColor = backgroundColor;
-		_previousButton.backgroundColor = backgroundColor;
-	}
-	
-	headerView.hidden = footerView.hidden = nextButtonView.hidden = previousButtonView.hidden = !_bluredUserInterface;
 #endif
 }
 
