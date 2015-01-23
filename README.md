@@ -7,9 +7,8 @@
 
 LMMediaPlayer is a video and audio player for iPhone with changeable user interface.
 
-![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/2.png)
-
 ![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/1.png)
+![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/2.png)
 ![](https://raw.github.com/0x0c/LMMediaPlayer/master/images/3.png)
 
 ## Requirements
@@ -75,8 +74,34 @@ Already implemented repeat mode and shuffle mode.
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeNone;
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeAll;
 	player.mediaPlayer.repeatMode = LMMediaRepeatModeOne;
-	
+
 	[player.mediaPlayer setShuffleEnabled:YES];
+
+To change user interface, use ```setButtonImages:``` and set images with these keys.
+
+| Keys |
+|:-----------|
+| LMMediaPlayerViewPlayButtonImageKey       |
+| LMMediaPlayerViewPlayButtonSelectedImageKey |
+| LMMediaPlayerViewStopButtonImageKey |
+| LMMediaPlayerViewStopButtonSelectedImageKey |
+| LMMediaPlayerViewFullscreenButtonImageKey |
+| LMMediaPlayerViewFullscreenButtonSelectedImageKey |
+| LMMediaPlayerViewUnfullscreenButtonImageKey |
+| LMMediaPlayerViewUnfullscreenButtonSelectedImageKey |
+| LMMediaPlayerViewShuffleButtonShuffledImageKey  |
+| LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey  |
+| LMMediaPlayerViewShuffleButtonUnshuffledImageKey  |
+| LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey  |
+| LMMediaPlayerViewRepeatButtonRepeatOneImageKey  |
+| LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey  |
+| LMMediaPlayerViewRepeatButtonRepeatAllImageKey  |
+| LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey  |
+| LMMediaPlayerViewRepeatButtonRepeatNoneImageKey |
+| LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey |
+| LMMediaPlayerViewActionButtonImageKey |
+
+To show action button, set image with ```LMMediaPlayerViewActionButtonImageKey```.
 
 Of course, you can play video or audio in background mode and can control with control center.
 If you want to play with fullscreen mode, please add "View controller-based status bar appearance" key and set value with "NO" at your Info.plist
