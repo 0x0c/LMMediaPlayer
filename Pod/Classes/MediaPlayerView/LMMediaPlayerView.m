@@ -66,15 +66,12 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 
 @interface LMMediaPlayerView ()
 {
-	BOOL userInterfaceHidden_;
 	__unsafe_unretained IBOutlet UILabel *playbackTimeLabel_;
 	__unsafe_unretained IBOutlet UILabel *remainingTimeLabel_;
 	__unsafe_unretained IBOutlet UIView *headerView_;
 	__unsafe_unretained IBOutlet UIView *footerView_;
 	__unsafe_unretained IBOutlet UIImageView *artworkImageView_;
 	__unsafe_unretained IBOutlet UIButton *playButton_;
-	__unsafe_unretained IBOutlet UIButton *nextButton_;
-	__unsafe_unretained IBOutlet UIButton *previousButton_;
 	__unsafe_unretained IBOutlet UIButton *shuffleButton_;
 	__unsafe_unretained IBOutlet UIButton *repeatButton_;
 	__unsafe_unretained IBOutlet UIButton *fullscreenButton_;
@@ -144,8 +141,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	LM_RELEASE(footerView_);
 	LM_RELEASE(artworkImageView_);
 	LM_RELEASE(playButton_);
-	LM_RELEASE(nextButton_);
-	LM_RELEASE(previousButton_);
+	LM_RELEASE(_nextButton);
+	LM_RELEASE(_previousButton);
 	LM_RELEASE(shuffleButton_);
 	LM_RELEASE(repeatButton_);
 	LM_RELEASE(fullscreenButton_);
@@ -168,18 +165,60 @@ static LMMediaPlayerView *sharedPlayerView;
 	playerLayer_.frame = self.bounds;
 }
 
-- (void)setShowInterface:(BOOL)showInterface
-{
-	headerView_.hidden = !showInterface;
-	footerView_.hidden = !showInterface;
-	_currentTimeSlider.hidden = !showInterface;
-	previousButton_.hidden = !showInterface;
-	nextButton_.hidden = !showInterface;
-}
-
 - (UIButton *)actionButton
 {
 	return actionButton_;
+}
+
+- (void)setBluredUserInterface:(BOOL)bluredUserInterface visualEffect:(UIVisualEffect *)effect
+{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+	_bluredUserInterface = bluredUserInterface;
+	static UIVisualEffectView *headerView;
+	static UIVisualEffectView *footerView;
+	static UIVisualEffectView *nextButtonView;
+	static UIVisualEffectView *previousButtonView;
+	if (_bluredUserInterface == YES) {
+		static dispatch_once_t onceToken;
+		dispatch_once(&onceToken, ^{
+			headerView = [[UIVisualEffectView alloc] initWithEffect:effect];
+			footerView = [[UIVisualEffectView alloc] initWithEffect:effect];
+			nextButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
+			previousButtonView = [[UIVisualEffectView alloc] initWithEffect:effect];
+
+			headerView.frame = headerView_.bounds;
+			headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			
+			footerView.frame = footerView_.bounds;
+			footerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			
+			nextButtonView.frame = _nextButton.bounds;
+			nextButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			
+			previousButtonView.frame = _previousButton.bounds;
+			previousButtonView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+			
+			[headerView_ insertSubview:headerView atIndex:0];
+			[footerView_ insertSubview:footerView atIndex:0];
+			[_nextButton.superview insertSubview:nextButtonView atIndex:0];
+			[_previousButton.superview insertSubview:previousButtonView atIndex:0];
+		});
+		
+		headerView_.backgroundColor = [UIColor clearColor];
+		footerView_.backgroundColor = [UIColor clearColor];
+		_nextButton.backgroundColor = [UIColor clearColor];
+		_previousButton.backgroundColor = [UIColor clearColor];
+	}
+	else {
+		UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
+		headerView_.backgroundColor = backgroundColor;
+		footerView_.backgroundColor = backgroundColor;
+		_nextButton.backgroundColor = backgroundColor;
+		_previousButton.backgroundColor = backgroundColor;
+	}
+	
+	headerView.hidden = footerView.hidden = nextButtonView.hidden = previousButtonView.hidden = !_bluredUserInterface;
+#endif
 }
 
 #pragma mark -
@@ -199,7 +238,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 	
 	needToSetPlayer_ = NO;
-	userInterfaceHidden_ = NO;
+	_userInterfaceHidden = NO;
 	
 	_mediaPlayer = [[LMMediaPlayer alloc] init];
 	_mediaPlayer.delegate = self;
@@ -218,13 +257,13 @@ static LMMediaPlayerView *sharedPlayerView;
 	[_currentTimeSlider addTarget:self action:@selector(endSeek:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[playButton_ addTarget:self action:@selector(changePlaybackState:) forControlEvents:UIControlEventTouchUpInside];
-	[nextButton_ addTarget:self action:@selector(fourcePlayNextMedia) forControlEvents:UIControlEventTouchUpInside];
-	[previousButton_ addTarget:self	action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
+	[_nextButton addTarget:self action:@selector(fourcePlayNextMedia) forControlEvents:UIControlEventTouchUpInside];
+	[_previousButton addTarget:self	action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
 		
 	UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 	footerView_.backgroundColor = headerView_.backgroundColor = backgroundColor;
-	nextButton_.backgroundColor = previousButton_.backgroundColor = backgroundColor;
-	
+	_nextButton.backgroundColor = _previousButton.backgroundColor = backgroundColor;
+	_nextButton.superview.backgroundColor = _previousButton.superview.backgroundColor = [UIColor clearColor];
 	[_mediaPlayer setShuffleEnabled:NO];
 	[_mediaPlayer setRepeatMode:LMMediaRepeatModeNone];
 	
@@ -456,7 +495,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)reverseUserInterfaceHidden
 {
-	[self setUserInterfaceHidden:!userInterfaceHidden_];
+	[self setUserInterfaceHidden:!_userInterfaceHidden];
 }
 
 - (void)fourcePlayNextMedia
@@ -572,14 +611,14 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setUserInterfaceHidden:(BOOL)hidden
 {
-	userInterfaceHidden_ = hidden;
+	_userInterfaceHidden = hidden;
 	if (hidden) {
 		[UIView animateWithDuration:0.3 animations:^{
 			headerView_.alpha = 0;
 			footerView_.alpha = 0;
 			_currentTimeSlider.alpha = 0;
-			previousButton_.alpha = 0;
-			nextButton_.alpha = 0;
+			_nextButton.superview.alpha = 0;
+			_previousButton.superview.alpha = 0;
 		} completion:^(BOOL finished) {
 		}];
 	}
@@ -588,8 +627,8 @@ static LMMediaPlayerView *sharedPlayerView;
 			headerView_.alpha = 1;
 			footerView_.alpha = 1;
 			_currentTimeSlider.alpha = 1;
-			previousButton_.alpha = 1;
-			nextButton_.alpha = 1;
+			_nextButton.superview.alpha = 1;
+			_previousButton.superview.alpha = 1;
 		} completion:^(BOOL finished) {
 		}];
 	}

@@ -29,21 +29,21 @@ You can play **MPMediaItem** and **http streaming contents** with fullscreen or 
 
 	//Get shared player
 	LMMediaPlayerView *player = [LMMediaPlayerView sharedPlayerView];
-	
+
 	//Create media item with URL.
 	LMMediaItem *item1 = [[LMMediaItem alloc] initWithInfo:@{
 		LMMediaItemInfoURLKey:[NSURL URLWithString:@"video or audio url"],
 		LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)
 	}];
-	
+
 	//Create media item with MPMediaItem.
-	MPMediaItem *mediaItem = 
+	MPMediaItem *mediaItem =
 	LMMediaItem *item2 = [[LMMediaItem alloc] initWithMetaMedia:mediaItem contentType:LMMediaItemContentTypeVideo];
-	
+
 	//Add queue.
 	[player.mediaPlayer addMedia:item1];
 	[player.mediaPlayer addMedia:item2];
-	
+
 	//Play it!
 	[player.mediaPlayer play];
 
@@ -51,21 +51,21 @@ without player view.
 
 	//Get shared player
 	LMMediaPlayer *player = [LMMediaPlayer sharedPlayer];
-	
+
 	//Create media item with URL.
 	LMMediaItem *item1 = [[LMMediaItem alloc] initWithInfo:@{
 		LMMediaItemInfoURLKey:[NSURL URLWithString:@"video or audio url"],
 		LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)
 	}];
-	
+
 	//Create media item with MPMediaItem.
-	MPMediaItem *mediaItem = 
+	MPMediaItem *mediaItem =
 	LMMediaItem *item2 = [[LMMediaItem alloc] initWithMetaMedia:mediaItem contentType:LMMediaItemContentTypeVideo];
-	
+
 	//Add queue.
 	[player addMedia:item1];
 	[player addMedia:item2];
-	
+
 	//Play it!
 	[player play];
 
@@ -88,4 +88,3 @@ Akira Matsuda, [akira.matsuda@me.com](mailto:akira.matsuda@me.com)
 ## License
 
 LMMediaPlayer is available under the MIT license. See the LICENSE file for more info.
-

@@ -58,6 +58,8 @@
 	}
 	playerView_ = [LMMediaPlayerView sharedPlayerView];
 	playerView_.delegate = self;
+	[playerView_ setBluredUserInterface:YES visualEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+//	[playerView_ setBluredUserInterface:NO visualEffect:nil];
 	
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{

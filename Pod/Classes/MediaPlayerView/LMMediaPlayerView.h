@@ -53,19 +53,22 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 
 @property (nonatomic, assign) id<LMMediaPlayerViewDelegate> delegate;
 @property (nonatomic, readonly) LMMediaPlayer *mediaPlayer;
-@property (nonatomic, strong) IBOutlet UISlider *currentTimeSlider;
-@property (unsafe_unretained, nonatomic) IBOutlet UILabel *titleLabel;
+@property (nonatomic, unsafe_unretained) IBOutlet UISlider *currentTimeSlider;
+@property (nonatomic, unsafe_unretained) IBOutlet UILabel *titleLabel;
 @property (nonatomic, readonly) BOOL isFullscreen;
-@property (nonatomic, assign) BOOL showInterface;
+@property (nonatomic, unsafe_unretained) IBOutlet UIButton *nextButton;
+@property (nonatomic, unsafe_unretained) IBOutlet UIButton *previousButton;
 @property (nonatomic, readonly) UIButton *actionButton;
+@property (nonatomic, assign) BOOL userInterfaceHidden;
+@property (nonatomic, readonly) BOOL bluredUserInterface;
 
 + (instancetype)sharedPlayerView;
 + (instancetype)create;
-- (void)setUserInterfaceHidden:(BOOL)hidden;
 - (void)setHeaderViewHidden:(BOOL)hidden;
 - (void)setFooterViewHidden:(BOOL)hidden;
 - (void)setFullscreen:(BOOL)fullscreen animated:(BOOL)animated;
 - (void)setFullscreen:(BOOL)fullscreen;
 - (void)setButtonImages:(NSDictionary *)info;
+- (void)setBluredUserInterface:(BOOL)bluredUserInterface visualEffect:(UIVisualEffect *)effect;
 
 @end
