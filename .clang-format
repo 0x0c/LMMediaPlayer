@@ -1,0 +1,4 @@
+BasedOnStyle: WebKit
+UseTab: Always
+IndentWidth: 8
+PointerBindsToType: false
