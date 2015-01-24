@@ -242,7 +242,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	
 	[_currentTimeSlider addTarget:self action:@selector(beginSeek:) forControlEvents:UIControlEventTouchDown];
 	[_currentTimeSlider addTarget:self action:@selector(seekPositionChanged:) forControlEvents:UIControlEventValueChanged];
-	[_currentTimeSlider addTarget:self action:@selector(endSeek:) forControlEvents:UIControlEventTouchUpInside];
+	[_currentTimeSlider addTarget:self action:@selector(endSeek:) forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside | UIControlEventTouchCancel)];
 	
 	[playButton_ addTarget:self action:@selector(changePlaybackState:) forControlEvents:UIControlEventTouchUpInside];
 	[_nextButton addTarget:self action:@selector(fourcePlayNextMedia) forControlEvents:UIControlEventTouchUpInside];
@@ -481,7 +481,9 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)reverseUserInterfaceHidden
 {
-	[self setUserInterfaceHidden:!_userInterfaceHidden];
+	if (seeking_ == NO) {
+		[self setUserInterfaceHidden:!_userInterfaceHidden];
+	}
 }
 
 - (void)fourcePlayNextMedia
