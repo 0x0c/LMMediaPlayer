@@ -147,9 +147,9 @@ static LMMediaPlayer *sharedPlayer;
 - (void)updateLockScreenInfo
 {
 	NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-	[songInfo setObject:[_nowPlayingItem getTitle] ?: @"" forKey:MPMediaItemPropertyTitle];
-	[songInfo setObject:[_nowPlayingItem getAlbumTitle] ?: @"" forKey:MPMediaItemPropertyAlbumTitle];
-	[songInfo setObject:[_nowPlayingItem getArtistString] ?: @"" forKey:MPMediaItemPropertyArtist];
+	[songInfo setObject:[_nowPlayingItem title] ?: @"" forKey:MPMediaItemPropertyTitle];
+	[songInfo setObject:[_nowPlayingItem albumTitle] ?: @"" forKey:MPMediaItemPropertyAlbumTitle];
+	[songInfo setObject:[_nowPlayingItem artist] ?: @"" forKey:MPMediaItemPropertyArtist];
 	[songInfo setObject:@([self currentPlaybackTime]) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
 	[songInfo setObject:@([self currentPlaybackDuration]) forKey:MPMediaItemPropertyPlaybackDuration];
 	UIImage *artworkImage = [_nowPlayingItem artworkImageWithSize:CGSizeMake(320, 320)];
@@ -168,7 +168,7 @@ static LMMediaPlayer *sharedPlayer;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] == NO || [self.delegate mediaPlayerWillStartPlaying:self media:media] == YES) {
 		if (media != nil) {
-			NSURL *url = [media getAssetURL];
+			NSURL *url = [media assetURL];
 			_nowPlayingItem = media;
 			[player_ removeTimeObserver:playerObserver_];
 			[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];

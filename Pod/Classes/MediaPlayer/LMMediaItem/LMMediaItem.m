@@ -134,7 +134,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	return newObject;
 }
 
-- (id)getPropertyValue:(NSString *)property cache:(id)cache
+- (id)valueWithProperty:(NSString *)property cache:(id)cache
 {
 	id returnValue = nil;
 	if ([metaMedia_ isKindOfClass:[MPMediaItem class]]) {
@@ -144,19 +144,19 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	return returnValue;
 }
 
-- (NSString *)getTitle
+- (NSString *)title
 {
-	return title_ ?: [self getPropertyValue:MPMediaItemPropertyTitle cache:title_];
+	return title_ ?: [self valueWithProperty:MPMediaItemPropertyTitle cache:title_];
 }
 
-- (NSString *)getAlbumTitle
+- (NSString *)albumTitle
 {
-	return albumTitle_ ?: [self getPropertyValue:MPMediaItemPropertyAlbumTitle cache:albumTitle_];
+	return albumTitle_ ?: [self valueWithProperty:MPMediaItemPropertyAlbumTitle cache:albumTitle_];
 }
 
-- (NSString *)getArtistString
+- (NSString *)artist
 {
-	return artist_ ?: [self getPropertyValue:MPMediaItemPropertyAlbumTitle cache:artist_];
+	return artist_ ?: [self valueWithProperty:MPMediaItemPropertyAlbumTitle cache:artist_];
 }
 
 - (UIImage *)artworkImageWithSize:(CGSize)size
@@ -178,12 +178,12 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	artworkImage_ = [image copy];
 }
 
-- (NSURL *)getAssetURL
+- (NSURL *)assetURL
 {
-	return url_ ?: [self getPropertyValue:MPMediaItemPropertyAssetURL cache:url_];
+	return url_ ?: [self valueWithProperty:MPMediaItemPropertyAssetURL cache:url_];
 }
 
-- (id)getMetaMedia
+- (id)metaMedia
 {
 	return metaMedia_;
 }

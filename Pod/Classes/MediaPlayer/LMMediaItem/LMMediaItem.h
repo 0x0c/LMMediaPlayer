@@ -30,11 +30,11 @@ typedef NS_ENUM(NSUInteger, LMMediaItemContentType) {
 - (void)setArtworkImage:(UIImage *)image;
 - (BOOL)isVideo;
 
-@property (nonatomic, copy, getter = getTitle) NSString *title;
-@property (nonatomic, copy, getter = getAlbumTitle) NSString *albumTitle;
-@property (nonatomic, copy, getter = getArtistString) NSString *artist;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *albumTitle;
+@property (nonatomic, copy) NSString *artist;
 @property (nonatomic, copy) id metaMedia;
-@property (nonatomic, copy, getter = getAssetURL) NSURL *assetURL;
+@property (nonatomic, copy) NSURL *assetURL;
 @property (nonatomic, readonly) LMMediaItemContentType contentType;
 
 @end

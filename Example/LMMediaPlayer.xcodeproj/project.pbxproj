@@ -24,6 +24,7 @@
 		A73668C881864D758DB9CE8E /* libPods-LMMediaPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E47F90859134B90894A0A06 /* libPods-LMMediaPlayer.a */; };
 		E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E94B353C19AF14A6001889E8 /* sample.mp4 */; };
 		E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* LMAppDelegate.m */; };
+		E996AAB61A74425A00C2F7BE /* LMMediaItemStreamingCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E996AAB51A74425A00C2F7BE /* LMMediaItemStreamingCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		E94B353019AF1267001889E8 /* LMMediaPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerView.m; sourceTree = "<group>"; };
 		E94B353C19AF14A6001889E8 /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
 		E980AF2119C85CEA003FF2AF /* LMMediaPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LMMediaPlayerView.bundle; sourceTree = "<group>"; };
+		E996AAB41A74425A00C2F7BE /* LMMediaItemStreamingCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaItemStreamingCache.h; sourceTree = "<group>"; };
+		E996AAB51A74425A00C2F7BE /* LMMediaItemStreamingCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaItemStreamingCache.m; sourceTree = "<group>"; };
 		E9B7202C19B2C6F700F7E4D1 /* LMMediaPlayerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerHelper.h; sourceTree = "<group>"; };
 		E9B7202D19B2C6F700F7E4D1 /* LMMediaPlayerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerHelper.m; sourceTree = "<group>"; };
 		E9B890A719C8B1DF00F22638 /* LMMediaPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LMMediaPlayerView.xib; sourceTree = "<group>"; };
@@ -260,6 +263,7 @@
 		E94B352419AF1267001889E8 /* MediaPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				E996AAB31A74425A00C2F7BE /* LMMediaItemStreamingCache */,
 				E94B352519AF1267001889E8 /* LMMediaItem */,
 				E94B352819AF1267001889E8 /* LMMediaItemQueueManager */,
 				E94B352B19AF1267001889E8 /* LMMediaPlayer */,
@@ -301,6 +305,15 @@
 				E94B353019AF1267001889E8 /* LMMediaPlayerView.m */,
 			);
 			path = MediaPlayerView;
+			sourceTree = "<group>";
+		};
+		E996AAB31A74425A00C2F7BE /* LMMediaItemStreamingCache */ = {
+			isa = PBXGroup;
+			children = (
+				E996AAB41A74425A00C2F7BE /* LMMediaItemStreamingCache.h */,
+				E996AAB51A74425A00C2F7BE /* LMMediaItemStreamingCache.m */,
+			);
+			path = LMMediaItemStreamingCache;
 			sourceTree = "<group>";
 		};
 		E9B7202B19B2C6CF00F7E4D1 /* Hepler */ = {
@@ -485,6 +498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E996AAB61A74425A00C2F7BE /* LMMediaItemStreamingCache.m in Sources */,
 				6003F5A7195388D20070C39A /* LMViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */,
