@@ -47,14 +47,14 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 
 @implementation LMMediaPlayerFullscreenViewController
 
--(BOOL)shouldAutorotate
+- (BOOL)shouldAutorotate
 {
 	return YES;
 }
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAllButUpsideDown;
+	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
@@ -64,8 +64,7 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 
 @end
 
-@interface LMMediaPlayerView ()
-{
+@interface LMMediaPlayerView () {
 	__unsafe_unretained IBOutlet UILabel *playbackTimeLabel_;
 	__unsafe_unretained IBOutlet UILabel *remainingTimeLabel_;
 	__unsafe_unretained IBOutlet UIView *headerView_;
@@ -84,12 +83,12 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 	UIView *superView_;
 	NSMutableDictionary *buttonImages_;
 	AVPlayerLayer *playerLayer_;
-	
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
 	UIVisualEffectView *headerBlurView_;
 	UIVisualEffectView *footerBlurView_;
 #endif
-	
+
 	UIWindow *mainWindow_;
 }
 
@@ -121,14 +120,14 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (self) {
 		[self setup];
 	}
-	
+
 	return self;
 }
 
 - (void)drawRect:(CGRect)rect
 {
 	[super drawRect:rect];
-	
+
 	if (needToSetPlayer_) {
 		[playerLayer_ setPlayer:self.mediaPlayer.corePlayer];
 	}
@@ -139,7 +138,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	_mediaPlayer.delegate = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-	
+
 	LM_RELEASE(playbackTimeLabel_);
 	LM_RELEASE(remainingTimeLabel_);
 	LM_RELEASE(headerView_);
@@ -184,17 +183,17 @@ static LMMediaPlayerView *sharedPlayerView;
 			if (headerBlurView_ == nil) {
 				headerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
 				footerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
-				
+
 				headerBlurView_.frame = headerView_.bounds;
 				headerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-				
+
 				footerBlurView_.frame = footerView_.bounds;
 				footerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-				
+
 				[headerView_ insertSubview:headerBlurView_ atIndex:0];
 				[footerView_ insertSubview:footerBlurView_ atIndex:0];
 			}
-			
+
 			headerView_.backgroundColor = [UIColor clearColor];
 			footerView_.backgroundColor = [UIColor clearColor];
 		}
@@ -203,7 +202,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			headerView_.backgroundColor = backgroundColor;
 			footerView_.backgroundColor = backgroundColor;
 		}
-		
+
 		headerBlurView_.hidden = footerBlurView_.hidden = !_bluredUserInterface;
 	}
 #endif
@@ -215,19 +214,19 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	[self setTranslatesAutoresizingMaskIntoConstraints:YES];
 	self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-	
+
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
 	if (mainWindow_ == nil) {
 		mainWindow_ = [[UIApplication sharedApplication] windows][0];
 	}
 	LM_RETAIN(mainWindow_);
-	
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeForgroundMode:) name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-	
+
 	needToSetPlayer_ = NO;
 	_userInterfaceHidden = NO;
-	
+
 	_mediaPlayer = [[LMMediaPlayer alloc] init];
 	_mediaPlayer.delegate = self;
 }
@@ -237,58 +236,58 @@ static LMMediaPlayerView *sharedPlayerView;
 	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
 	[self addGestureRecognizer:gesture];
 	LM_RELEASE(gesture);
-	
+
 	artworkImageView_.contentMode = UIViewContentModeScaleAspectFit;
-	
+
 	[_currentTimeSlider addTarget:self action:@selector(beginSeek:) forControlEvents:UIControlEventTouchDown];
 	[_currentTimeSlider addTarget:self action:@selector(seekPositionChanged:) forControlEvents:UIControlEventValueChanged];
 	[_currentTimeSlider addTarget:self action:@selector(endSeek:) forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside | UIControlEventTouchCancel)];
-	
+
 	[playButton_ addTarget:self action:@selector(changePlaybackState:) forControlEvents:UIControlEventTouchUpInside];
 	[_nextButton addTarget:self action:@selector(fourcePlayNextMedia) forControlEvents:UIControlEventTouchUpInside];
-	[_previousButton addTarget:self	action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
-		
+	[_previousButton addTarget:self action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
+
 	UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 	footerView_.backgroundColor = headerView_.backgroundColor = backgroundColor;
 	[_mediaPlayer setShuffleEnabled:NO];
 	[_mediaPlayer setRepeatMode:LMMediaRepeatModeNone];
-	
-	buttonImages_ = [@{LMMediaPlayerViewPlayButtonImageKey						:	[[self class] imageForFilename:@"play"],
-					   LMMediaPlayerViewPlayButtonSelectedImageKey				:	[[self class] imageForFilename:@"play"],
-					   LMMediaPlayerViewStopButtonImageKey						:	[[self class] imageForFilename:@"pause"],
-					   LMMediaPlayerViewStopButtonSelectedImageKey				:	[[self class] imageForFilename:@"pause"],
-					   LMMediaPlayerViewShuffleButtonShuffledImageKey			:	[[self class] imageForFilename:@"shuffle"],
-					   LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey	:	[[self class] imageForFilename:@"shuffle"],
-					   LMMediaPlayerViewShuffleButtonUnshuffledImageKey			:	[[self class] imageForFilename:@"unshuffle"],
-					   LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey	:	[[self class] imageForFilename:@"unshuffle"],
-					   LMMediaPlayerViewRepeatButtonRepeatNoneImageKey			:	[[self class] imageForFilename:@"repeat_none"],
-					   LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey	:	[[self class] imageForFilename:@"repeat_none"],
-					   LMMediaPlayerViewRepeatButtonRepeatOneImageKey			:	[[self class] imageForFilename:@"repeat_one"],
-					   LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey	:	[[self class] imageForFilename:@"repeat_one"],
-					   LMMediaPlayerViewRepeatButtonRepeatAllImageKey			:	[[self class] imageForFilename:@"repeat_all"],
-					   LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey	:	[[self class] imageForFilename:@"repeat_all"],
-					   LMMediaPlayerViewFullscreenButtonImageKey				:	[[self class] imageForFilename:@"fullscreen"],
-					   LMMediaPlayerViewFullscreenButtonSelectedImageKey		:	[[self class] imageForFilename:@"fullscreen"],
-					   LMMediaPlayerViewUnfullscreenButtonImageKey				:	[[self class] imageForFilename:@"unfullscreen"],
-					   LMMediaPlayerViewUnfullscreenButtonSelectedImageKey		:	[[self class] imageForFilename:@"unfullscreen"]
-					   } mutableCopy];
-	
+
+	buttonImages_ = [@{ LMMediaPlayerViewPlayButtonImageKey : [[self class] imageForFilename:@"play"],
+		LMMediaPlayerViewPlayButtonSelectedImageKey : [[self class] imageForFilename:@"play"],
+		LMMediaPlayerViewStopButtonImageKey : [[self class] imageForFilename:@"pause"],
+		LMMediaPlayerViewStopButtonSelectedImageKey : [[self class] imageForFilename:@"pause"],
+		LMMediaPlayerViewShuffleButtonShuffledImageKey : [[self class] imageForFilename:@"shuffle"],
+		LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey : [[self class] imageForFilename:@"shuffle"],
+		LMMediaPlayerViewShuffleButtonUnshuffledImageKey : [[self class] imageForFilename:@"unshuffle"],
+		LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey : [[self class] imageForFilename:@"unshuffle"],
+		LMMediaPlayerViewRepeatButtonRepeatNoneImageKey : [[self class] imageForFilename:@"repeat_none"],
+		LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey : [[self class] imageForFilename:@"repeat_none"],
+		LMMediaPlayerViewRepeatButtonRepeatOneImageKey : [[self class] imageForFilename:@"repeat_one"],
+		LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey : [[self class] imageForFilename:@"repeat_one"],
+		LMMediaPlayerViewRepeatButtonRepeatAllImageKey : [[self class] imageForFilename:@"repeat_all"],
+		LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey : [[self class] imageForFilename:@"repeat_all"],
+		LMMediaPlayerViewFullscreenButtonImageKey : [[self class] imageForFilename:@"fullscreen"],
+		LMMediaPlayerViewFullscreenButtonSelectedImageKey : [[self class] imageForFilename:@"fullscreen"],
+		LMMediaPlayerViewUnfullscreenButtonImageKey : [[self class] imageForFilename:@"unfullscreen"],
+		LMMediaPlayerViewUnfullscreenButtonSelectedImageKey : [[self class] imageForFilename:@"unfullscreen"]
+	} mutableCopy];
+
 	[playButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] forState:UIControlStateNormal];
 	[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] forState:UIControlStateSelected];
-	
+
 	[fullscreenButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 	[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
-	
+
 	[repeatButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
 	[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
-	
+
 	[shuffleButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
-	
+
 	[actionButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	actionButtonWidth_.constant = 0;
 	actionButtonRightMergin.constant = 0;
@@ -304,7 +303,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	double delayInSeconds = 0.01;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-	dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+	dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
 		[playerLayer_ setPlayer:nil];
 		if (self.mediaPlayer.playbackState == LMMediaPlaybackStatePlaying) {
 			[self.mediaPlayer play];
@@ -319,7 +318,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeState:state:)]) {
 		[self.delegate mediaPlayerViewWillChangeState:self state:state];
 	}
-	
+
 	if (state == LMMediaPlaybackStateStopped || state == LMMediaPlaybackStatePaused) {
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] ?: nil forState:UIControlStateNormal];
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] ?: nil forState:UIControlStateSelected];
@@ -340,7 +339,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		result = YES;
 	}
 	self.titleLabel.text = media.title;
-	
+
 	return result;
 }
 
@@ -353,7 +352,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		playerLayer_ = [AVPlayerLayer playerLayerWithPlayer:player.corePlayer];
 		playerLayer_.frame = self.frame;
 		[self.layer insertSublayer:playerLayer_ atIndex:0];
-		
+
 		playerLayer_.hidden = NO;
 	}
 	else {
@@ -377,12 +376,12 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	if (seeking_ == NO) {
 		_currentTimeSlider.value = player.currentPlaybackTime / player.currentPlaybackDuration;
-		
+
 		NSMutableString *durationString = [NSMutableString new];
 		NSInteger duration = (NSInteger)player.currentPlaybackTime;
 		if (duration / (60 * 60) > 0) {
 			[durationString appendFormat:@"%02ld:",
-			 (long int)duration / (60 * 60)];
+					(long int)duration / (60 * 60)];
 			duration /= 60 * 60;
 		}
 		[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -390,12 +389,12 @@ static LMMediaPlayerView *sharedPlayerView;
 		[durationString appendFormat:@"%02ld", (long int)duration];
 		playbackTimeLabel_.text = durationString;
 		LM_RELEASE(durationString);
-		
+
 		durationString = [[NSMutableString alloc] initWithString:@"-"];
 		duration = (NSInteger)fabs(player.currentPlaybackTime - player.currentPlaybackDuration);
 		if (duration / (60 * 60) > 0) {
 			[durationString appendFormat:@"%02ld:",
-			 (long int)duration / (60 * 60)];
+					(long int)duration / (60 * 60)];
 			duration /= 60 * 60;
 		}
 		[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -439,7 +438,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	NSInteger duration = currentTime;
 	if (duration / (60 * 60) > 0) {
 		[durationString appendFormat:@"%02ld:",
-		 (long int)duration / (60 * 60)];
+				(long int)duration / (60 * 60)];
 		duration /= 60 * 60;
 	}
 	[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -452,7 +451,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	duration = (NSInteger)_mediaPlayer.currentPlaybackDuration - currentTime;
 	if (duration / (60 * 60) > 0) {
 		[durationString appendFormat:@"%02ld:",
-		 (long int)duration / (60 * 60)];
+				(long int)duration / (60 * 60)];
 		duration /= 60 * 60;
 	}
 	[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -509,7 +508,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (IBAction)shuffleButtonPressed:(id)sender
 {
 	[_mediaPlayer setShuffleEnabled:!_mediaPlayer.shuffleMode];
-	
+
 	if (_mediaPlayer.shuffleMode) {
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledImageKey] forState:UIControlStateNormal];
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey] forState:UIControlStateSelected];
@@ -524,20 +523,17 @@ static LMMediaPlayerView *sharedPlayerView;
 - (IBAction)repeatButtonPressed:(id)sender
 {
 	switch (_mediaPlayer.repeatMode) {
-		case LMMediaRepeatModeAll: {
-			_mediaPlayer.repeatMode = LMMediaRepeatModeOne;
-		}
-			break;
-		case LMMediaRepeatModeOne: {
-			_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
-		}
-			break;
-		case LMMediaRepeatModeNone: {
-			_mediaPlayer.repeatMode = LMMediaRepeatModeAll;
-		}
-			break;
-		default:
-			break;
+	case LMMediaRepeatModeAll: {
+		_mediaPlayer.repeatMode = LMMediaRepeatModeOne;
+	} break;
+	case LMMediaRepeatModeOne: {
+		_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
+	} break;
+	case LMMediaRepeatModeNone: {
+		_mediaPlayer.repeatMode = LMMediaRepeatModeAll;
+	} break;
+	default:
+		break;
 	}
 	[self setRepeatButtonImageWithRepeatMode:_mediaPlayer.repeatMode];
 }
@@ -557,26 +553,22 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)setRepeatButtonImageWithRepeatMode:(LMMediaRepeatMode)mode
 {
 	switch (_mediaPlayer.repeatMode) {
-		case LMMediaRepeatModeAll: {
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllImageKey] forState:UIControlStateNormal];
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey] forState:UIControlStateSelected];
-		}
-			break;
-		case LMMediaRepeatModeOne: {
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneImageKey] forState:UIControlStateNormal];
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey] forState:UIControlStateSelected];
-		}
-			break;
-		case LMMediaRepeatModeNone: {
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
-		}
-			break;
-		default: {
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
-			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
-		}
-			break;
+	case LMMediaRepeatModeAll: {
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllImageKey] forState:UIControlStateNormal];
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey] forState:UIControlStateSelected];
+	} break;
+	case LMMediaRepeatModeOne: {
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneImageKey] forState:UIControlStateNormal];
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey] forState:UIControlStateSelected];
+	} break;
+	case LMMediaRepeatModeNone: {
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
+	} break;
+	default: {
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
+		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
+	} break;
 	}
 }
 
@@ -607,7 +599,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			_currentTimeSlider.alpha = 0;
 			_nextButton.superview.alpha = 0;
 			_previousButton.superview.alpha = 0;
-		} completion:^(BOOL finished) {
+		} completion:^(BOOL finished){
 		}];
 	}
 	else {
@@ -617,7 +609,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			_currentTimeSlider.alpha = 1;
 			_nextButton.superview.alpha = 1;
 			_previousButton.superview.alpha = 1;
-		} completion:^(BOOL finished) {
+		} completion:^(BOOL finished){
 		}];
 	}
 }
@@ -627,27 +619,27 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (fullscreen_ == fullscreen) {
 		return;
 	}
-	
+
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewWillChangeFullscreenMode:fullscreen];
 	}
-	
+
 	LMMediaPlayerFullscreenViewController *viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
 	LM_AUTORELEASE(viewController);
 	viewController.view.frame = [UIScreen mainScreen].bounds;
-	
+
 	if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 		viewController.extendedLayoutIncludesOpaqueBars = YES;
 	}
 	else {
 		viewController.wantsFullScreenLayout = YES;
 	}
-	
+
 	CGRect newRect;
 	if (fullscreen == NO) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
-		
+
 		newRect = superView_.bounds;
 		self.frame = newRect;
 		[superView_ addSubview:self];
@@ -664,10 +656,10 @@ static LMMediaPlayerView *sharedPlayerView;
 		superView_ = self.superview;
 		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
-		
+
 		UIViewController *rootViewController = [mainWindow_ rootViewController];
 		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
-		
+
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
 			if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 				newRect = CGRectMake(0, 0, CGRectGetWidth(mainWindow_.frame), CGRectGetHeight(mainWindow_.frame));
@@ -676,7 +668,7 @@ static LMMediaPlayerView *sharedPlayerView;
 				newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
 			}
 		}
-		
+
 		[self removeFromSuperview];
 		[viewController.view addSubview:self];
 		UIWindow *newWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -687,6 +679,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[[[UIApplication sharedApplication] delegate] setWindow:newWindow];
 		LM_RELEASE(newWindow);
 	}
+
 	self.frame = newRect;
 	if (animated) {
 		self.alpha = 0;
@@ -734,7 +727,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] forState:UIControlStateNormal];
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] forState:UIControlStateSelected];
 	}
-	
+
 	if (self.isFullscreen) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
@@ -743,7 +736,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 	}
-	
+
 	[self setRepeatButtonImageWithRepeatMode:self.mediaPlayer.repeatMode];
 	[self setShuffleButtonImageWithShuffleMode:self.mediaPlayer.shuffleMode];
 }
@@ -755,7 +748,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		version = @"6";
 	}
 	UIImage *image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@/%@.png", [[NSBundle mainBundle] pathForResource:@"LMMediaPlayerView" ofType:@"bundle"], version, filename]];
-	
+
 	return image;
 }
 
