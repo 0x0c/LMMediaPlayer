@@ -130,6 +130,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 	if (needToSetPlayer_) {
 		[playerLayer_ setPlayer:self.mediaPlayer.corePlayer];
+		needToSetPlayer_ = NO;
 	}
 }
 
@@ -250,7 +251,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 	footerView_.backgroundColor = headerView_.backgroundColor = backgroundColor;
 	[_mediaPlayer setShuffleEnabled:NO];
-	[_mediaPlayer setRepeatMode:LMMediaRepeatModeNone];
+	[_mediaPlayer setRepeatMode:LMMediaRepeatModeDefault];
 
 	buttonImages_ = [@{ LMMediaPlayerViewPlayButtonImageKey : [[self class] imageForFilename:@"play"],
 		LMMediaPlayerViewPlayButtonSelectedImageKey : [[self class] imageForFilename:@"play"],
@@ -348,10 +349,12 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (media.isVideo) {
 		artworkImageView_.hidden = YES;
 		self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-		[playerLayer_ removeFromSuperlayer];
-		playerLayer_ = [AVPlayerLayer playerLayerWithPlayer:player.corePlayer];
-		playerLayer_.frame = self.frame;
-		[self.layer insertSublayer:playerLayer_ atIndex:0];
+		if (playerLayer_ == nil) {
+			playerLayer_ = [AVPlayerLayer playerLayerWithPlayer:player.corePlayer];
+			playerLayer_.frame = self.frame;
+			[self.layer insertSublayer:playerLayer_ atIndex:0];
+		}
+		needToSetPlayer_ = YES;
 
 		playerLayer_.hidden = NO;
 	}
@@ -489,7 +492,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	LMMediaRepeatMode repeatMode = _mediaPlayer.repeatMode;
 	if (repeatMode == LMMediaRepeatModeOne) {
-		_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
+		_mediaPlayer.repeatMode = LMMediaRepeatModeDefault;
 	}
 	[_mediaPlayer playNextMedia];
 	_mediaPlayer.repeatMode = repeatMode;
@@ -499,7 +502,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	LMMediaRepeatMode repeatMode = _mediaPlayer.repeatMode;
 	if (repeatMode == LMMediaRepeatModeOne) {
-		_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
+		_mediaPlayer.repeatMode = LMMediaRepeatModeDefault;
 	}
 	[_mediaPlayer playPreviousMedia];
 	_mediaPlayer.repeatMode = repeatMode;
@@ -527,9 +530,9 @@ static LMMediaPlayerView *sharedPlayerView;
 			_mediaPlayer.repeatMode = LMMediaRepeatModeOne;
 		} break;
 		case LMMediaRepeatModeOne: {
-			_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
+			_mediaPlayer.repeatMode = LMMediaRepeatModeDefault;
 		} break;
-		case LMMediaRepeatModeNone: {
+		case LMMediaRepeatModeDefault: {
 			_mediaPlayer.repeatMode = LMMediaRepeatModeAll;
 		} break;
 		default:
@@ -561,7 +564,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneImageKey] forState:UIControlStateNormal];
 			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey] forState:UIControlStateSelected];
 		} break;
-		case LMMediaRepeatModeNone: {
+		case LMMediaRepeatModeDefault: {
 			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
 			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
 		} break;

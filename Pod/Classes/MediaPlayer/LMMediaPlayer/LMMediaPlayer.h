@@ -22,7 +22,6 @@ typedef NS_ENUM(NSUInteger, LMMediaPlaybackState) {
 
 typedef NS_ENUM(NSUInteger, LMMediaRepeatMode) {
 	LMMediaRepeatModeDefault,
-	LMMediaRepeatModeNone,
 	LMMediaRepeatModeOne,
 	LMMediaRepeatModeAll
 };
@@ -50,9 +49,9 @@ extern NSString *const LMMediaPlayerStopNotification;
 
 @property (nonatomic, assign) id<LMMediaPlayerDelegate> delegate;
 @property (nonatomic, readonly) LMMediaItem *nowPlayingItem;
-@property(nonatomic, readonly) LMMediaPlaybackState playbackState;
-@property(nonatomic, assign) LMMediaRepeatMode repeatMode;
-@property(nonatomic, readonly) BOOL shuffleMode;
+@property (nonatomic, readonly) LMMediaPlaybackState playbackState;
+@property (nonatomic, assign) LMMediaRepeatMode repeatMode;
+@property (nonatomic, readonly) BOOL shuffleMode;
 @property (nonatomic, readonly) NSInteger index;
 
 + (instancetype)sharedPlayer;

@@ -14,10 +14,9 @@
 NSString *const LMMediaPlayerPauseNotification = @"LMMediaPlayerPauseNotification";
 NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification";
 
-@interface LMMediaPlayer ()
-{
+@interface LMMediaPlayer () {
 	NSMutableArray *queue_;
-	
+
 	LMMediaPlaybackState playbackState_;
 	AVPlayer *player_;
 	id playerObserver_;
@@ -39,7 +38,7 @@ static LMMediaPlayer *sharedPlayer;
 	dispatch_once(&onceToken, ^{
 		sharedPlayer = [[self class] new];
 	});
-	
+
 	return sharedPlayer;
 }
 
@@ -50,14 +49,14 @@ static LMMediaPlayer *sharedPlayer;
 		player_ = [AVPlayer new];
 		queue_ = [NSMutableArray new];
 		self.currentQueue = queue_;
-		_repeatMode = LMMediaRepeatModeNone;
+		_repeatMode = LMMediaRepeatModeDefault;
 		_shuffleMode = YES;
-		
+
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		[notificationCenter addObserver:self selector:@selector(pause) name:LMMediaPlayerPauseNotification object:nil];
 		[notificationCenter addObserver:self selector:@selector(stop) name:LMMediaPlayerStopNotification object:nil];
 	}
-	
+
 	return self;
 }
 
@@ -198,8 +197,8 @@ static LMMediaPlayer *sharedPlayer;
 	else {
 		[player_ play];
 	}
-    
-    [self setCurrentState:LMMediaPlaybackStatePlaying];
+
+	[self setCurrentState:LMMediaPlaybackStatePlaying];
 }
 
 - (void)playAtIndex:(NSInteger)index
@@ -210,8 +209,8 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)stop
 {
-    [player_ pause];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+	[player_ pause];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	[self setCurrentState:LMMediaPlaybackStateStopped];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStop:media:)]) {
 		[self.delegate mediaPlayerDidStop:self media:_nowPlayingItem];
@@ -250,14 +249,11 @@ static LMMediaPlayer *sharedPlayer;
 			}
 			[self playMedia:self.currentQueue[_index]];
 		}
-		else if (_repeatMode == LMMediaRepeatModeNone) {
-			[self stop];
-		}
 		else {
 			[self playMedia:self.nowPlayingItem];
 		}
 	}
-	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll){
+	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll) {
 		[self playMedia:self.nowPlayingItem];
 	}
 }
@@ -291,7 +287,7 @@ static LMMediaPlayer *sharedPlayer;
 			[self playMedia:self.currentQueue[_index]];
 		}
 	}
-	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll){
+	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll) {
 		[self playMedia:self.nowPlayingItem];
 	}
 }
@@ -334,7 +330,7 @@ static LMMediaPlayer *sharedPlayer;
 	else {
 		self.currentQueue = queue_;
 	}
-	
+
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerDidChangeShuffleMode:player:)]) {
 		[self.delegate mediaPlayerDidChangeShuffleMode:enabled player:self];
 	}
@@ -352,22 +348,22 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)setCurrentState:(LMMediaPlaybackState)state
 {
-    if (state == playbackState_) {
-        return;
-    }
-    
+	if (state == playbackState_) {
+		return;
+	}
+
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillChangeState:)]) {
 		[self.delegate mediaPlayerWillChangeState:state];
 	}
-	
+
 	if (state == LMMediaPlaybackStatePlaying) {
 		[self updateLockScreenInfo];
 		NSError *e = nil;
 		AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 		[audioSession setCategory:AVAudioSessionCategoryPlayback error:&e];
-		[audioSession setActive:YES error: NULL];
+		[audioSession setActive:YES error:NULL];
 	}
-	
+
 	playbackState_ = state;
 }
 
@@ -382,7 +378,7 @@ static LMMediaPlayer *sharedPlayer;
 	UIImage *resultImage = [[UIImage alloc] initWithCGImage:imageRef];
 	LM_AUTORELEASE(resultImage);
 	CGImageRelease(imageRef);
-	
+
 	return resultImage;
 }
 
@@ -396,7 +392,7 @@ static LMMediaPlayer *sharedPlayer;
 	NSError *e = nil;
 	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 	[audioSession setCategory:category error:&e];
-	
+
 	return e;
 }
 
