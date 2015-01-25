@@ -13,7 +13,9 @@
 #define LM_RETAIN(v) [v retain]
 #define LM_DEALLOC(v) [v dealloc]
 #define LM_RELEASE(v) [v release]
-#define LM_RELEASE_NIL(v) [v release]; v = nil;
+#define LM_RELEASE_NIL(v) \
+	[v release];      \
+	v = nil;
 #else
 #define LM_AUTORELEASE(v)
 #define LM_RETAIN(v)

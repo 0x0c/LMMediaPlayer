@@ -11,8 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "LMMediaPlayerHelper.h"
 
-@interface LMMediaItem ()
-{
+@interface LMMediaItem () {
 	id metaMedia_;
 	NSString *title_;
 	NSString *albumTitle_;
@@ -54,7 +53,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		metaMedia_ = media;
 		_contentType = type;
 	}
-	
+
 	return self;
 }
 
@@ -69,11 +68,11 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		url_ = ([info[LMMediaItemInfoURLKey] isKindOfClass:[NSURL class]] ? [info[LMMediaItemInfoURLKey] copy] : nil);
 		_contentType = (LMMediaItemContentType)([info[LMMediaItemInfoContentTypeKey] isKindOfClass:[NSNumber class]] ? [info[LMMediaItemInfoContentTypeKey] integerValue] : -1);
 	}
-	
+
 	return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder*)coder
+- (instancetype)initWithCoder:(NSCoder *)coder
 {
 	self = [super init];
 	if (self) {
@@ -84,11 +83,11 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		url_ = [coder decodeObjectForKey:LMMediaItemInfoURLKey];
 		_contentType = (LMMediaItemContentType)[[coder decodeObjectForKey:LMMediaItemInfoContentTypeKey] integerValue];
 	}
-	
+
 	return self;
 }
 
-- (void)encodeWithCoder:(NSCoder*)coder
+- (void)encodeWithCoder:(NSCoder *)coder
 {
 	[coder encodeObject:title_ forKey:LMMediaItemInfoTitleKey];
 	[coder encodeObject:albumTitle_ forKey:LMMediaItemInfoAlubumTitleKey];
@@ -127,10 +126,10 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 		newInfo[LMMediaItemInfoURLKey] = newURL ?: [NSNull null];
 	}
 	newInfo[LMMediaItemInfoContentTypeKey] = [NSNumber numberWithInteger:_contentType];
-	
+
 	LMMediaItem *newObject = [[[self class] allocWithZone:zone] initWithInfo:newInfo];
 	LM_RELEASE(newInfo);
-	
+
 	return newObject;
 }
 
@@ -140,7 +139,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	if ([metaMedia_ isKindOfClass:[MPMediaItem class]]) {
 		returnValue = cache = [metaMedia_ valueForProperty:property];
 	}
-	
+
 	return returnValue;
 }
 
@@ -161,16 +160,17 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 
 - (UIImage *)artworkImageWithSize:(CGSize)size
 {
-	UIImage *(^f)(id) = ^UIImage *(id metaMedia){
+	UIImage * (^f)(id) = ^UIImage *(id metaMedia)
+	{
 		UIImage *image = nil;
 		if ([metaMedia isKindOfClass:[MPMediaItem class]]) {
 			artworkImage_ = image = [[metaMedia_ valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:size];
 		}
-		
+
 		return image;
 	};
 
-	return artworkImage_ ?:  f(metaMedia_);
+	return artworkImage_ ?: f(metaMedia_);
 }
 
 - (void)setArtworkImage:(UIImage *)image
@@ -195,13 +195,13 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 
 - (NSString *)description
 {
-	return [@{@"title":title_ ?: @"nil",
-			  @"album":albumTitle_ ?: @"nil",
-			  @"artist":artist_ ?: @"nil",
-			  @"url":url_ ?: @"nil",
-			  @"artwork":artworkImage_ ?: @"nil",
-			  @"content type":_contentType == LMMediaItemContentTypeAudio ? @"LMMediaItemContentTypeAudio" : @"LMMediaItemContentTypeVideo",
-			  @"meta media":metaMedia_ ?: @"nil"} description];
+	return [@{ @"title" : title_ ?: @"nil",
+		@"album" : albumTitle_ ?: @"nil",
+		@"artist" : artist_ ?: @"nil",
+		@"url" : url_ ?: @"nil",
+		@"artwork" : artworkImage_ ?: @"nil",
+		@"content type" : _contentType == LMMediaItemContentTypeAudio ? @"LMMediaItemContentTypeAudio" : @"LMMediaItemContentTypeVideo",
+		@"meta media" : metaMedia_ ?: @"nil" } description];
 }
 
 @end

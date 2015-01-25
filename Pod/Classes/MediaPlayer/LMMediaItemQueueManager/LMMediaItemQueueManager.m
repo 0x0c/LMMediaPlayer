@@ -28,7 +28,7 @@ static NSString *const kLMMediaItemQueueManagerQueueList = @"kLMMediaItemQueueMa
 			break;
 		}
 	}
-	
+
 	[[NSUserDefaults standardUserDefaults] setObject:keys forKey:kLMMediaItemQueueManagerQueueList];
 }
 
@@ -41,7 +41,7 @@ static NSString *const kLMMediaItemQueueManagerQueueList = @"kLMMediaItemQueueMa
 		[saveArray addObject:data];
 	}
 	[[NSUserDefaults standardUserDefaults] setObject:saveArray forKey:key];
-	
+
 	NSMutableArray *keys = [NSMutableArray arrayWithArray:[LMMediaItemQueueManager queueList]];
 	[keys addObject:key];
 	[[NSUserDefaults standardUserDefaults] setObject:keys forKey:kLMMediaItemQueueManagerQueueList];
@@ -56,7 +56,7 @@ static NSString *const kLMMediaItemQueueManagerQueueList = @"kLMMediaItemQueueMa
 		LMMediaItem *item = [NSKeyedUnarchiver unarchiveObjectWithData:d];
 		[result addObject:item];
 	}
-	
+
 	NSArray *newArray = [result copy];
 	LM_AUTORELEASE(newArray);
 	return newArray;

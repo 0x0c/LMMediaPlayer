@@ -523,17 +523,17 @@ static LMMediaPlayerView *sharedPlayerView;
 - (IBAction)repeatButtonPressed:(id)sender
 {
 	switch (_mediaPlayer.repeatMode) {
-	case LMMediaRepeatModeAll: {
-		_mediaPlayer.repeatMode = LMMediaRepeatModeOne;
-	} break;
-	case LMMediaRepeatModeOne: {
-		_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
-	} break;
-	case LMMediaRepeatModeNone: {
-		_mediaPlayer.repeatMode = LMMediaRepeatModeAll;
-	} break;
-	default:
-		break;
+		case LMMediaRepeatModeAll: {
+			_mediaPlayer.repeatMode = LMMediaRepeatModeOne;
+		} break;
+		case LMMediaRepeatModeOne: {
+			_mediaPlayer.repeatMode = LMMediaRepeatModeNone;
+		} break;
+		case LMMediaRepeatModeNone: {
+			_mediaPlayer.repeatMode = LMMediaRepeatModeAll;
+		} break;
+		default:
+			break;
 	}
 	[self setRepeatButtonImageWithRepeatMode:_mediaPlayer.repeatMode];
 }
@@ -553,22 +553,22 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)setRepeatButtonImageWithRepeatMode:(LMMediaRepeatMode)mode
 {
 	switch (_mediaPlayer.repeatMode) {
-	case LMMediaRepeatModeAll: {
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllImageKey] forState:UIControlStateNormal];
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey] forState:UIControlStateSelected];
-	} break;
-	case LMMediaRepeatModeOne: {
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneImageKey] forState:UIControlStateNormal];
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey] forState:UIControlStateSelected];
-	} break;
-	case LMMediaRepeatModeNone: {
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
-	} break;
-	default: {
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
-		[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
-	} break;
+		case LMMediaRepeatModeAll: {
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllImageKey] forState:UIControlStateNormal];
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey] forState:UIControlStateSelected];
+		} break;
+		case LMMediaRepeatModeOne: {
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneImageKey] forState:UIControlStateNormal];
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey] forState:UIControlStateSelected];
+		} break;
+		case LMMediaRepeatModeNone: {
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
+		} break;
+		default: {
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
+			[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
+		} break;
 	}
 }
 

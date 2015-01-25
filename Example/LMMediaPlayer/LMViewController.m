@@ -10,8 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "LMMediaItem.h"
 
-@interface LMViewController ()
-{
+@interface LMViewController () {
 	MPMediaPlaylist *currentPlaylist_;
 	LMMediaPlayerView *playerView_;
 	NSArray *musics_;
@@ -28,7 +27,7 @@
 	if (self) {
 		currentPlaylist_ = playlist;
 	}
-	
+
 	return self;
 }
 
@@ -43,7 +42,7 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	if (currentPlaylist_) {
 		musics_ = [currentPlaylist_ items];
 		self.title = [currentPlaylist_ valueForProperty:MPMediaPlaylistPropertyName];
@@ -59,8 +58,8 @@
 	playerView_ = [LMMediaPlayerView sharedPlayerView];
 	playerView_.delegate = self;
 	[playerView_ setBluredUserInterface:YES visualEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
-//	[playerView_ setBluredUserInterface:NO visualEffect:nil];
-	
+	//	[playerView_ setBluredUserInterface:NO visualEffect:nil];
+
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		NSURL *path = [[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
@@ -84,9 +83,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
+
 	playerView_.delegate = self;
-	
+
 	UIView *baseView = [[UIView alloc] initWithFrame:playerView_.frame];
 	baseView.backgroundColor = [UIColor blackColor];
 	[baseView addSubview:playerView_];
@@ -99,10 +98,10 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
-	
+
 	[[UIApplication sharedApplication] endReceivingRemoteControlEvents];
 	[self resignFirstResponder];
-	
+
 	playerView_.delegate = self;
 }
 
@@ -122,22 +121,22 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return currentPlaylist_ == nil ? 2 : 1;
+	// Return the number of sections.
+	return currentPlaylist_ == nil ? 2 : 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return section == 0 ? [musics_ count] : [playlists_ count];
+	// Return the number of rows in the section.
+	return section == 0 ? [musics_ count] : [playlists_ count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
+	static NSString *CellIdentifier = @"Cell";
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+	// Configure the cell...
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -145,7 +144,7 @@
 		[cell autorelease];
 #endif
 	}
-	
+
 	if (indexPath.section == 0) {
 		cell.textLabel.text = [(MPMediaItem *)musics_[indexPath.row] valueForProperty:MPMediaItemPropertyTitle];
 		cell.detailTextLabel.text = [(MPMediaItem *)musics_[indexPath.row] valueForProperty:MPMediaItemPropertyArtist];
@@ -157,8 +156,8 @@
 		cell.detailTextLabel.text = @"";
 		cell.imageView.image = nil;
 	}
-	
-    return cell;
+
+	return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -170,7 +169,7 @@
 	else {
 		title = @"Playlists";
 	}
-	
+
 	return title;
 }
 
@@ -210,7 +209,7 @@
 	if (receivedEvent.type == UIEventTypeRemoteControl) {
 		switch (receivedEvent.subtype) {
 			case UIEventSubtypeRemoteControlPlay:
-            case UIEventSubtypeRemoteControlPause:
+			case UIEventSubtypeRemoteControlPause:
 			case UIEventSubtypeRemoteControlTogglePlayPause: {
 				if ([playerView_.mediaPlayer playbackState] == LMMediaPlaybackStatePlaying) {
 					[playerView_.mediaPlayer pause];
@@ -218,16 +217,13 @@
 				else if ([playerView_.mediaPlayer playbackState] == LMMediaPlaybackStatePaused || [playerView_.mediaPlayer playbackState] == LMMediaPlaybackStateStopped) {
 					[playerView_.mediaPlayer play];
 				}
-			}
-				break;
+			} break;
 			case UIEventSubtypeRemoteControlPreviousTrack: {
 				[playerView_.mediaPlayer playPreviousMedia];
-			}
-				break;
+			} break;
 			case UIEventSubtypeRemoteControlNextTrack: {
 				[playerView_.mediaPlayer playNextMedia];
-			}
-				break;
+			} break;
 			default:
 				break;
 		}
@@ -236,7 +232,7 @@
 
 - (BOOL)canBecomeFirstResponder
 {
-    return YES;
+	return YES;
 }
 
 @end
