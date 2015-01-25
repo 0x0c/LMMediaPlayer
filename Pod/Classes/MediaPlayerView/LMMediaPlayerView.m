@@ -697,7 +697,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setFullscreen:(BOOL)fullscreen
 {
-	[self setFullscreen:fullscreen animated:NO];
+	[self setFullscreen:fullscreen animated:YES];
 }
 
 - (void)setButtonImages:(NSDictionary *)info
