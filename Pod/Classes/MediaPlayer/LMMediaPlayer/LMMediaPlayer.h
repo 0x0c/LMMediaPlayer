@@ -23,7 +23,8 @@ typedef NS_ENUM(NSUInteger, LMMediaPlaybackState) {
 typedef NS_ENUM(NSUInteger, LMMediaRepeatMode) {
 	LMMediaRepeatModeDefault,
 	LMMediaRepeatModeOne,
-	LMMediaRepeatModeAll
+	LMMediaRepeatModeAll,
+	LMMediaRepeatModeNone = LMMediaRepeatModeDefault
 };
 
 extern NSString *const LMMediaPlayerPauseNotification;
