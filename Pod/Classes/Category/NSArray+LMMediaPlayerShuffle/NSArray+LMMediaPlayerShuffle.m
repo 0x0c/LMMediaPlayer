@@ -14,11 +14,11 @@
 {
 	NSMutableArray *results = [NSMutableArray arrayWithArray:self];
 	NSUInteger i = [results count];
-	
-	while(--i) {
+
+	while (--i) {
 		[results exchangeObjectAtIndex:i withObjectAtIndex:(NSUInteger)arc4random_uniform(i + 1.0)];
 	}
-	
+
 	return [NSArray arrayWithArray:results];
 }
 
@@ -29,7 +29,7 @@
 - (void)lm_shuffle
 {
 	NSUInteger i = [self count];
-	while(--i) {
+	while (--i) {
 		[self exchangeObjectAtIndex:i withObjectAtIndex:(NSUInteger)arc4random_uniform(i + 1.0)];
 	}
 }

@@ -22,7 +22,7 @@
 	dispatch_once(&onceToken, ^{
 		sharedInstance = [[[self class] alloc] init];
 	});
-	
+
 	return sharedInstance;
 }
 
@@ -40,7 +40,6 @@
 
 - (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
 {
-	
 }
 
 @end
