@@ -156,7 +156,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 
 - (NSString *)getArtistString
 {
-	return artist_ ?: [self getPropertyValue:MPMediaItemPropertyAlbumTitle cache:artist_];
+	return artist_ ?: [self getPropertyValue:MPMediaItemPropertyArtist cache:artist_];
 }
 
 - (UIImage *)artworkImageWithSize:(CGSize)size
