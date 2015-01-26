@@ -24,7 +24,6 @@
 		A73668C881864D758DB9CE8E /* libPods-LMMediaPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E47F90859134B90894A0A06 /* libPods-LMMediaPlayer.a */; };
 		E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E94B353C19AF14A6001889E8 /* sample.mp4 */; };
 		E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* LMAppDelegate.m */; };
-		E996AAB61A74425A00C2F7BE /* LMMediaItemStreamingCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E996AAB51A74425A00C2F7BE /* LMMediaItemStreamingCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -498,7 +497,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E996AAB61A74425A00C2F7BE /* LMMediaItemStreamingCache.m in Sources */,
 				6003F5A7195388D20070C39A /* LMViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */,
