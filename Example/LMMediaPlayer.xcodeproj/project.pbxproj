@@ -23,6 +23,7 @@
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		A73668C881864D758DB9CE8E /* libPods-LMMediaPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E47F90859134B90894A0A06 /* libPods-LMMediaPlayer.a */; };
 		E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E94B353C19AF14A6001889E8 /* sample.mp4 */; };
+		E95F59F91A86F2FF00F815F3 /* IMG_2380.MOV in Resources */ = {isa = PBXBuildFile; fileRef = E95F59F81A86F2FF00F815F3 /* IMG_2380.MOV */; };
 		E98CB3F019C865AD0072A6F7 /* LMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* LMAppDelegate.m */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		E94B352F19AF1267001889E8 /* LMMediaPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaPlayerView.h; sourceTree = "<group>"; };
 		E94B353019AF1267001889E8 /* LMMediaPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaPlayerView.m; sourceTree = "<group>"; };
 		E94B353C19AF14A6001889E8 /* sample.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.mp4; sourceTree = "<group>"; };
+		E95F59F81A86F2FF00F815F3 /* IMG_2380.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_2380.MOV; sourceTree = "<group>"; };
 		E980AF2119C85CEA003FF2AF /* LMMediaPlayerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = LMMediaPlayerView.bundle; sourceTree = "<group>"; };
 		E996AAB41A74425A00C2F7BE /* LMMediaItemStreamingCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMMediaItemStreamingCache.h; sourceTree = "<group>"; };
 		E996AAB51A74425A00C2F7BE /* LMMediaItemStreamingCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMMediaItemStreamingCache.m; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				6003F59F195388D20070C39A /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* LMViewController.h */,
 				6003F5A6195388D20070C39A /* LMViewController.m */,
+				E95F59F81A86F2FF00F815F3 /* IMG_2380.MOV */,
 				E94B353C19AF14A6001889E8 /* sample.mp4 */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -414,6 +417,7 @@
 			files = (
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
+				E95F59F91A86F2FF00F815F3 /* IMG_2380.MOV in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				E94B353D19AF14B5001889E8 /* sample.mp4 in Resources */,
 			);

@@ -370,6 +370,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerDidFinishPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
+	_currentTimeSlider.value = 1.0;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerViewDidFinishPlaying:self media:media];
 	}
