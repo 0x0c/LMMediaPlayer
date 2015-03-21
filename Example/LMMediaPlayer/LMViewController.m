@@ -66,6 +66,11 @@
 		LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
 		item.title = @"sample.mp4";
 		[playerView_.mediaPlayer addMedia:item];
+		path = [[NSBundle mainBundle] URLForResource:@"IMG_2380" withExtension:@"MOV"];
+		item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
+		item.title = @"IMG_2380.MOV";
+		[playerView_.mediaPlayer addMedia:item];
+
 		[playerView_.mediaPlayer play];
 #if !__has_feature(objc_arc)
 		[item release];
