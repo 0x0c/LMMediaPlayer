@@ -321,6 +321,9 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 
 	if (state == LMMediaPlaybackStateStopped || state == LMMediaPlaybackStatePaused) {
+		if (state == LMMediaPlaybackStateStopped) {
+			playerLayer_.hidden = YES;
+		}
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] ?: nil forState:UIControlStateNormal];
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] ?: nil forState:UIControlStateSelected];
 	}
