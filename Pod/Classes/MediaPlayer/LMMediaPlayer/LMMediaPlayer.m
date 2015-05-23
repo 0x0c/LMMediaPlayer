@@ -189,12 +189,14 @@ static LMMediaPlayer *sharedPlayer;
 - (void)play
 {
 	if (playbackState_ == LMMediaPlaybackStateStopped) {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 		[player_ seekToTime:CMTimeMake(0, 1)];
 	}
 	if (_nowPlayingItem == nil) {
 		[self playMedia:self.currentQueue.firstObject];
 	}
 	else {
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 		[player_ play];
 	}
 
