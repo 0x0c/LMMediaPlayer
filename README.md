@@ -15,6 +15,10 @@ LMMediaPlayer is a video and an audio player for iPhone with replaceable user in
 
 - Runs on iOS 6.0 or later.
 
+## Contribution
+
+Please use clang-format and use .clang-format file which is containing this repo.
+
 ## Installation
 
 LMMediaPlayer is available through [CocoaPods](http://cocoapods.org). To install
