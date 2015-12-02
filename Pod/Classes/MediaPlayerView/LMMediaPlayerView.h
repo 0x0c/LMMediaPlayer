@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "LMMediaPlayer.h"
+#import "LMProgressBarView.h"
 
 extern NSString *const LMMediaPlayerViewPlayButtonImageKey;
 extern NSString *const LMMediaPlayerViewPlayButtonSelectedImageKey;
@@ -46,7 +47,7 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 - (void)mediaPlayerViewDidChangeShuffleMode:(BOOL)enabled playerView:(LMMediaPlayerView *)playerView;
 - (void)mediaPlayerViewWillChangeFullscreenMode:(BOOL)fullscreen;
 - (void)mediaPlayerViewDidChangeFullscreenMode:(BOOL)fullscreen;
-
+- (void)mediaPlayerDidUpdateStreamingProgress:(float)progress playerView:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
 @end
 
 @interface LMMediaPlayerView : UIView <LMMediaPlayerDelegate>
@@ -54,6 +55,7 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 @property (nonatomic, assign) id<LMMediaPlayerViewDelegate> delegate;
 @property (nonatomic, readonly) LMMediaPlayer *mediaPlayer;
 @property (nonatomic, unsafe_unretained) IBOutlet UISlider *currentTimeSlider;
+@property (nonatomic, unsafe_unretained) IBOutlet LMProgressBarView *currentProgressView;
 @property (nonatomic, unsafe_unretained) IBOutlet UILabel *titleLabel;
 @property (nonatomic, readonly) BOOL isFullscreen;
 @property (nonatomic, unsafe_unretained) IBOutlet UIButton *nextButton;

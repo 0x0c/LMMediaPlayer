@@ -52,9 +52,9 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 	return YES;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-	return UIInterfaceOrientationMaskAllButUpsideDown;
+    return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
@@ -292,6 +292,17 @@ static LMMediaPlayerView *sharedPlayerView;
 	[actionButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	actionButtonWidth_.constant = 0;
 	actionButtonRightMergin.constant = 0;
+    
+    self.currentProgressView.barBorderWidth = 1.0f;
+    self.currentProgressView.barBorderColor = [UIColor whiteColor];
+    self.currentProgressView.barInnerBorderColor = [UIColor whiteColor];
+    self.currentProgressView.barInnerBorderWidth = 1.0;
+    self.currentProgressView.barBackgroundColor = [UIColor clearColor];
+    self.currentProgressView.barFillColor = [UIColor whiteColor];
+    self.currentProgressView.barInnerPadding = 1.0f;
+    
+    [self.currentTimeSlider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
+    [self.currentTimeSlider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
 }
 
 - (void)mediaPlayerBecomeForgroundMode:(NSNotification *)notification
@@ -429,6 +440,14 @@ static LMMediaPlayerView *sharedPlayerView;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeShuffleMode:playerView:)]) {
 		[self.delegate mediaPlayerViewDidChangeShuffleMode:enabled playerView:self];
 	}
+}
+
+- (void)mediaPlayerDidUpdateStreamingProgress:(float)progress player:(LMMediaPlayer *)player media:(LMMediaItem *)media
+{
+    [_currentProgressView setProgress:progress];
+    if([self.delegate respondsToSelector:@selector(mediaPlayerDidUpdateStreamingProgress:playerView:media:)]) {
+        [self.delegate mediaPlayerDidUpdateStreamingProgress:progress playerView:self media:media];
+    }
 }
 
 #pragma mark -

@@ -14,6 +14,12 @@
 NSString *const LMMediaPlayerPauseNotification = @"LMMediaPlayerPauseNotification";
 NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification";
 
+NSString *const kLMLoadedTimeRanges = @"loadedTimeRanges";
+NSString *const kLMPlayerItemStatus = @"status";
+
+static void *AudioControllerBufferingObservationContext = &AudioControllerBufferingObservationContext;
+static void *LMPlayerItemStatusObservationContext = &LMPlayerItemStatusObservationContext;
+
 @interface LMMediaPlayer () {
 	NSMutableArray *queue_;
 
@@ -67,12 +73,32 @@ static LMMediaPlayer *sharedPlayer;
 	[notificationCenter removeObserver:self name:LMMediaPlayerPauseNotification object:nil];
 	[notificationCenter removeObserver:self name:LMMediaPlayerStopNotification object:nil];
 	[notificationCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+    
+    [self removeLMPlayerItemObservers];
+    
+    
 	LM_RELEASE(player_);
 	LM_RELEASE(queue_);
 	LM_RELEASE(_currentQueue);
 	LM_DEALLOC(super);
 }
 
+- (void)removeLMPlayerItemObservers
+{
+    @try {
+        [self.corePlayer.currentItem removeObserver:self forKeyPath:kLMPlayerItemStatus];
+    }
+    @catch (NSException *exception) {
+        
+    }
+    
+    @try {
+        [self.corePlayer.currentItem removeObserver:self forKeyPath:kLMLoadedTimeRanges];
+    }
+    @catch (NSException *exception) {
+        
+    }
+}
 #pragma mark -
 
 - (AVPlayer *)corePlayer
@@ -163,6 +189,8 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playMedia:(LMMediaItem *)media
 {
+    //Safely remove any previously added observer before adding new one
+    [self removeLMPlayerItemObservers];
 	[self stop];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] == NO || [self.delegate mediaPlayerWillStartPlaying:self media:media] == YES) {
@@ -170,7 +198,12 @@ static LMMediaPlayer *sharedPlayer;
 			NSURL *url = [media assetURL];
 			_nowPlayingItem = media;
 			[player_ removeTimeObserver:playerObserver_];
-			[player_ replaceCurrentItemWithPlayerItem:[AVPlayerItem playerItemWithURL:url]];
+            
+            AVPlayerItem *item = [AVPlayerItem playerItemWithURL:url];
+            [item addObserver:self forKeyPath:kLMPlayerItemStatus options:NSKeyValueObservingOptionNew context:LMPlayerItemStatusObservationContext];
+
+            [player_ replaceCurrentItemWithPlayerItem:item];
+            
 			[self play];
 			if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
 				[self.delegate mediaPlayerDidStartPlaying:self media:media];
@@ -397,5 +430,40 @@ static LMMediaPlayer *sharedPlayer;
 
 	return e;
 }
-
+#pragma mark - Observer
+- (void)observeValueForKeyPath:(NSString*)aPath ofObject:(id)anObject change:(NSDictionary*)aChange context:(void*)aContext {
+    
+    if(aContext == LMPlayerItemStatusObservationContext) {
+        if (self.corePlayer.currentItem.status == AVPlayerItemStatusReadyToPlay) {
+            [self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
+        } else if (self.corePlayer.status == AVPlayerStatusFailed) {
+            // If failed then remove the loadedTimeRanges and status observers as we don't need them any more.
+            [self removeLMPlayerItemObservers];
+            NSLog(@"unable to load asset");
+        }
+    } else if (aContext == AudioControllerBufferingObservationContext) {
+    
+        AVPlayerItem* playerItem = (AVPlayerItem*)anObject;
+        NSArray* times = playerItem.loadedTimeRanges;
+        
+        NSValue* value = [times firstObject];
+        
+        if(value) {
+            CMTimeRange range;
+            [value getValue:&range];
+            float start = CMTimeGetSeconds(range.start);
+            float duration = CMTimeGetSeconds(range.duration);
+            
+            CGFloat videoAvailable = start + duration;
+            CGFloat totalDuration = CMTimeGetSeconds(self.corePlayer.currentItem.asset.duration);
+            CGFloat progress = videoAvailable / totalDuration;
+            
+            // UI must be update on the main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if([self.delegate respondsToSelector:@selector(mediaPlayerDidUpdateStreamingProgress:player:media:)])
+                    [self.delegate mediaPlayerDidUpdateStreamingProgress:progress player:self media:self.nowPlayingItem];
+            });
+        }
+    }
+}
 @end
