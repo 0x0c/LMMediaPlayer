@@ -23,7 +23,7 @@
                                 <constraint firstAttribute="height" constant="6" id="GkV-Dy-Zm2"/>
                             </constraints>
                         </view>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="tJg-rp-csT">
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="tJg-rp-csT">
                             <rect key="frame" x="75" y="7" width="170" height="31"/>
                         </slider>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lWT-Df-Byc">
@@ -123,7 +123,10 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Qi-Gq-8h6">
-                            <rect key="frame" x="51" y="11" width="181" height="21"/>
+                            <rect key="frame" x="51" y="11" width="163" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="tql-VR-q0j"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -138,20 +141,27 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="die-EZ-SFM">
+                            <rect key="frame" x="217" y="12" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="OX9-YC-iZf"/>
+                            </constraints>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     <constraints>
-                        <constraint firstItem="9Qi-Gq-8h6" firstAttribute="top" secondItem="GIL-kJ-GRw" secondAttribute="top" constant="11" id="5EV-RQ-nTc"/>
                         <constraint firstAttribute="centerY" secondItem="gwr-a1-XwM" secondAttribute="centerY" id="8U3-RP-BCS"/>
                         <constraint firstItem="Xbe-CP-Is5" firstAttribute="leading" secondItem="GIL-kJ-GRw" secondAttribute="leading" constant="8" id="BJa-Pf-HsP"/>
                         <constraint firstAttribute="trailing" secondItem="gdm-wB-X2t" secondAttribute="trailing" constant="12" id="D6O-mp-kdP"/>
                         <constraint firstAttribute="centerY" secondItem="Xbe-CP-Is5" secondAttribute="centerY" id="Gen-x5-5si"/>
                         <constraint firstItem="gdm-wB-X2t" firstAttribute="leading" secondItem="gwr-a1-XwM" secondAttribute="trailing" constant="-2" id="LKy-CR-E7x"/>
-                        <constraint firstItem="gwr-a1-XwM" firstAttribute="leading" secondItem="9Qi-Gq-8h6" secondAttribute="trailing" constant="8" id="NMf-rN-2LZ"/>
-                        <constraint firstAttribute="bottom" secondItem="9Qi-Gq-8h6" secondAttribute="bottom" constant="12" id="aus-9L-lpw"/>
-                        <constraint firstItem="9Qi-Gq-8h6" firstAttribute="leading" secondItem="Xbe-CP-Is5" secondAttribute="trailing" constant="8" id="dPd-Vu-4Ul"/>
+                        <constraint firstItem="die-EZ-SFM" firstAttribute="leading" secondItem="9Qi-Gq-8h6" secondAttribute="trailing" constant="3" id="VqT-xy-gxO"/>
+                        <constraint firstItem="die-EZ-SFM" firstAttribute="centerY" secondItem="GIL-kJ-GRw" secondAttribute="centerY" id="Xma-gE-iz3"/>
+                        <constraint firstItem="gwr-a1-XwM" firstAttribute="leading" secondItem="die-EZ-SFM" secondAttribute="trailing" constant="3" id="agf-tC-ozT"/>
+                        <constraint firstItem="9Qi-Gq-8h6" firstAttribute="leading" secondItem="Xbe-CP-Is5" secondAttribute="trailing" constant="8" id="fyM-jT-fff"/>
                         <constraint firstAttribute="height" constant="44" id="lSK-HM-Lxp"/>
                         <constraint firstAttribute="centerY" secondItem="gdm-wB-X2t" secondAttribute="centerY" id="rep-eI-5fV"/>
+                        <constraint firstItem="9Qi-Gq-8h6" firstAttribute="centerY" secondItem="GIL-kJ-GRw" secondAttribute="centerY" id="uxO-ai-CnU"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KVB-cs-JcH">
@@ -217,9 +227,10 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="actionButtonRightMergin" destination="dPd-Vu-4Ul" id="tl6-wA-ktN"/>
                 <outlet property="actionButtonWidth_" destination="TF0-cD-vsO" id="MZB-yc-oWV"/>
                 <outlet property="actionButton_" destination="Xbe-CP-Is5" id="1vZ-tI-63l"/>
+                <outlet property="activityIndicator" destination="die-EZ-SFM" id="4Xc-Le-D6Y"/>
+                <outlet property="activityIndicatorWidth" destination="OX9-YC-iZf" id="6nG-fO-YdL"/>
                 <outlet property="artworkImageView_" destination="077-OQ-G8z" id="GvA-H8-HRb"/>
                 <outlet property="currentProgressView" destination="jkb-yO-1Ik" id="gaY-k4-osP"/>
                 <outlet property="currentTimeSlider" destination="tJg-rp-csT" id="Ycb-MT-Xux"/>

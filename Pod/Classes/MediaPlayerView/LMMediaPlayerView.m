@@ -445,11 +445,34 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)mediaPlayerDidUpdateStreamingProgress:(float)progress player:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
     [_currentProgressView setProgress:progress];
-    if([self.delegate respondsToSelector:@selector(mediaPlayerDidUpdateStreamingProgress:playerView:media:)]) {
-        [self.delegate mediaPlayerDidUpdateStreamingProgress:progress playerView:self media:media];
+    if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidUpdateStreamingProgress:playerView:media:)]) {
+        [self.delegate mediaPlayerViewDidUpdateStreamingProgress:progress playerView:self media:media];
     }
 }
 
+- (void)mediaPlayerDidFailedWithError:(NSError *)error player:(LMMediaPlayer *)player media:(LMMediaItem *)media {
+    if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFailedWithError:playerView:media:)]) {
+        [self.delegate mediaPlayerViewDidFailedWithError:error playerView:self media:media];
+    }
+}
+
+- (void)mediaPlayerWillStartLoading:(LMMediaPlayer *)player media:(LMMediaItem *)media {
+    [self.activityIndicatorWidth setConstant:20.0];
+    [self.activityIndicator startAnimating];
+    
+    if([self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartLoading:media:)]) {
+        [self.delegate mediaPlayerViewWillStartLoading:self media:media];
+    }
+}
+
+- (void)mediaPlayerDidEndLoading:(LMMediaPlayer *)player media:(LMMediaItem *)media {
+    [self.activityIndicatorWidth setConstant:0.0];
+    [self.activityIndicator stopAnimating];
+    
+    if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidEndLoading:media:)]) {
+        [self.delegate mediaPlayerViewDidEndLoading:self media:media];
+    }
+}
 #pragma mark -
 
 - (void)beginSeek:(id)sender

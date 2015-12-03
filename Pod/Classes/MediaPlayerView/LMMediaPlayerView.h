@@ -47,7 +47,11 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 - (void)mediaPlayerViewDidChangeShuffleMode:(BOOL)enabled playerView:(LMMediaPlayerView *)playerView;
 - (void)mediaPlayerViewWillChangeFullscreenMode:(BOOL)fullscreen;
 - (void)mediaPlayerViewDidChangeFullscreenMode:(BOOL)fullscreen;
-- (void)mediaPlayerDidUpdateStreamingProgress:(float)progress playerView:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
+- (void)mediaPlayerViewDidUpdateStreamingProgress:(float)progress playerView:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
+- (void)mediaPlayerViewDidFailedWithError:(NSError *)error playerView:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
+- (void)mediaPlayerViewWillStartLoading:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
+- (void)mediaPlayerViewDidEndLoading:(LMMediaPlayerView *)playerView media:(LMMediaItem *)media;
+
 @end
 
 @interface LMMediaPlayerView : UIView <LMMediaPlayerDelegate>
@@ -56,6 +60,8 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 @property (nonatomic, readonly) LMMediaPlayer *mediaPlayer;
 @property (nonatomic, unsafe_unretained) IBOutlet UISlider *currentTimeSlider;
 @property (nonatomic, unsafe_unretained) IBOutlet LMProgressBarView *currentProgressView;
+@property (nonatomic, unsafe_unretained) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) IBOutlet NSLayoutConstraint *activityIndicatorWidth;
 @property (nonatomic, unsafe_unretained) IBOutlet UILabel *titleLabel;
 @property (nonatomic, readonly) BOOL isFullscreen;
 @property (nonatomic, unsafe_unretained) IBOutlet UIButton *nextButton;

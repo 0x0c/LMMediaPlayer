@@ -15,10 +15,10 @@ NSString *const LMMediaPlayerPauseNotification = @"LMMediaPlayerPauseNotificatio
 NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification";
 
 NSString *const kLMLoadedTimeRanges = @"loadedTimeRanges";
-NSString *const kLMPlayerItemStatus = @"status";
+NSString *const kLMTracks = @"tracks";
+NSString *const kLMPlayable = @"playable";
 
 static void *AudioControllerBufferingObservationContext = &AudioControllerBufferingObservationContext;
-static void *LMPlayerItemStatusObservationContext = &LMPlayerItemStatusObservationContext;
 
 @interface LMMediaPlayer () {
 	NSMutableArray *queue_;
@@ -86,16 +86,8 @@ static LMMediaPlayer *sharedPlayer;
 - (void)removeLMPlayerItemObservers
 {
     @try {
-        [self.corePlayer.currentItem removeObserver:self forKeyPath:kLMPlayerItemStatus];
-    }
-    @catch (NSException *exception) {
-        
-    }
-    
-    @try {
         [self.corePlayer.currentItem removeObserver:self forKeyPath:kLMLoadedTimeRanges];
-    }
-    @catch (NSException *exception) {
+    } @catch (NSException *exception) {
         
     }
 }
@@ -192,19 +184,51 @@ static LMMediaPlayer *sharedPlayer;
     //Safely remove any previously added observer before adding new one
     [self removeLMPlayerItemObservers];
 	[self stop];
+    [self.corePlayer.currentItem.asset cancelLoading];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)] == NO || [self.delegate mediaPlayerWillStartPlaying:self media:media] == YES) {
 		if (media != nil) {
 			NSURL *url = [media assetURL];
 			_nowPlayingItem = media;
 			[player_ removeTimeObserver:playerObserver_];
-            
-            AVPlayerItem *item = [AVPlayerItem playerItemWithURL:url];
-            [item addObserver:self forKeyPath:kLMPlayerItemStatus options:NSKeyValueObservingOptionNew context:LMPlayerItemStatusObservationContext];
 
-            [player_ replaceCurrentItemWithPlayerItem:item];
+            [self setCurrentState:LMMediaPlaybackStateLoading];
             
-			[self play];
+            if([self.delegate respondsToSelector:@selector(mediaPlayerWillStartLoading:media:)]) {
+                [self.delegate mediaPlayerWillStartLoading:self media:media];
+            }
+            AVURLAsset *urlAsset = [AVURLAsset assetWithURL:url];
+            [urlAsset loadValuesAsynchronouslyForKeys:@[kLMTracks, kLMPlayable] completionHandler:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    if([self.delegate respondsToSelector:@selector(mediaPlayerDidEndLoading:media:)]) {
+                        [self.delegate mediaPlayerDidEndLoading:self media:media];
+                    }
+                    
+                    NSError *error = nil;
+                    
+                    AVKeyValueStatus status = [urlAsset statusOfValueForKey:kLMTracks error:&error];
+                    if (status == AVKeyValueStatusLoaded) {
+                        
+                        AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:urlAsset];
+                        [player_ replaceCurrentItemWithPlayerItem:item];
+                        
+                        [self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
+
+                        [self play];
+                        
+                    } else {
+                        NSLog(@"unable to load asset current status: %zd error: %@", status, self.corePlayer.currentItem.error);
+                        [self setCurrentState:LMMediaPlaybackStateStopped];
+                        [self removeLMPlayerItemObservers];
+                        if([self.delegate respondsToSelector:@selector(mediaPlayerDidFailedWithError:player:media:)]) {
+                            [self.delegate mediaPlayerDidFailedWithError:error player:self media:media];
+                        }
+                    }
+                    
+                });
+            }];
+            
 			if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
 				[self.delegate mediaPlayerDidStartPlaying:self media:media];
 			}
@@ -433,16 +457,8 @@ static LMMediaPlayer *sharedPlayer;
 #pragma mark - Observer
 - (void)observeValueForKeyPath:(NSString*)aPath ofObject:(id)anObject change:(NSDictionary*)aChange context:(void*)aContext {
     
-    if(aContext == LMPlayerItemStatusObservationContext) {
-        if (self.corePlayer.currentItem.status == AVPlayerItemStatusReadyToPlay) {
-            [self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
-        } else {
-            [self removeLMPlayerItemObservers];
-            AVPlayerItemStatus status = self.corePlayer.currentItem.status;
-            NSLog(@"unable to load asset current status: %zd", status);
-        }
-    } else if (aContext == AudioControllerBufferingObservationContext) {
-    
+    if (aContext == AudioControllerBufferingObservationContext) {
+        
         AVPlayerItem* playerItem = (AVPlayerItem*)anObject;
         NSArray* times = playerItem.loadedTimeRanges;
         
