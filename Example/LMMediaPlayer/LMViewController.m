@@ -71,7 +71,7 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURL *path = [NSURL URLWithString:@"https://dl.dropbox.com/u/97700329/file1.mp4"];//[[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
+        NSURL *path = [NSURL URLWithString:@"http://dl.dropbox.com/u/97700329/file1.mp4"];//[[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
         LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
         item.title = @"sample.mp4";
         [playerView_.mediaPlayer addMedia:item];

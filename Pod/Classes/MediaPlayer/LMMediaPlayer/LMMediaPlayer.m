@@ -436,10 +436,10 @@ static LMMediaPlayer *sharedPlayer;
     if(aContext == LMPlayerItemStatusObservationContext) {
         if (self.corePlayer.currentItem.status == AVPlayerItemStatusReadyToPlay) {
             [self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
-        } else if (self.corePlayer.status == AVPlayerStatusFailed) {
-            // If failed then remove the loadedTimeRanges and status observers as we don't need them any more.
+        } else {
             [self removeLMPlayerItemObservers];
-            NSLog(@"unable to load asset");
+            AVPlayerItemStatus status = self.corePlayer.currentItem.status;
+            NSLog(@"unable to load asset current status: %zd", status);
         }
     } else if (aContext == AudioControllerBufferingObservationContext) {
     
