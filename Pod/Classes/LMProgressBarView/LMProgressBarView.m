@@ -33,6 +33,10 @@ void setRectPathInContext(CGContextRef context, CGRect rect, CGFloat radius);
     [self setNeedsDisplay];
 }
 
+- (void)setCurrentProgress:(CGFloat)newProgress {
+    _currentProgress = fmaxf(0.0, fminf(1.0, newProgress));
+    [self setNeedsDisplay];
+}
 
 - (void)setBarBorderWidth:(CGFloat)barBorderWidth {
     _barBorderWidth = barBorderWidth;
@@ -70,6 +74,10 @@ void setRectPathInContext(CGContextRef context, CGRect rect, CGFloat radius);
     [self setNeedsDisplay];
 }
 
+- (void)setBarMinimumTrackFillColor:(UIColor *)barMinimumTrackFillColor {
+    _barMinimumTrackFillColor = barMinimumTrackFillColor;
+    [self setNeedsDisplay];
+}
 
 - (void)setBarBackgroundColor:(UIColor *)barBackgroundColor {
     _barBackgroundColor = barBackgroundColor;
@@ -102,8 +110,10 @@ void setRectPathInContext(CGContextRef context, CGRect rect, CGFloat radius);
         [appearance setBarInnerPadding:2.0];
         [appearance setBarFillColor:[self defaultBarColor]];
         [appearance setBarBackgroundColor:[UIColor whiteColor]];
+        [appearance setBarMinimumTrackFillColor:[UIColor whiteColor]];
     }
 }
+
 
 
 #pragma mark - UIView
@@ -188,6 +198,22 @@ void setRectPathInContext(CGContextRef context, CGRect rect, CGFloat radius);
         
         [self.barFillColor setFill];
         fillRectInContext(context, currentRect, radius);
+    }
+    
+    if (self.barMinimumTrackFillColor) {
+        
+        CGRect progressFillRect = currentRect;
+        progressFillRect.size.width = CGRectInset(rect, self.barInnerPadding, self.barInnerPadding).size.width;
+        progressFillRect.size.width = CGRectInset(progressFillRect, halfLineWidth, halfLineWidth).size.width;
+        progressFillRect.size.width = CGRectInset(progressFillRect, halfLineWidth, halfLineWidth).size.width;
+        
+        if (self.usesRoundedCorners) radius = progressFillRect.size.height / 2;
+        
+        progressFillRect.size.width *= self.currentProgress;
+        progressFillRect.size.width = fmaxf(progressFillRect.size.width, 2 * radius);
+        
+        [self.barMinimumTrackFillColor setFill];
+        fillRectInContext(context, progressFillRect, radius);
     }
     
     // Restore the context

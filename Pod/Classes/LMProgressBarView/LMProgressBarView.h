@@ -32,6 +32,8 @@
  */
 @property (nonatomic) CGFloat progress;
 
+@property (nonatomic) CGFloat currentProgress;
+
 
 ///-------------------------------------
 /// @name Configuring the Appearance
@@ -79,6 +81,7 @@
  */
 @property (nonatomic) UIColor *barFillColor UI_APPEARANCE_SELECTOR;
 
+@property (nonatomic) UIColor *barMinimumTrackFillColor UI_APPEARANCE_SELECTOR;
 /**
  The bar background color.
  

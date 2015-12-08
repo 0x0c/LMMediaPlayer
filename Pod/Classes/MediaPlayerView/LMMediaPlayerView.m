@@ -208,11 +208,11 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 #endif
 }
-- (void)setProgressBarBorderColor:(UIColor *)borderColor innerBorderColor:(UIColor *)innerBorderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor thumbTintColor:(UIColor *)thumbTintColor {
+- (void)setProgressBarBorderColor:(UIColor *)borderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor minTrackColor:(UIColor *)minTrackColor thumbTintColor:(UIColor *)thumbTintColor {
     self.currentProgressView.barBorderColor = borderColor;
-    self.currentProgressView.barInnerBorderColor = innerBorderColor;
     self.currentProgressView.barBackgroundColor = backgroundColor;
     self.currentProgressView.barFillColor = fillColor;
+    self.currentProgressView.barMinimumTrackFillColor = minTrackColor;
     
     self.currentTimeSlider.thumbTintColor = thumbTintColor;
 }
@@ -304,13 +304,12 @@ static LMMediaPlayerView *sharedPlayerView;
 	actionButtonRightMergin.constant = 0;
     
     self.currentProgressView.barBorderWidth = 1.0f;
-    self.currentProgressView.barInnerBorderWidth = 1.0;
     self.currentProgressView.barInnerPadding = 1.0f;
     
     [self setProgressBarBorderColor:[UIColor whiteColor]
-                   innerBorderColor:[UIColor whiteColor]
                     backgroundColor:[UIColor clearColor]
                           fillColor:[UIColor whiteColor]
+                      minTrackColor:[UIColor whiteColor]
                      thumbTintColor:[UIColor whiteColor]];
     
     [self.currentTimeSlider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
@@ -397,6 +396,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)mediaPlayerDidFinishPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
 	_currentTimeSlider.value = 1.0;
+    _currentProgressView.currentProgress = _currentTimeSlider.value;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerViewDidFinishPlaying:self media:media];
 	}
@@ -406,6 +406,7 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	if (seeking_ == NO) {
 		_currentTimeSlider.value = player.currentPlaybackTime / player.currentPlaybackDuration;
+        _currentProgressView.currentProgress = _currentTimeSlider.value;
 
 		NSMutableString *durationString = [NSMutableString new];
 		NSInteger duration = (NSInteger)player.currentPlaybackTime;
@@ -520,12 +521,15 @@ static LMMediaPlayerView *sharedPlayerView;
 	[durationString appendFormat:@"%02ld", (long int)duration];
 	remainingTimeLabel_.text = durationString;
 	LM_RELEASE(durationString);
+    
+    _currentProgressView.currentProgress = _currentTimeSlider.value;
 }
 
 - (void)endSeek:(id)sender
 {
 	UISlider *slider = (UISlider *)sender;
 	[_mediaPlayer seekTo:_mediaPlayer.currentPlaybackDuration * slider.value];
+    _currentProgressView.currentProgress = _currentTimeSlider.value;
 	seeking_ = NO;
 }
 

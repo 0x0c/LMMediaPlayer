@@ -78,6 +78,6 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 - (void)setFullscreen:(BOOL)fullscreen;
 - (void)setButtonImages:(NSDictionary *)info;
 - (void)setBluredUserInterface:(BOOL)bluredUserInterface visualEffect:(UIVisualEffect *)effect;
-- (void)setProgressBarBorderColor:(UIColor *)borderColor innerBorderColor:(UIColor *)innerBorderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor thumbTintColor:(UIColor *)thumbTintColor;
+- (void)setProgressBarBorderColor:(UIColor *)borderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor minTrackColor:(UIColor *)minTrackColor thumbTintColor:(UIColor *)thumbTintColor;
 - (void)setProgressBarThumbImage:(UIImage *)image;
 @end
