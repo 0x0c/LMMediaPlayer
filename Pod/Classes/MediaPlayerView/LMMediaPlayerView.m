@@ -208,7 +208,17 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 #endif
 }
-
+- (void)setProgressBarBorderColor:(UIColor *)borderColor innerBorderColor:(UIColor *)innerBorderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor thumbTintColor:(UIColor *)thumbTintColor {
+    self.currentProgressView.barBorderColor = borderColor;
+    self.currentProgressView.barInnerBorderColor = innerBorderColor;
+    self.currentProgressView.barBackgroundColor = backgroundColor;
+    self.currentProgressView.barFillColor = fillColor;
+    
+    self.currentTimeSlider.thumbTintColor = thumbTintColor;
+}
+- (void)setProgressBarThumbImage:(UIImage *)image {
+    [self.currentTimeSlider setThumbImage:image forState:UIControlStateNormal];
+}
 #pragma mark -
 
 - (void)setup
@@ -294,12 +304,14 @@ static LMMediaPlayerView *sharedPlayerView;
 	actionButtonRightMergin.constant = 0;
     
     self.currentProgressView.barBorderWidth = 1.0f;
-    self.currentProgressView.barBorderColor = [UIColor whiteColor];
-    self.currentProgressView.barInnerBorderColor = [UIColor whiteColor];
     self.currentProgressView.barInnerBorderWidth = 1.0;
-    self.currentProgressView.barBackgroundColor = [UIColor clearColor];
-    self.currentProgressView.barFillColor = [UIColor whiteColor];
     self.currentProgressView.barInnerPadding = 1.0f;
+    
+    [self setProgressBarBorderColor:[UIColor whiteColor]
+                   innerBorderColor:[UIColor whiteColor]
+                    backgroundColor:[UIColor clearColor]
+                          fillColor:[UIColor whiteColor]
+                     thumbTintColor:[UIColor whiteColor]];
     
     [self.currentTimeSlider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
     [self.currentTimeSlider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
