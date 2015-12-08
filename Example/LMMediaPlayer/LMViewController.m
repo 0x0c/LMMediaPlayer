@@ -60,22 +60,7 @@
 	[playerView_ setBluredUserInterface:YES visualEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
 	//	[playerView_ setBluredUserInterface:NO visualEffect:nil];
 
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		NSURL *path = [[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
-		LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
-		item.title = @"sample.mp4";
-		[playerView_.mediaPlayer addMedia:item];
-		path = [[NSBundle mainBundle] URLForResource:@"IMG_2380" withExtension:@"MOV"];
-		item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
-		item.title = @"IMG_2380.MOV";
-		[playerView_.mediaPlayer addMedia:item];
-
-		[playerView_.mediaPlayer play];
-#if !__has_feature(objc_arc)
-		[item release];
-#endif
-	});
+	
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -83,6 +68,23 @@
 	[super viewDidAppear:animated];
 	[[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
 	[self becomeFirstResponder];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSURL *path = [NSURL URLWithString:@"http://dl.dropbox.com/u/97700329/file1.mp4"];//[[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
+        LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
+        item.title = @"sample.mp4";
+        [playerView_.mediaPlayer addMedia:item];
+        path = [[NSBundle mainBundle] URLForResource:@"IMG_2380" withExtension:@"MOV"];
+        item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
+        item.title = @"IMG_2380.MOV";
+        [playerView_.mediaPlayer addMedia:item];
+        
+        [playerView_.mediaPlayer play];
+#if !__has_feature(objc_arc)
+        [item release];
+#endif
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated

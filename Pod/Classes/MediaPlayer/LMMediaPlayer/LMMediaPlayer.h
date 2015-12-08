@@ -17,7 +17,8 @@
 typedef NS_ENUM(NSUInteger, LMMediaPlaybackState) {
 	LMMediaPlaybackStateStopped,
 	LMMediaPlaybackStatePlaying,
-	LMMediaPlaybackStatePaused
+	LMMediaPlaybackStatePaused,
+    LMMediaPlaybackStateLoading,
 };
 
 typedef NS_ENUM(NSUInteger, LMMediaRepeatMode) {
@@ -43,6 +44,10 @@ extern NSString *const LMMediaPlayerStopNotification;
 - (void)mediaPlayerDidChangeCurrentTime:(LMMediaPlayer *)player;
 - (void)mediaPlayerDidChangeRepeatMode:(LMMediaRepeatMode)mode player:(LMMediaPlayer *)player;
 - (void)mediaPlayerDidChangeShuffleMode:(BOOL)enabled player:(LMMediaPlayer *)player;
+- (void)mediaPlayerDidUpdateStreamingProgress:(float)progress player:(LMMediaPlayer *)player media:(LMMediaItem *)media;
+- (void)mediaPlayerDidFailedWithError:(NSError *)error player:(LMMediaPlayer *)player media:(LMMediaItem *)media;
+- (void)mediaPlayerWillStartLoading:(LMMediaPlayer *)player media:(LMMediaItem *)media;
+- (void)mediaPlayerDidEndLoading:(LMMediaPlayer *)player media:(LMMediaItem *)media;
 
 @end
 
