@@ -107,6 +107,20 @@ To change user interface, use ```setButtonImages:``` and set images with these k
 
 To show action button, set image with ```LMMediaPlayerViewActionButtonImageKey```.
 
+Use the following helper method for customising the progress bar:
+```objective-c
+[[LMMediaPlayerView sharedPlayerView] setProgressBarBorderColor:[UIColor whiteColor]
+                                                    backgroundColor:[UIColor clearColor]
+                                                          fillColor:[UIColor lightGrayColor]
+                                                      minTrackColor:[UIColor redColor]
+                                                     thumbTintColor:[UIColor whiteColor]];
+```
+Use the following helper method for customising the progress bar thumb:
+```objective-c
+[[LMMediaPlayerView sharedPlayerView] setProgressBarThumbImage:[UIImage imageNamed:@"thumb"]];
+```
+
+
 Of course, you can play video or audio in background mode and can control with control center.
 If you want to play with fullscreen mode, please add "View controller-based status bar appearance" key and set value with "NO" at your Info.plist
 
