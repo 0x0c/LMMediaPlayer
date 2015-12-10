@@ -314,6 +314,8 @@ static LMMediaPlayerView *sharedPlayerView;
     
     [self.currentTimeSlider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
     [self.currentTimeSlider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
+	
+	[self setProgressBarBorderColor:[UIColor whiteColor] backgroundColor:[UIColor clearColor] fillColor:[UIColor whiteColor] minTrackColor:[UIColor colorWithRed:0.188 green:0.514 blue:0.984 alpha:1.000] thumbTintColor:[UIColor whiteColor]];
 }
 
 - (void)mediaPlayerBecomeForgroundMode:(NSNotification *)notification
