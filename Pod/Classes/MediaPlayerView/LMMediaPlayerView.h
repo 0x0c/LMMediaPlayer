@@ -72,6 +72,7 @@ extern NSString *const LMMediaPlayerViewActionButtonImageKey;
 
 + (instancetype)sharedPlayerView;
 + (instancetype)create;
+- (void)setUserInterfaceHidden:(BOOL)userInterfaceHidden animated:(BOOL)animated;
 - (void)setHeaderViewHidden:(BOOL)hidden;
 - (void)setFooterViewHidden:(BOOL)hidden;
 - (void)setFullscreen:(BOOL)fullscreen animated:(BOOL)animated;

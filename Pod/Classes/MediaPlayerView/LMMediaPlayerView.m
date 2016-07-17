@@ -208,7 +208,9 @@ static LMMediaPlayerView *sharedPlayerView;
 	}
 #endif
 }
-- (void)setProgressBarBorderColor:(UIColor *)borderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor minTrackColor:(UIColor *)minTrackColor thumbTintColor:(UIColor *)thumbTintColor {
+
+- (void)setProgressBarBorderColor:(UIColor *)borderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor minTrackColor:(UIColor *)minTrackColor thumbTintColor:(UIColor *)thumbTintColor
+{
     self.currentProgressView.barBorderColor = borderColor;
     self.currentProgressView.barBackgroundColor = backgroundColor;
     self.currentProgressView.barFillColor = fillColor;
@@ -216,9 +218,12 @@ static LMMediaPlayerView *sharedPlayerView;
     
     self.currentTimeSlider.thumbTintColor = thumbTintColor;
 }
-- (void)setProgressBarThumbImage:(UIImage *)image {
+
+- (void)setProgressBarThumbImage:(UIImage *)image
+{
     [self.currentTimeSlider setThumbImage:image forState:UIControlStateNormal];
 }
+
 #pragma mark -
 
 - (void)setup
@@ -656,11 +661,17 @@ static LMMediaPlayerView *sharedPlayerView;
 	footerView_.hidden = hidden;
 }
 
-- (void)setUserInterfaceHidden:(BOOL)hidden
+- (void)setUserInterfaceHidden:(BOOL)userInterfaceHidden
 {
-	_userInterfaceHidden = hidden;
-	if (hidden) {
-		[UIView animateWithDuration:0.3 animations:^{
+	[self setUserInterfaceHidden:userInterfaceHidden animated:NO];
+}
+
+- (void)setUserInterfaceHidden:(BOOL)userInterfaceHidden animated:(BOOL)animated
+{
+	NSTimeInterval duration = 0.3 * animated ? 1 : 0;
+	_userInterfaceHidden = userInterfaceHidden;
+	if (userInterfaceHidden) {
+		[UIView animateWithDuration:duration animations:^{
 			headerView_.alpha = 0;
 			footerView_.alpha = 0;
 			_currentTimeSlider.alpha = 0;
@@ -670,7 +681,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		}];
 	}
 	else {
-		[UIView animateWithDuration:0.3 animations:^{
+		[UIView animateWithDuration:duration animations:^{
 			headerView_.alpha = 1;
 			footerView_.alpha = 1;
 			_currentTimeSlider.alpha = 1;
