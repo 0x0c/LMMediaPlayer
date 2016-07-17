@@ -59,6 +59,7 @@ extern NSString *const LMMediaPlayerStopNotification;
 @property (nonatomic, assign) LMMediaRepeatMode repeatMode;
 @property (nonatomic, readonly) BOOL shuffleMode;
 @property (nonatomic, readonly) NSInteger index;
+@property (nonatomic, readonly) NSString *currentAudioSessionCategory;
 
 + (instancetype)sharedPlayer;
 - (AVPlayer *)corePlayer;

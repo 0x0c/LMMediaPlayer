@@ -57,7 +57,7 @@ static LMMediaPlayer *sharedPlayer;
 		self.currentQueue = queue_;
 		_repeatMode = LMMediaRepeatModeDefault;
 		_shuffleMode = YES;
-
+		_currentAudioSessionCategory = AVAudioSessionCategoryPlayback;
 		NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 		[notificationCenter addObserver:self selector:@selector(pause) name:LMMediaPlayerPauseNotification object:nil];
 		[notificationCenter addObserver:self selector:@selector(stop) name:LMMediaPlayerStopNotification object:nil];
@@ -419,7 +419,7 @@ static LMMediaPlayer *sharedPlayer;
 		[self updateLockScreenInfo];
 		NSError *e = nil;
 		AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-		[audioSession setCategory:AVAudioSessionCategoryPlayback error:&e];
+		[audioSession setCategory:self.currentAudioSessionCategory error:&e];
 		[audioSession setActive:YES error:NULL];
 	}
 
@@ -451,7 +451,7 @@ static LMMediaPlayer *sharedPlayer;
 	NSError *e = nil;
 	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 	[audioSession setCategory:category error:&e];
-
+	_currentAudioSessionCategory = category;
 	return e;
 }
 #pragma mark - Observer
