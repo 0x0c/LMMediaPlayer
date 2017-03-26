@@ -51,7 +51,7 @@
  
  @see defaultBarColor
  */
-@property (nonatomic) UIColor *barBorderColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *barBorderColor UI_APPEARANCE_SELECTOR;
 
 /**
  The inner border width.
@@ -65,7 +65,7 @@
  
  The default is nil.
  */
-@property (nonatomic) UIColor *barInnerBorderColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *barInnerBorderColor UI_APPEARANCE_SELECTOR;
 
 /**
  The inner padding.
@@ -79,15 +79,15 @@
  
  @see defaultBarColor
  */
-@property (nonatomic) UIColor *barFillColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *barFillColor UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic) UIColor *barMinimumTrackFillColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *barMinimumTrackFillColor UI_APPEARANCE_SELECTOR;
 /**
  The bar background color.
  
  The default is white.
  */
-@property (nonatomic) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
  It determines whether use rounded corners.

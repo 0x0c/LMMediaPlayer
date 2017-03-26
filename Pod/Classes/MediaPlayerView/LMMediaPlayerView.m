@@ -54,7 +54,7 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAllButUpsideDown;
+	return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
@@ -83,12 +83,12 @@ NSString *const LMMediaPlayerViewActionButtonImageKey = @"LMMediaPlayerViewActio
 	UIView *superView_;
 	NSMutableDictionary *buttonImages_;
 	AVPlayerLayer *playerLayer_;
-
+	
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
 	UIVisualEffectView *headerBlurView_;
 	UIVisualEffectView *footerBlurView_;
 #endif
-
+	
 	UIWindow *mainWindow_;
 }
 
@@ -111,7 +111,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 + (instancetype)create
 {
-	return [[UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle mainBundle]] instantiateWithOwner:nil options:nil][0];
+	return [[UINib nibWithNibName:NSStringFromClass([self class]) bundle:[NSBundle bundleForClass:[self class]]] instantiateWithOwner:nil options:nil][0];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -120,14 +120,14 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (self) {
 		[self setup];
 	}
-
+	
 	return self;
 }
 
 - (void)drawRect:(CGRect)rect
 {
 	[super drawRect:rect];
-
+	
 	if (needToSetPlayer_) {
 		[playerLayer_ setPlayer:self.mediaPlayer.corePlayer];
 		needToSetPlayer_ = NO;
@@ -139,7 +139,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	_mediaPlayer.delegate = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
-
+	
 	LM_RELEASE(playbackTimeLabel_);
 	LM_RELEASE(remainingTimeLabel_);
 	LM_RELEASE(headerView_);
@@ -184,17 +184,17 @@ static LMMediaPlayerView *sharedPlayerView;
 			if (headerBlurView_ == nil) {
 				headerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
 				footerBlurView_ = [[UIVisualEffectView alloc] initWithEffect:effect];
-
+				
 				headerBlurView_.frame = headerView_.bounds;
 				headerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
+				
 				footerBlurView_.frame = footerView_.bounds;
 				footerBlurView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-
+				
 				[headerView_ insertSubview:headerBlurView_ atIndex:0];
 				[footerView_ insertSubview:footerBlurView_ atIndex:0];
 			}
-
+			
 			headerView_.backgroundColor = [UIColor clearColor];
 			footerView_.backgroundColor = [UIColor clearColor];
 		}
@@ -203,7 +203,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			headerView_.backgroundColor = backgroundColor;
 			footerView_.backgroundColor = backgroundColor;
 		}
-
+		
 		headerBlurView_.hidden = footerBlurView_.hidden = !_bluredUserInterface;
 	}
 #endif
@@ -211,17 +211,17 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setProgressBarBorderColor:(UIColor *)borderColor backgroundColor:(UIColor *)backgroundColor fillColor:(UIColor *)fillColor minTrackColor:(UIColor *)minTrackColor thumbTintColor:(UIColor *)thumbTintColor
 {
-    self.currentProgressView.barBorderColor = borderColor;
-    self.currentProgressView.barBackgroundColor = backgroundColor;
-    self.currentProgressView.barFillColor = fillColor;
-    self.currentProgressView.barMinimumTrackFillColor = minTrackColor;
-    
-    self.currentTimeSlider.thumbTintColor = thumbTintColor;
+	self.currentProgressView.barBorderColor = borderColor;
+	self.currentProgressView.barBackgroundColor = backgroundColor;
+	self.currentProgressView.barFillColor = fillColor;
+	self.currentProgressView.barMinimumTrackFillColor = minTrackColor;
+	
+	self.currentTimeSlider.thumbTintColor = thumbTintColor;
 }
 
 - (void)setProgressBarThumbImage:(UIImage *)image
 {
-    [self.currentTimeSlider setThumbImage:image forState:UIControlStateNormal];
+	[self.currentTimeSlider setThumbImage:image forState:UIControlStateNormal];
 }
 
 #pragma mark -
@@ -230,19 +230,19 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	[self setTranslatesAutoresizingMaskIntoConstraints:YES];
 	self.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-
+	
 	mainWindow_ = [[UIApplication sharedApplication] keyWindow];
 	if (mainWindow_ == nil) {
 		mainWindow_ = [[UIApplication sharedApplication] windows][0];
 	}
 	LM_RETAIN(mainWindow_);
-
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeForgroundMode:) name:UIApplicationWillEnterForegroundNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mediaPlayerBecomeBackgroundMode:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-
+	
 	needToSetPlayer_ = NO;
 	_userInterfaceHidden = NO;
-
+	
 	_mediaPlayer = [[LMMediaPlayer alloc] init];
 	_mediaPlayer.delegate = self;
 }
@@ -252,73 +252,73 @@ static LMMediaPlayerView *sharedPlayerView;
 	UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(reverseUserInterfaceHidden)];
 	[self addGestureRecognizer:gesture];
 	LM_RELEASE(gesture);
-
+	
 	artworkImageView_.contentMode = UIViewContentModeScaleAspectFit;
-
+	
 	[_currentTimeSlider addTarget:self action:@selector(beginSeek:) forControlEvents:UIControlEventTouchDown];
 	[_currentTimeSlider addTarget:self action:@selector(seekPositionChanged:) forControlEvents:UIControlEventValueChanged];
 	[_currentTimeSlider addTarget:self action:@selector(endSeek:) forControlEvents:(UIControlEventTouchUpInside | UIControlEventTouchUpOutside | UIControlEventTouchCancel)];
-
+	
 	[playButton_ addTarget:self action:@selector(changePlaybackState:) forControlEvents:UIControlEventTouchUpInside];
 	[_nextButton addTarget:self action:@selector(fourcePlayNextMedia) forControlEvents:UIControlEventTouchUpInside];
 	[_previousButton addTarget:self action:@selector(fourcePlayPreviousMedia) forControlEvents:UIControlEventTouchUpInside];
-
+	
 	UIColor *backgroundColor = [UIColor colorWithWhite:0.000 alpha:0.400];
 	footerView_.backgroundColor = headerView_.backgroundColor = backgroundColor;
 	[_mediaPlayer setShuffleEnabled:NO];
 	[_mediaPlayer setRepeatMode:LMMediaRepeatModeDefault];
-
+	
 	buttonImages_ = [@{ LMMediaPlayerViewPlayButtonImageKey : [[self class] imageForFilename:@"play"],
-		LMMediaPlayerViewPlayButtonSelectedImageKey : [[self class] imageForFilename:@"play"],
-		LMMediaPlayerViewStopButtonImageKey : [[self class] imageForFilename:@"pause"],
-		LMMediaPlayerViewStopButtonSelectedImageKey : [[self class] imageForFilename:@"pause"],
-		LMMediaPlayerViewShuffleButtonShuffledImageKey : [[self class] imageForFilename:@"shuffle"],
-		LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey : [[self class] imageForFilename:@"shuffle"],
-		LMMediaPlayerViewShuffleButtonUnshuffledImageKey : [[self class] imageForFilename:@"unshuffle"],
-		LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey : [[self class] imageForFilename:@"unshuffle"],
-		LMMediaPlayerViewRepeatButtonRepeatNoneImageKey : [[self class] imageForFilename:@"repeat_none"],
-		LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey : [[self class] imageForFilename:@"repeat_none"],
-		LMMediaPlayerViewRepeatButtonRepeatOneImageKey : [[self class] imageForFilename:@"repeat_one"],
-		LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey : [[self class] imageForFilename:@"repeat_one"],
-		LMMediaPlayerViewRepeatButtonRepeatAllImageKey : [[self class] imageForFilename:@"repeat_all"],
-		LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey : [[self class] imageForFilename:@"repeat_all"],
-		LMMediaPlayerViewFullscreenButtonImageKey : [[self class] imageForFilename:@"fullscreen"],
-		LMMediaPlayerViewFullscreenButtonSelectedImageKey : [[self class] imageForFilename:@"fullscreen"],
-		LMMediaPlayerViewUnfullscreenButtonImageKey : [[self class] imageForFilename:@"unfullscreen"],
-		LMMediaPlayerViewUnfullscreenButtonSelectedImageKey : [[self class] imageForFilename:@"unfullscreen"]
-	} mutableCopy];
-
+						LMMediaPlayerViewPlayButtonSelectedImageKey : [[self class] imageForFilename:@"play"],
+						LMMediaPlayerViewStopButtonImageKey : [[self class] imageForFilename:@"pause"],
+						LMMediaPlayerViewStopButtonSelectedImageKey : [[self class] imageForFilename:@"pause"],
+						LMMediaPlayerViewShuffleButtonShuffledImageKey : [[self class] imageForFilename:@"shuffle"],
+						LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey : [[self class] imageForFilename:@"shuffle"],
+						LMMediaPlayerViewShuffleButtonUnshuffledImageKey : [[self class] imageForFilename:@"unshuffle"],
+						LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey : [[self class] imageForFilename:@"unshuffle"],
+						LMMediaPlayerViewRepeatButtonRepeatNoneImageKey : [[self class] imageForFilename:@"repeat_none"],
+						LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey : [[self class] imageForFilename:@"repeat_none"],
+						LMMediaPlayerViewRepeatButtonRepeatOneImageKey : [[self class] imageForFilename:@"repeat_one"],
+						LMMediaPlayerViewRepeatButtonRepeatOneSelectedImageKey : [[self class] imageForFilename:@"repeat_one"],
+						LMMediaPlayerViewRepeatButtonRepeatAllImageKey : [[self class] imageForFilename:@"repeat_all"],
+						LMMediaPlayerViewRepeatButtonRepeatAllSelectedImageKey : [[self class] imageForFilename:@"repeat_all"],
+						LMMediaPlayerViewFullscreenButtonImageKey : [[self class] imageForFilename:@"fullscreen"],
+						LMMediaPlayerViewFullscreenButtonSelectedImageKey : [[self class] imageForFilename:@"fullscreen"],
+						LMMediaPlayerViewUnfullscreenButtonImageKey : [[self class] imageForFilename:@"unfullscreen"],
+						LMMediaPlayerViewUnfullscreenButtonSelectedImageKey : [[self class] imageForFilename:@"unfullscreen"]
+						} mutableCopy];
+	
 	[playButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] forState:UIControlStateNormal];
 	[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] forState:UIControlStateSelected];
-
+	
 	[fullscreenButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 	[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
-
+	
 	[repeatButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneImageKey] forState:UIControlStateNormal];
 	[repeatButton_ setImage:buttonImages_[LMMediaPlayerViewRepeatButtonRepeatNoneSelectedImageKey] forState:UIControlStateSelected];
-
+	
 	[shuffleButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledImageKey] forState:UIControlStateNormal];
 	[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonUnshuffledSelectedImageKey] forState:UIControlStateSelected];
-
+	
 	[actionButton_.imageView setContentMode:UIViewContentModeScaleAspectFit];
 	actionButtonWidth_.constant = 0;
 	actionButtonRightMergin.constant = 0;
-    
-    self.currentProgressView.barBorderWidth = 1.0f;
-    self.currentProgressView.barInnerPadding = 1.0f;
-    
-    [self setProgressBarBorderColor:[UIColor whiteColor]
-                    backgroundColor:[UIColor clearColor]
-                          fillColor:[UIColor whiteColor]
-                      minTrackColor:[UIColor whiteColor]
-                     thumbTintColor:[UIColor whiteColor]];
-    
-    [self.currentTimeSlider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
-    [self.currentTimeSlider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
+	
+	self.currentProgressView.barBorderWidth = 1.0f;
+	self.currentProgressView.barInnerPadding = 1.0f;
+	
+	[self setProgressBarBorderColor:[UIColor whiteColor]
+					backgroundColor:[UIColor clearColor]
+						  fillColor:[UIColor whiteColor]
+					  minTrackColor:[UIColor whiteColor]
+					 thumbTintColor:[UIColor whiteColor]];
+	
+	[self.currentTimeSlider setMinimumTrackImage:[UIImage new] forState:UIControlStateNormal];
+	[self.currentTimeSlider setMaximumTrackImage:[UIImage new] forState:UIControlStateNormal];
 	
 	[self setProgressBarBorderColor:[UIColor whiteColor] backgroundColor:[UIColor clearColor] fillColor:[UIColor whiteColor] minTrackColor:[UIColor colorWithRed:0.188 green:0.514 blue:0.984 alpha:1.000] thumbTintColor:[UIColor whiteColor]];
 }
@@ -348,7 +348,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeState:state:)]) {
 		[self.delegate mediaPlayerViewWillChangeState:self state:state];
 	}
-
+	
 	if (state == LMMediaPlaybackStateStopped || state == LMMediaPlaybackStatePaused) {
 		if (state == LMMediaPlaybackStateStopped) {
 			playerLayer_.hidden = YES;
@@ -372,7 +372,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		result = YES;
 	}
 	self.titleLabel.text = media.title;
-
+	
 	return result;
 }
 
@@ -387,7 +387,7 @@ static LMMediaPlayerView *sharedPlayerView;
 			[self.layer insertSublayer:playerLayer_ atIndex:0];
 		}
 		needToSetPlayer_ = YES;
-
+		
 		playerLayer_.hidden = NO;
 	}
 	else {
@@ -403,7 +403,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (void)mediaPlayerDidFinishPlaying:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
 	_currentTimeSlider.value = 1.0;
-    _currentProgressView.currentProgress = _currentTimeSlider.value;
+	_currentProgressView.currentProgress = _currentTimeSlider.value;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFinishPlaying:media:)]) {
 		[self.delegate mediaPlayerViewDidFinishPlaying:self media:media];
 	}
@@ -413,13 +413,13 @@ static LMMediaPlayerView *sharedPlayerView;
 {
 	if (seeking_ == NO) {
 		_currentTimeSlider.value = player.currentPlaybackTime / player.currentPlaybackDuration;
-        _currentProgressView.currentProgress = _currentTimeSlider.value;
-
+		_currentProgressView.currentProgress = _currentTimeSlider.value;
+		
 		NSMutableString *durationString = [NSMutableString new];
 		NSInteger duration = (NSInteger)player.currentPlaybackTime;
 		if (duration / (60 * 60) > 0) {
 			[durationString appendFormat:@"%02ld:",
-					(long int)duration / (60 * 60)];
+			 (long int)duration / (60 * 60)];
 			duration /= 60 * 60;
 		}
 		[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -427,12 +427,12 @@ static LMMediaPlayerView *sharedPlayerView;
 		[durationString appendFormat:@"%02ld", (long int)duration];
 		playbackTimeLabel_.text = durationString;
 		LM_RELEASE(durationString);
-
+		
 		durationString = [[NSMutableString alloc] initWithString:@"-"];
 		duration = (NSInteger)fabs(player.currentPlaybackTime - player.currentPlaybackDuration);
 		if (duration / (60 * 60) > 0) {
 			[durationString appendFormat:@"%02ld:",
-					(long int)duration / (60 * 60)];
+			 (long int)duration / (60 * 60)];
 			duration /= 60 * 60;
 		}
 		[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -464,34 +464,34 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)mediaPlayerDidUpdateStreamingProgress:(float)progress player:(LMMediaPlayer *)player media:(LMMediaItem *)media
 {
-    [_currentProgressView setProgress:progress];
-    if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidUpdateStreamingProgress:playerView:media:)]) {
-        [self.delegate mediaPlayerViewDidUpdateStreamingProgress:progress playerView:self media:media];
-    }
+	[_currentProgressView setProgress:progress];
+	if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidUpdateStreamingProgress:playerView:media:)]) {
+		[self.delegate mediaPlayerViewDidUpdateStreamingProgress:progress playerView:self media:media];
+	}
 }
 
 - (void)mediaPlayerDidFailedWithError:(NSError *)error player:(LMMediaPlayer *)player media:(LMMediaItem *)media {
-    if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFailedWithError:playerView:media:)]) {
-        [self.delegate mediaPlayerViewDidFailedWithError:error playerView:self media:media];
-    }
+	if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidFailedWithError:playerView:media:)]) {
+		[self.delegate mediaPlayerViewDidFailedWithError:error playerView:self media:media];
+	}
 }
 
 - (void)mediaPlayerWillStartLoading:(LMMediaPlayer *)player media:(LMMediaItem *)media {
-    [self.activityIndicatorWidth setConstant:20.0];
-    [self.activityIndicator startAnimating];
-    
-    if([self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartLoading:media:)]) {
-        [self.delegate mediaPlayerViewWillStartLoading:self media:media];
-    }
+	[self.activityIndicatorWidth setConstant:20.0];
+	[self.activityIndicator startAnimating];
+	
+	if([self.delegate respondsToSelector:@selector(mediaPlayerViewWillStartLoading:media:)]) {
+		[self.delegate mediaPlayerViewWillStartLoading:self media:media];
+	}
 }
 
 - (void)mediaPlayerDidEndLoading:(LMMediaPlayer *)player media:(LMMediaItem *)media {
-    [self.activityIndicatorWidth setConstant:0.0];
-    [self.activityIndicator stopAnimating];
-    
-    if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidEndLoading:media:)]) {
-        [self.delegate mediaPlayerViewDidEndLoading:self media:media];
-    }
+	[self.activityIndicatorWidth setConstant:0.0];
+	[self.activityIndicator stopAnimating];
+	
+	if([self.delegate respondsToSelector:@selector(mediaPlayerViewDidEndLoading:media:)]) {
+		[self.delegate mediaPlayerViewDidEndLoading:self media:media];
+	}
 }
 #pragma mark -
 
@@ -507,7 +507,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	NSInteger duration = currentTime;
 	if (duration / (60 * 60) > 0) {
 		[durationString appendFormat:@"%02ld:",
-				(long int)duration / (60 * 60)];
+		 (long int)duration / (60 * 60)];
 		duration /= 60 * 60;
 	}
 	[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -515,12 +515,12 @@ static LMMediaPlayerView *sharedPlayerView;
 	[durationString appendFormat:@"%02ld", (long int)duration];
 	playbackTimeLabel_.text = durationString;
 	LM_RELEASE(durationString);
-
+	
 	durationString = [[NSMutableString alloc] initWithString:@"-"];
 	duration = (NSInteger)_mediaPlayer.currentPlaybackDuration - currentTime;
 	if (duration / (60 * 60) > 0) {
 		[durationString appendFormat:@"%02ld:",
-				(long int)duration / (60 * 60)];
+		 (long int)duration / (60 * 60)];
 		duration /= 60 * 60;
 	}
 	[durationString appendFormat:@"%02ld:", (long int)duration / 60];
@@ -528,15 +528,15 @@ static LMMediaPlayerView *sharedPlayerView;
 	[durationString appendFormat:@"%02ld", (long int)duration];
 	remainingTimeLabel_.text = durationString;
 	LM_RELEASE(durationString);
-    
-    _currentProgressView.currentProgress = _currentTimeSlider.value;
+	
+	_currentProgressView.currentProgress = _currentTimeSlider.value;
 }
 
 - (void)endSeek:(id)sender
 {
 	UISlider *slider = (UISlider *)sender;
 	[_mediaPlayer seekTo:_mediaPlayer.currentPlaybackDuration * slider.value];
-    _currentProgressView.currentProgress = _currentTimeSlider.value;
+	_currentProgressView.currentProgress = _currentTimeSlider.value;
 	seeking_ = NO;
 }
 
@@ -580,7 +580,7 @@ static LMMediaPlayerView *sharedPlayerView;
 - (IBAction)shuffleButtonPressed:(id)sender
 {
 	[_mediaPlayer setShuffleEnabled:!_mediaPlayer.shuffleMode];
-
+	
 	if (_mediaPlayer.shuffleMode) {
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledImageKey] forState:UIControlStateNormal];
 		[shuffleButton_ setImage:buttonImages_[LMMediaPlayerViewShuffleButtonShuffledSelectedImageKey] forState:UIControlStateSelected];
@@ -697,27 +697,27 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (fullscreen_ == fullscreen) {
 		return;
 	}
-
+	
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewWillChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewWillChangeFullscreenMode:fullscreen];
 	}
-
+	
 	LMMediaPlayerFullscreenViewController *viewController = [[LMMediaPlayerFullscreenViewController alloc] init];
 	LM_AUTORELEASE(viewController);
 	viewController.view.frame = [UIScreen mainScreen].bounds;
-
+	
 	if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 		viewController.extendedLayoutIncludesOpaqueBars = YES;
 	}
 	else {
 		viewController.wantsFullScreenLayout = YES;
 	}
-
+	
 	CGRect newRect;
 	if (fullscreen == NO) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
-
+		
 		newRect = superView_.bounds;
 		self.frame = newRect;
 		[superView_ addSubview:self];
@@ -734,10 +734,10 @@ static LMMediaPlayerView *sharedPlayerView;
 		superView_ = self.superview;
 		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
-
+		
 		UIViewController *rootViewController = [mainWindow_ rootViewController];
 		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
-
+		
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
 			if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 				newRect = CGRectMake(0, 0, CGRectGetWidth(mainWindow_.frame), CGRectGetHeight(mainWindow_.frame));
@@ -746,7 +746,7 @@ static LMMediaPlayerView *sharedPlayerView;
 				newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
 			}
 		}
-
+		
 		[self removeFromSuperview];
 		[viewController.view addSubview:self];
 		UIWindow *newWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -757,7 +757,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[[[UIApplication sharedApplication] delegate] setWindow:newWindow];
 		LM_RELEASE(newWindow);
 	}
-
+	
 	self.frame = newRect;
 	if (animated) {
 		self.alpha = 0;
@@ -805,7 +805,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonImageKey] forState:UIControlStateNormal];
 		[playButton_ setImage:buttonImages_[LMMediaPlayerViewPlayButtonSelectedImageKey] forState:UIControlStateSelected];
 	}
-
+	
 	if (self.isFullscreen) {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
@@ -814,7 +814,7 @@ static LMMediaPlayerView *sharedPlayerView;
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonImageKey] forState:UIControlStateNormal];
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewFullscreenButtonSelectedImageKey] forState:UIControlStateSelected];
 	}
-
+	
 	[self setRepeatButtonImageWithRepeatMode:self.mediaPlayer.repeatMode];
 	[self setShuffleButtonImageWithShuffleMode:self.mediaPlayer.shuffleMode];
 }
@@ -825,8 +825,8 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1) {
 		version = @"6";
 	}
-	UIImage *image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@/%@.png", [[NSBundle mainBundle] pathForResource:@"LMMediaPlayerView" ofType:@"bundle"], version, filename]];
-
+	UIImage *image = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/%@/%@.png", [[NSBundle bundleForClass:[self class]] pathForResource:@"LMMediaPlayerView" ofType:@"bundle"], version, filename]];
+	
 	return image;
 }
 
