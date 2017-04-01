@@ -668,7 +668,7 @@ static LMMediaPlayerView *sharedPlayerView;
 
 - (void)setUserInterfaceHidden:(BOOL)userInterfaceHidden animated:(BOOL)animated
 {
-	NSTimeInterval duration = 0.3 * animated ? 1 : 0;
+	NSTimeInterval duration = 0.3 * (animated ? 1 : 0);
 	_userInterfaceHidden = userInterfaceHidden;
 	if (userInterfaceHidden) {
 		[UIView animateWithDuration:duration animations:^{
