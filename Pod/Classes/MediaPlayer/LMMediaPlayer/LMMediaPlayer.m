@@ -171,7 +171,9 @@ static LMMediaPlayer *sharedPlayer;
 	[songInfo setObject:@([self currentPlaybackDuration]) forKey:MPMediaItemPropertyPlaybackDuration];
 	UIImage *artworkImage = [_nowPlayingItem artworkImageWithSize:CGSizeMake(320, 320)];
 	if (artworkImage) {
-		MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithImage:artworkImage];
+        MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:artworkImage.size requestHandler:^UIImage * _Nonnull(CGSize size) {
+            return artworkImage;
+        }];
 		[songInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
 		LM_AUTORELEASE(artwork);
 	}
@@ -212,7 +214,7 @@ static LMMediaPlayer *sharedPlayer;
 						if (status == AVKeyValueStatusLoaded) {
 							
 							AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:urlAsset];
-							[player_ replaceCurrentItemWithPlayerItem:item];
+                            [self->player_ replaceCurrentItemWithPlayerItem:item];
 							
 							[self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
 							

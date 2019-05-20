@@ -69,7 +69,7 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSURL *path = [NSURL URLWithString:@"https://www.dropbox.com/sm/hls_playlist/s/ixc85y6ewmgfkv8/sample.mp4?secure_hash="];//[[NSBundle mainBundle] URLForResource:@"sample" withExtension:@"mp4"];
+        NSURL *path = [NSURL URLWithString:@"https://www.dropbox.com/s/ixc85y6ewmgfkv8/sample.mp4"];
         LMMediaItem *item = [[LMMediaItem alloc] initWithInfo:@{LMMediaItemInfoURLKey:path, LMMediaItemInfoContentTypeKey:@(LMMediaItemContentTypeVideo)}];
         item.title = @"sample.mp4";
         [playerView_.mediaPlayer addMedia:item];
@@ -193,8 +193,9 @@
 #endif
 		}
 		else {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"DRM content" message:@"You cannot add this content because of DRM." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"DRM content" message:@"You cannot add this content because of DRM." preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
 		}
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}

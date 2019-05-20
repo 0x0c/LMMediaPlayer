@@ -1,0 +1,27 @@
+PODS:
+  - Expecta (1.0.6)
+  - LMMediaPlayer (0.6.1)
+  - Specta (0.2.1)
+
+DEPENDENCIES:
+  - Expecta
+  - LMMediaPlayer (from `../`)
+  - Specta (~> 0.2.1)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Expecta
+    - Specta
+
+EXTERNAL SOURCES:
+  LMMediaPlayer:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
+  LMMediaPlayer: c5e87d9a896cac8b8aa341f2937bc7a62e4fc6fe
+  Specta: 15a276a6343867b426d5ed135d5aa4d04123a573
+
+PODFILE CHECKSUM: 497f067e7b5d5fcead81226d0b64d793f0687359
+
+COCOAPODS: 1.6.2

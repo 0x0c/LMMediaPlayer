@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.author           = { "Akira Matsuda" => "akira.matsuda@me.com" }
   s.source           = { :git => "https://github.com/0x0c/LMMediaPlayer.git", :tag => s.version.to_s }
 
-  s.platform     = :ios, '6.0'
+  s.platform     = :ios, '10.0'
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/**/*.{h,m}'

@@ -164,7 +164,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	{
 		UIImage *image = nil;
 		if ([metaMedia isKindOfClass:[MPMediaItem class]]) {
-			artworkImage_ = image = [[metaMedia_ valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:size];
+            self->artworkImage_ = image = [[self->metaMedia_ valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:size];
 		}
 
 		return image;

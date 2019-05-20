@@ -334,7 +334,7 @@ static LMMediaPlayerView *sharedPlayerView;
 	double delayInSeconds = 0.01;
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
 	dispatch_after(popTime, dispatch_get_main_queue(), ^(void) {
-		[playerLayer_ setPlayer:nil];
+        [self->playerLayer_ setPlayer:nil];
 		if (self.mediaPlayer.playbackState == LMMediaPlaybackStatePlaying) {
 			[self.mediaPlayer play];
 		}
@@ -672,21 +672,21 @@ static LMMediaPlayerView *sharedPlayerView;
 	_userInterfaceHidden = userInterfaceHidden;
 	if (userInterfaceHidden) {
 		[UIView animateWithDuration:duration animations:^{
-			headerView_.alpha = 0;
-			footerView_.alpha = 0;
-			_currentTimeSlider.alpha = 0;
-			_nextButton.superview.alpha = 0;
-			_previousButton.superview.alpha = 0;
+            self->headerView_.alpha = 0;
+            self->footerView_.alpha = 0;
+            self->_currentTimeSlider.alpha = 0;
+            self->_nextButton.superview.alpha = 0;
+            self->_previousButton.superview.alpha = 0;
 		} completion:^(BOOL finished){
 		}];
 	}
 	else {
 		[UIView animateWithDuration:duration animations:^{
-			headerView_.alpha = 1;
-			footerView_.alpha = 1;
-			_currentTimeSlider.alpha = 1;
-			_nextButton.superview.alpha = 1;
-			_previousButton.superview.alpha = 1;
+            self->headerView_.alpha = 1;
+            self->footerView_.alpha = 1;
+            self->_currentTimeSlider.alpha = 1;
+            self->_nextButton.superview.alpha = 1;
+            self->_previousButton.superview.alpha = 1;
 		} completion:^(BOOL finished){
 		}];
 	}
@@ -709,9 +709,6 @@ static LMMediaPlayerView *sharedPlayerView;
 	if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 		viewController.extendedLayoutIncludesOpaqueBars = YES;
 	}
-	else {
-		viewController.wantsFullScreenLayout = YES;
-	}
 	
 	CGRect newRect;
 	if (fullscreen == NO) {
@@ -724,9 +721,6 @@ static LMMediaPlayerView *sharedPlayerView;
 		LM_RELEASE(superView_);
 		[mainWindow_ makeKeyAndVisible];
 		[[[UIApplication sharedApplication] delegate] setWindow:mainWindow_];
-		[[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
-		[[UIApplication sharedApplication] setStatusBarOrientation:[mainWindow_ rootViewController].interfaceOrientation];
-		[[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 	}
 	else {
 		[fullscreenButton_ setImage:buttonImages_[LMMediaPlayerViewUnfullscreenButtonImageKey] forState:UIControlStateNormal];
@@ -735,15 +729,10 @@ static LMMediaPlayerView *sharedPlayerView;
 		LM_RETAIN(superView_);
 		newRect = mainWindow_.frame;
 		
-		UIViewController *rootViewController = [mainWindow_ rootViewController];
-		UIInterfaceOrientation orientation = rootViewController.interfaceOrientation;
-		
+        UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
 		if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
 			if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_7_0) {
 				newRect = CGRectMake(0, 0, CGRectGetWidth(mainWindow_.frame), CGRectGetHeight(mainWindow_.frame));
-			}
-			else {
-				newRect = CGRectMake(0, 0, CGRectGetHeight(mainWindow_.frame), CGRectGetWidth(mainWindow_.frame));
 			}
 		}
 		
@@ -769,7 +758,6 @@ static LMMediaPlayerView *sharedPlayerView;
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerViewDidChangeFullscreenMode:)]) {
 		[self.delegate mediaPlayerViewDidChangeFullscreenMode:fullscreen];
 	}
-	[[UIApplication sharedApplication] setStatusBarHidden:fullscreen];
 	[[NSNotificationCenter defaultCenter] postNotificationName:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
 }
 

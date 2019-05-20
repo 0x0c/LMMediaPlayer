@@ -1,8 +1,8 @@
-target 'LMMediaPlayer', :exclusive => true do
+target 'LMMediaPlayer' do
   pod "LMMediaPlayer", :path => "../"
 end
 
-target 'Tests', :exclusive => true do
+target 'Tests' do
   pod "LMMediaPlayer", :path => "../"
 
   pod 'Specta', '~> 0.2.1'
