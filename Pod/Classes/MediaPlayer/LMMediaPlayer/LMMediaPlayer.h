@@ -6,11 +6,11 @@
 //  Copyright (c) 2014年 Akira Matsuda. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <MediaPlayer/MediaPlayer.h>
-#import <AVFoundation/AVFoundation.h>
 #import "LMMediaItem.h"
+#import <AVFoundation/AVFoundation.h>
+#import <Foundation/Foundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <UIKit/UIKit.h>
 
 @class LMMediaPlayer;
 
@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, LMMediaPlaybackState) {
 	LMMediaPlaybackStateStopped,
 	LMMediaPlaybackStatePlaying,
 	LMMediaPlaybackStatePaused,
-    LMMediaPlaybackStateLoading,
+	LMMediaPlaybackStateLoading,
 };
 
 typedef NS_ENUM(NSUInteger, LMMediaRepeatMode) {

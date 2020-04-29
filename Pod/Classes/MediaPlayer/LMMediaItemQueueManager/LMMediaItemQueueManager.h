@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 Akira Matsuda. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "LMMediaItem.h"
+#import <Foundation/Foundation.h>
 
 @interface LMMediaItemQueueManager : NSObject
 

@@ -7,9 +7,9 @@
 //
 
 #import "LMMediaItem.h"
-#import <MediaPlayer/MediaPlayer.h>
-#import <AVFoundation/AVFoundation.h>
 #import "LMMediaPlayerHelper.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface LMMediaItem () {
 	id metaMedia_;
@@ -164,7 +164,7 @@ NSString *LMMediaItemInfoContentTypeKey = @"LMMediaItemInfoContentTypeKey";
 	{
 		UIImage *image = nil;
 		if ([metaMedia isKindOfClass:[MPMediaItem class]]) {
-            self->artworkImage_ = image = [[self->metaMedia_ valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:size];
+			self->artworkImage_ = image = [[self->metaMedia_ valueForProperty:MPMediaItemPropertyArtwork] imageWithSize:size];
 		}
 
 		return image;

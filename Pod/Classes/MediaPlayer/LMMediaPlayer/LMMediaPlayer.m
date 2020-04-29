@@ -7,9 +7,9 @@
 //
 
 #import "LMMediaPlayer.h"
+#import "LMMediaPlayerHelper.h"
 #import "NSArray+LMMediaPlayerShuffle.h"
 #import <AudioToolbox/AudioToolbox.h>
-#import "LMMediaPlayerHelper.h"
 
 NSString *const LMMediaPlayerPauseNotification = @"LMMediaPlayerPauseNotification";
 NSString *const LMMediaPlayerStopNotification = @"LMMediaPlayerStopNotification";
@@ -42,7 +42,7 @@ static LMMediaPlayer *sharedPlayer;
 {
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		sharedPlayer = [[self class] new];
+	    sharedPlayer = [[self class] new];
 	});
 
 	return sharedPlayer;
@@ -73,10 +73,9 @@ static LMMediaPlayer *sharedPlayer;
 	[notificationCenter removeObserver:self name:LMMediaPlayerPauseNotification object:nil];
 	[notificationCenter removeObserver:self name:LMMediaPlayerStopNotification object:nil];
 	[notificationCenter removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
-    
-    [self removeLMPlayerItemObservers];
-    
-    
+
+	[self removeLMPlayerItemObservers];
+
 	LM_RELEASE(player_);
 	LM_RELEASE(queue_);
 	LM_RELEASE(_currentQueue);
@@ -85,11 +84,10 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)removeLMPlayerItemObservers
 {
-    @try {
-        [self.corePlayer.currentItem removeObserver:self forKeyPath:kLMLoadedTimeRanges];
-    } @catch (NSException *exception) {
-        
-    }
+	@try {
+		[self.corePlayer.currentItem removeObserver:self forKeyPath:kLMLoadedTimeRanges];
+	} @catch (NSException *exception) {
+	}
 }
 #pragma mark -
 
@@ -171,9 +169,10 @@ static LMMediaPlayer *sharedPlayer;
 	[songInfo setObject:@([self currentPlaybackDuration]) forKey:MPMediaItemPropertyPlaybackDuration];
 	UIImage *artworkImage = [_nowPlayingItem artworkImageWithSize:CGSizeMake(320, 320)];
 	if (artworkImage) {
-        MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:artworkImage.size requestHandler:^UIImage * _Nonnull(CGSize size) {
-            return artworkImage;
-        }];
+		MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:artworkImage.size
+									      requestHandler:^UIImage *_Nonnull(CGSize size) {
+										  return artworkImage;
+									      }];
 		[songInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
 		LM_AUTORELEASE(artwork);
 	}
@@ -183,10 +182,10 @@ static LMMediaPlayer *sharedPlayer;
 
 - (void)playMedia:(LMMediaItem *)media
 {
-    //Safely remove any previously added observer before adding new one
-    [self removeLMPlayerItemObservers];
+	//Safely remove any previously added observer before adding new one
+	[self removeLMPlayerItemObservers];
 	[self stop];
-    [self.corePlayer.currentItem.asset cancelLoading];
+	[self.corePlayer.currentItem.asset cancelLoading];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 	if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartPlaying:media:)]) {
 		if ([self.delegate mediaPlayerWillStartPlaying:self media:media]) {
@@ -194,54 +193,55 @@ static LMMediaPlayer *sharedPlayer;
 				NSURL *url = [media assetURL];
 				_nowPlayingItem = media;
 				[player_ removeTimeObserver:playerObserver_];
-				
+
 				[self setCurrentState:LMMediaPlaybackStateLoading];
-				
-				if([self.delegate respondsToSelector:@selector(mediaPlayerWillStartLoading:media:)]) {
+
+				if ([self.delegate respondsToSelector:@selector(mediaPlayerWillStartLoading:media:)]) {
 					[self.delegate mediaPlayerWillStartLoading:self media:media];
 				}
 				AVURLAsset *urlAsset = [AVURLAsset assetWithURL:url];
-				[urlAsset loadValuesAsynchronouslyForKeys:@[kLMTracks, kLMPlayable] completionHandler:^{
-					dispatch_async(dispatch_get_main_queue(), ^{
-						
-						if([self.delegate respondsToSelector:@selector(mediaPlayerDidEndLoading:media:)]) {
-							[self.delegate mediaPlayerDidEndLoading:self media:media];
-						}
-						
-						NSError *error = nil;
-						
-						AVKeyValueStatus status = [urlAsset statusOfValueForKey:kLMTracks error:&error];
-						if (status == AVKeyValueStatusLoaded) {
-							
-							AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:urlAsset];
-                            [self->player_ replaceCurrentItemWithPlayerItem:item];
-							
-							[self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
-							
-							[self play];
-							
-						} else {
-							NSLog(@"unable to load asset current status: %zd error: %@", status, self.corePlayer.currentItem.error);
-							[self setCurrentState:LMMediaPlaybackStateStopped];
-							[self removeLMPlayerItemObservers];
-							if([self.delegate respondsToSelector:@selector(mediaPlayerDidFailedWithError:player:media:)]) {
-								[self.delegate mediaPlayerDidFailedWithError:error player:self media:media];
-							}
-						}
-						
-					});
-				}];
-				
+				[urlAsset loadValuesAsynchronouslyForKeys:@[ kLMTracks, kLMPlayable ]
+							completionHandler:^{
+							    dispatch_async(dispatch_get_main_queue(), ^{
+								if ([self.delegate respondsToSelector:@selector(mediaPlayerDidEndLoading:media:)]) {
+									[self.delegate mediaPlayerDidEndLoading:self media:media];
+								}
+
+								NSError *error = nil;
+
+								AVKeyValueStatus status = [urlAsset statusOfValueForKey:kLMTracks error:&error];
+								if (status == AVKeyValueStatusLoaded) {
+
+									AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:urlAsset];
+									[self->player_ replaceCurrentItemWithPlayerItem:item];
+
+									[self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
+
+									[self play];
+
+								} else {
+									NSLog(@"unable to load asset current status: %zd error: %@", status, self.corePlayer.currentItem.error);
+									[self setCurrentState:LMMediaPlaybackStateStopped];
+									[self removeLMPlayerItemObservers];
+									if ([self.delegate respondsToSelector:@selector(mediaPlayerDidFailedWithError:player:media:)]) {
+										[self.delegate mediaPlayerDidFailedWithError:error player:self media:media];
+									}
+								}
+							    });
+							}];
+
 				if ([self.delegate respondsToSelector:@selector(mediaPlayerDidStartPlaying:media:)]) {
 					[self.delegate mediaPlayerDidStartPlaying:self media:media];
 				}
 				player_.usesExternalPlaybackWhileExternalScreenIsActive = YES;
 				__block LMMediaPlayer *bself = self;
-				playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-					if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
-						[bself.delegate mediaPlayerDidChangeCurrentTime:bself];
-					}
-				}];
+				playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1)
+											queue:dispatch_get_main_queue()
+										   usingBlock:^(CMTime time) {
+										       if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
+											       [bself.delegate mediaPlayerDidChangeCurrentTime:bself];
+										       }
+										   }];
 			}
 		}
 	}
@@ -255,8 +255,7 @@ static LMMediaPlayer *sharedPlayer;
 	}
 	if (_nowPlayingItem == nil) {
 		[self playMedia:self.currentQueue.firstObject];
-	}
-	else {
+	} else {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidReachEnd:) name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
 		[player_ play];
 	}
@@ -297,26 +296,21 @@ static LMMediaPlayer *sharedPlayer;
 			if (_index >= self.currentQueue.count - 1) {
 				_index = 0;
 				[self stop];
-			}
-			else {
+			} else {
 				_index++;
 				[self playMedia:self.currentQueue[_index]];
 			}
-		}
-		else if (_repeatMode == LMMediaRepeatModeAll) {
+		} else if (_repeatMode == LMMediaRepeatModeAll) {
 			if (_index >= self.currentQueue.count - 1) {
 				_index = 0;
-			}
-			else {
+			} else {
 				_index++;
 			}
 			[self playMedia:self.currentQueue[_index]];
-		}
-		else {
+		} else {
 			[self playMedia:self.nowPlayingItem];
 		}
-	}
-	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll) {
+	} else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll) {
 		[self playMedia:self.nowPlayingItem];
 	}
 }
@@ -331,26 +325,21 @@ static LMMediaPlayer *sharedPlayer;
 			if (_index - 1 < 0) {
 				_index = 0;
 				[self stop];
-			}
-			else {
+			} else {
 				_index--;
 				[self playMedia:self.currentQueue[_index]];
 			}
-		}
-		else if (_repeatMode == LMMediaRepeatModeAll) {
+		} else if (_repeatMode == LMMediaRepeatModeAll) {
 			if (_index - 1 < 0) {
 				_index = self.currentQueue.count - 1;
-			}
-			else {
+			} else {
 				_index--;
 			}
 			[self playMedia:self.currentQueue[_index]];
-		}
-		else {
+		} else {
 			[self playMedia:self.currentQueue[_index]];
 		}
-	}
-	else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll) {
+	} else if (_repeatMode == LMMediaRepeatModeOne || _repeatMode == LMMediaRepeatModeAll) {
 		[self playMedia:self.nowPlayingItem];
 	}
 }
@@ -389,8 +378,7 @@ static LMMediaPlayer *sharedPlayer;
 		NSMutableArray *newArray = [[self.currentQueue lm_shuffledArray] mutableCopy];
 		self.currentQueue = newArray;
 		LM_RELEASE(newArray);
-	}
-	else {
+	} else {
 		self.currentQueue = queue_;
 	}
 
@@ -459,31 +447,32 @@ static LMMediaPlayer *sharedPlayer;
 	return e;
 }
 #pragma mark - Observer
-- (void)observeValueForKeyPath:(NSString*)aPath ofObject:(id)anObject change:(NSDictionary*)aChange context:(void*)aContext {
-    
-    if (aContext == AudioControllerBufferingObservationContext) {
-        
-        AVPlayerItem* playerItem = (AVPlayerItem*)anObject;
-        NSArray* times = playerItem.loadedTimeRanges;
-        
-        NSValue* value = [times firstObject];
-        
-        if(value) {
-            CMTimeRange range;
-            [value getValue:&range];
-            float start = CMTimeGetSeconds(range.start);
-            float duration = CMTimeGetSeconds(range.duration);
-            
-            CGFloat videoAvailable = start + duration;
-            CGFloat totalDuration = CMTimeGetSeconds(self.corePlayer.currentItem.asset.duration);
-            CGFloat progress = videoAvailable / totalDuration;
-            
-            // UI must be update on the main thread
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if([self.delegate respondsToSelector:@selector(mediaPlayerDidUpdateStreamingProgress:player:media:)])
-                    [self.delegate mediaPlayerDidUpdateStreamingProgress:progress player:self media:self.nowPlayingItem];
-            });
-        }
-    }
+- (void)observeValueForKeyPath:(NSString *)aPath ofObject:(id)anObject change:(NSDictionary *)aChange context:(void *)aContext
+{
+
+	if (aContext == AudioControllerBufferingObservationContext) {
+
+		AVPlayerItem *playerItem = (AVPlayerItem *)anObject;
+		NSArray *times = playerItem.loadedTimeRanges;
+
+		NSValue *value = [times firstObject];
+
+		if (value) {
+			CMTimeRange range;
+			[value getValue:&range];
+			float start = CMTimeGetSeconds(range.start);
+			float duration = CMTimeGetSeconds(range.duration);
+
+			CGFloat videoAvailable = start + duration;
+			CGFloat totalDuration = CMTimeGetSeconds(self.corePlayer.currentItem.asset.duration);
+			CGFloat progress = videoAvailable / totalDuration;
+
+			// UI must be update on the main thread
+			dispatch_async(dispatch_get_main_queue(), ^{
+			    if ([self.delegate respondsToSelector:@selector(mediaPlayerDidUpdateStreamingProgress:player:media:)])
+				    [self.delegate mediaPlayerDidUpdateStreamingProgress:progress player:self media:self.nowPlayingItem];
+			});
+		}
+	}
 }
 @end

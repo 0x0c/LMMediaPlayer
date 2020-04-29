@@ -17,7 +17,6 @@
  */
 @interface LMProgressBarView : UIView
 
-
 ///---------------------------
 ///@name Managing the Progress
 ///---------------------------
@@ -33,7 +32,6 @@
 @property (nonatomic) CGFloat progress;
 
 @property (nonatomic) CGFloat currentProgress;
-
 
 ///-------------------------------------
 /// @name Configuring the Appearance
@@ -97,7 +95,6 @@
  @discussion We can't set `BOOL` type through the `UIAppearance` API, so we use `NSInteger` instead.
  */
 @property (nonatomic) NSInteger usesRoundedCorners UI_APPEARANCE_SELECTOR;
-
 
 ///---------------
 /// @name Defaults

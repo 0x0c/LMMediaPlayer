@@ -6,10 +6,10 @@
 //  Copyright (c) 2014年 Akira Matsuda. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "LMMediaPlayer.h"
 #import "LMProgressBarView.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 extern NSString *const LMMediaPlayerViewPlayButtonImageKey;
 extern NSString *const LMMediaPlayerViewPlayButtonSelectedImageKey;
