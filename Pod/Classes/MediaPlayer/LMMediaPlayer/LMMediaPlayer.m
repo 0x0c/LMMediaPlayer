@@ -215,6 +215,7 @@ static LMMediaPlayer *sharedPlayer;
 									AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:urlAsset];
 									[self->player_ replaceCurrentItemWithPlayerItem:item];
 
+                                    [self removeLMPlayerItemObservers];
 									[self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
 
 									[self play];
