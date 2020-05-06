@@ -234,14 +234,17 @@ static LMMediaPlayer *sharedPlayer;
 					[self.delegate mediaPlayerDidStartPlaying:self media:media];
 				}
 				player_.usesExternalPlaybackWhileExternalScreenIsActive = YES;
-				__block LMMediaPlayer *bself = self;
+                __weak LMMediaPlayer *weakSelf = self;
 				playerObserver_ = [player_ addPeriodicTimeObserverForInterval:CMTimeMake(1, 1)
 											queue:dispatch_get_main_queue()
 										   usingBlock:^(CMTime time) {
-										       if ([bself.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
-											       [bself.delegate mediaPlayerDidChangeCurrentTime:bself];
-										       }
-										   }];
+                    __strong LMMediaPlayer* strongSelf = weakSelf;
+                    if(strongSelf) {
+                        if ([strongSelf.delegate respondsToSelector:@selector(mediaPlayerDidChangeCurrentTime:)]) {
+                            [strongSelf.delegate mediaPlayerDidChangeCurrentTime:strongSelf];
+                        }
+                    }
+                }];
 			}
 		}
 	}
