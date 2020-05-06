@@ -212,10 +212,9 @@ static LMMediaPlayer *sharedPlayer;
 								AVKeyValueStatus status = [urlAsset statusOfValueForKey:kLMTracks error:&error];
 								if (status == AVKeyValueStatusLoaded) {
 
+                                    [self removeLMPlayerItemObservers];
 									AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:urlAsset];
 									[self->player_ replaceCurrentItemWithPlayerItem:item];
-
-                                    [self removeLMPlayerItemObservers];
 									[self.corePlayer.currentItem addObserver:self forKeyPath:kLMLoadedTimeRanges options:NSKeyValueObservingOptionNew context:AudioControllerBufferingObservationContext];
 
 									[self play];
